@@ -1,0 +1,432 @@
+2025-06-13 16:18:22,532 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 16:18:22,533 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 16:18:22,533 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 16:18:22,534 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 16:18:22,535 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 16:18:22,537 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:18:22,537 - core.screenshot_manager - INFO - ScreenshotManager initialisé
+2025-06-13 16:18:22,537 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 16:18:22,546 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:18:22,547 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 16:18:22,547 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 16:18:22,547 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 16:18:23,604 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 16:18:23,605 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 16:18:23,605 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 16:18:23,605 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 16:18:23,606 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 16:18:23,606 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 16:18:23,607 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 16:18:23,607 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 16:18:23,757 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 16:18:23,757 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 16:18:23,758 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 16:18:23,759 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 16:18:23,759 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 16:18:23,759 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 16:18:23,759 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 16:18:23,760 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 16:18:23,760 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 16:18:23,760 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 16:18:23,760 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 16:18:23,835 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 16:18:23,836 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 16:18:23,836 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 16:18:23,837 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 16:18:23,837 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 16:18:23,837 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 16:18:32,502 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-13 16:18:32,518 - core.screenshot_manager - INFO - Début capture fenêtre active
+2025-06-13 16:18:32,529 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:18:32,530 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 15, Mémoire libérée: -0.6MB
+2025-06-13 16:18:32,530 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:18:32,858 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\python.exe_Paramètres - SnapMaster_Screenshot_20250613_161832.png
+2025-06-13 16:18:32,869 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:18:32,870 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:18:34,701 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:18:34,703 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:18:34,705 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:18:34,708 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:18:34,710 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:18:34,715 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:18:34,718 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:18:34,721 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:18:34,723 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:18:34,726 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:18:34,729 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:18:34,732 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 16:19:08,612 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:19:10,163 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:19:10,175 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:19:10,176 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 74, Mémoire libérée: 0.0MB
+2025-06-13 16:19:10,176 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:19:10,296 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:19:10,297 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:19:10,333 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:19:10,334 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: 0.0MB
+2025-06-13 16:19:10,334 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:19:15,342 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 16:19:15,342 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-13 16:19:15,355 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:19:15,356 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: -0.0MB
+2025-06-13 16:27:15,088 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 16:27:15,089 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 16:27:15,089 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 16:27:15,090 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 16:27:15,091 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 16:27:15,092 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:27:15,092 - core.screenshot_manager - INFO - ScreenshotManager initialisé
+2025-06-13 16:27:15,093 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 16:27:15,093 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:27:15,093 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 16:27:15,093 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 16:27:15,094 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 16:27:16,229 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 16:27:16,230 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 16:27:16,231 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 16:27:16,231 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 16:27:16,232 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 16:27:16,232 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 16:27:16,233 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 16:27:16,233 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 16:27:16,363 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 16:27:16,364 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 16:27:16,364 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 16:27:16,365 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 16:27:16,365 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 16:27:16,365 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 16:27:16,365 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 16:27:16,366 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 16:27:16,366 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 16:27:16,366 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 16:27:16,367 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 16:27:16,435 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 16:27:16,435 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 16:27:16,436 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 16:27:16,436 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 16:27:16,436 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 16:27:16,437 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 16:27:18,865 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:27:18,885 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:27:18,886 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.3MB
+2025-06-13 16:27:18,886 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:27:19,017 - core.screenshot_manager - ERROR - Erreur sélection de zone: can't set fullscreen attribute for ".": override-redirect flag is set
+2025-06-13 16:27:19,024 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-13 16:27:26,616 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:27:26,638 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:27:26,638 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: -0.2MB
+2025-06-13 16:27:26,638 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:27:26,758 - core.screenshot_manager - ERROR - Erreur sélection de zone: can't set fullscreen attribute for ".": override-redirect flag is set
+2025-06-13 16:27:26,768 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-13 16:28:09,100 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:28:10,674 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:28:10,702 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:28:10,702 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: -0.5MB
+2025-06-13 16:28:10,703 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:28:10,851 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:28:10,852 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:28:10,885 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:28:10,886 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: 0.0MB
+2025-06-13 16:28:10,886 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:28:15,101 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 16:28:15,107 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-13 16:28:15,135 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:28:15,139 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: -0.0MB
+2025-06-13 16:28:29,364 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 16:28:29,367 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 16:28:29,367 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 16:28:29,370 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 16:28:29,372 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 16:28:29,375 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:28:29,376 - core.screenshot_manager - INFO - ScreenshotManager initialisé
+2025-06-13 16:28:29,376 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 16:28:29,377 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:28:29,378 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 16:28:29,378 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 16:28:29,379 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 16:28:30,785 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 16:28:30,785 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 16:28:30,786 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 16:28:30,786 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 16:28:30,786 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 16:28:30,786 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 16:28:30,786 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 16:28:30,787 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 16:28:31,038 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 16:28:31,039 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 16:28:31,040 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 16:28:31,040 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 16:28:31,040 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 16:28:31,041 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 16:28:31,041 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 16:28:31,041 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 16:28:31,041 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 16:28:31,042 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 16:28:31,042 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 16:28:31,135 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 16:28:31,135 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 16:28:31,135 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 16:28:31,136 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 16:28:31,136 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 16:28:31,136 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 16:28:32,533 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:28:32,553 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:28:32,554 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.3MB
+2025-06-13 16:28:32,554 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:28:33,142 - core.screenshot_manager - ERROR - Erreur sélection de zone: image "pyimage1" doesn't exist
+2025-06-13 16:28:33,152 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-13 16:28:45,585 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-13 16:28:45,587 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:28:45,601 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:28:45,602 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: -0.4MB
+2025-06-13 16:28:45,602 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:28:45,728 - core.screenshot_manager - ERROR - Erreur sélection de zone: image "pyimage2" doesn't exist
+2025-06-13 16:28:45,737 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-13 16:28:47,632 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-13 16:28:47,634 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:28:47,648 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:28:47,649 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: -0.5MB
+2025-06-13 16:28:47,649 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:28:47,793 - core.screenshot_manager - ERROR - Erreur sélection de zone: image "pyimage3" doesn't exist
+2025-06-13 16:28:47,804 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-13 16:29:32,566 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 16:29:45,617 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 16:29:47,663 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 16:30:16,935 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:30:17,556 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:30:17,573 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:30:17,574 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: -0.2MB
+2025-06-13 16:30:17,574 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:30:17,790 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:30:17,790 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:30:17,835 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:30:17,836 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: -0.2MB
+2025-06-13 16:30:17,837 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:30:22,850 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 16:30:22,851 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-13 16:30:22,923 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:30:22,924 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:30:24,677 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 16:30:24,678 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 16:30:24,678 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 16:30:24,680 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 16:30:24,681 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 16:30:24,682 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:30:24,683 - core.screenshot_manager - INFO - ScreenshotManager initialisé
+2025-06-13 16:30:24,683 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 16:30:24,683 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:30:24,683 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 16:30:24,684 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 16:30:24,684 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 16:30:25,936 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 16:30:25,936 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 16:30:25,937 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 16:30:25,937 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 16:30:25,937 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 16:30:25,937 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 16:30:25,938 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 16:30:25,939 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 16:30:26,312 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 16:30:26,312 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 16:30:26,313 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 16:30:26,314 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 16:30:26,314 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 16:30:26,315 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 16:30:26,315 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 16:30:26,315 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 16:30:26,316 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 16:30:26,316 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 16:30:26,316 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 16:30:26,416 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 16:30:26,416 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 16:30:26,417 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 16:30:26,417 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 16:30:26,417 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 16:30:26,418 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 16:30:27,999 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:30:28,105 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:30:28,144 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.2MB
+2025-06-13 16:30:28,145 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:30:28,953 - core.screenshot_manager - WARNING - Impossible d'afficher l'image de fond: image "pyimage1" doesn't exist
+2025-06-13 16:30:35,612 - core.screenshot_manager - INFO - Zone sélectionnée: 628,426 1076x518
+2025-06-13 16:30:35,710 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_163035.png
+2025-06-13 16:30:35,724 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:30:35,725 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: -0.0MB
+2025-06-13 16:31:28,193 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 16:34:06,473 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:34:08,387 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:34:08,400 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:34:08,400 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 14, Mémoire libérée: 0.0MB
+2025-06-13 16:34:08,400 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:34:08,515 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:34:08,516 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:34:08,544 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 16:34:08,545 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: 0.0MB
+2025-06-13 16:34:08,545 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:34:13,566 - core.memory_manager - ERROR - Erreur libération mémoire: sys.meta_path is None, Python is likely shutting down
+2025-06-13 16:34:13,567 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:34:15,779 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 16:34:15,780 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 16:34:15,780 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 16:34:15,781 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 16:34:15,782 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 16:34:15,783 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:34:15,784 - core.screenshot_manager - INFO - ScreenshotManager initialisé
+2025-06-13 16:34:15,784 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 16:34:15,784 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:34:15,784 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 16:34:15,785 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 16:34:15,785 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 16:34:16,848 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 16:34:16,849 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 16:34:16,849 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 16:34:16,849 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 16:34:16,849 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 16:34:16,850 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 16:34:16,851 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 16:34:16,851 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 16:34:16,986 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 16:34:16,986 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 16:34:16,987 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 16:34:16,987 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 16:34:16,988 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 16:34:16,988 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 16:34:16,988 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 16:34:16,989 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 16:34:16,989 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 16:34:16,989 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 16:34:16,989 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 16:34:17,063 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 16:34:17,063 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 16:34:17,064 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 16:34:17,064 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 16:34:17,064 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 16:34:17,064 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 16:34:20,476 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:34:20,494 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.0MB
+2025-06-13 16:34:20,495 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:34:33,453 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:34:33,477 - core.screenshot_manager - INFO - Zone sélectionnée: 205,168 1477x794
+2025-06-13 16:34:33,643 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_163433.png
+2025-06-13 16:34:33,652 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:34:34,739 - core.screenshot_manager - ERROR - Erreur callback capture: main thread is not in main loop
+2025-06-13 16:34:35,159 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:34:35,173 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 16:34:35,174 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:34:40,184 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 16:34:40,184 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-13 16:34:57,780 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 16:34:57,781 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 16:34:57,781 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 16:34:57,782 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 16:34:57,783 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 16:34:57,785 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:34:57,785 - core.screenshot_manager - INFO - ScreenshotManager initialisé
+2025-06-13 16:34:57,785 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 16:34:57,785 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:34:57,786 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 16:34:57,786 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 16:34:57,786 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 16:34:58,925 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 16:34:58,925 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 16:34:58,926 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 16:34:58,926 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 16:34:58,926 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 16:34:58,927 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 16:34:58,928 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 16:34:58,928 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 16:34:59,077 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 16:34:59,078 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 16:34:59,078 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 16:34:59,079 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 16:34:59,079 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 16:34:59,079 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 16:34:59,079 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 16:34:59,079 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 16:34:59,080 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 16:34:59,080 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 16:34:59,080 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 16:34:59,160 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 16:34:59,160 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 16:34:59,161 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 16:34:59,161 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 16:34:59,161 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 16:34:59,161 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 16:35:03,331 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-13 16:35:03,333 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:35:03,346 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.0MB
+2025-06-13 16:35:03,347 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:35:10,500 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-13 16:35:10,502 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:35:10,516 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:35:10,517 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:35:11,597 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-13 16:35:11,599 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:35:11,610 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:35:11,610 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:35:12,411 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-13 16:35:12,413 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:35:12,423 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:35:12,423 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:35:23,816 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-13 16:35:23,850 - core.screenshot_manager - INFO - Zone sélectionnée: 609,642 212x65
+2025-06-13 16:35:23,916 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_163523.png
+2025-06-13 16:35:23,939 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: -0.0MB
+2025-06-13 16:35:27,790 - core.memory_manager - WARNING - Seuil mémoire dépassé: 76.0MB > 64.8MB
+2025-06-13 16:35:27,801 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 16:35:28,253 - core.screenshot_manager - INFO - Zone sélectionnée: 52,677 979x326
+2025-06-13 16:35:28,302 - core.screenshot_manager - INFO - Zone sélectionnée: 1035,571 204x95
+2025-06-13 16:35:28,354 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_163528_1.png
+2025-06-13 16:35:28,364 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: -0.0MB
+2025-06-13 16:35:28,378 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_163528.png
+2025-06-13 16:35:28,388 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 16:35:45,509 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 16:35:45,510 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 16:35:45,510 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 16:35:45,512 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 16:35:45,513 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 16:35:45,514 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:35:45,514 - core.screenshot_manager - INFO - ScreenshotManager initialisé
+2025-06-13 16:35:45,514 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 16:35:45,515 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:35:45,515 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 16:35:45,515 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 16:35:45,515 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 16:35:46,562 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 16:35:46,562 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 16:35:46,562 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 16:35:46,563 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 16:35:46,563 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 16:35:46,563 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 16:35:46,564 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 16:35:46,564 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 16:35:46,701 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 16:35:46,701 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 16:35:46,702 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 16:35:46,702 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 16:35:46,702 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 16:35:46,703 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 16:35:46,703 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 16:35:46,703 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 16:35:46,703 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 16:35:46,703 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 16:35:46,703 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 16:35:46,773 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 16:35:46,773 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 16:35:46,774 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 16:35:46,774 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 16:35:46,774 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 16:35:46,774 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 16:35:57,250 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 16:35:57,270 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.0MB
+2025-06-13 16:35:57,272 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:36:05,158 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:36:05,202 - core.screenshot_manager - INFO - Zone sélectionnée: 18,35 1169x845
+2025-06-13 16:36:05,650 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_163605.png
+2025-06-13 16:36:05,664 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:36:06,754 - core.screenshot_manager - ERROR - Erreur callback capture: main thread is not in main loop
+2025-06-13 16:36:06,862 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:36:06,889 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 16:36:06,889 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:36:11,891 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 16:36:11,891 - __main__ - INFO - SnapMaster fermé proprement
