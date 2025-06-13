@@ -504,3 +504,168 @@
 2025-06-13 16:47:54,274 - gui.main_window - INFO - Nettoyage terminé
 2025-06-13 16:47:59,296 - core.screenshot_manager - INFO - Application marquée comme inactive, callbacks désactivés
 2025-06-13 16:47:59,297 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:53:41,526 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 16:53:41,527 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 16:53:41,527 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 16:53:41,528 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 16:53:41,529 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 16:53:41,530 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:53:41,530 - core.screenshot_manager - INFO - ScreenshotManager initialisé (version finale corrigée)
+2025-06-13 16:53:41,531 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 16:53:41,531 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:53:41,531 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 16:53:41,531 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 16:53:41,531 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 16:53:42,634 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 16:53:42,635 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 16:53:42,635 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 16:53:42,636 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 16:53:42,636 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 16:53:42,636 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 16:53:42,637 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 16:53:42,637 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 16:53:42,768 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 16:53:42,769 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 16:53:42,769 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 16:53:42,770 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 16:53:42,770 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 16:53:42,770 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 16:53:42,771 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 16:53:42,771 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 16:53:42,771 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 16:53:42,771 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 16:53:42,771 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 16:53:42,834 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 16:53:42,834 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 16:53:42,834 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 16:53:42,834 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 16:53:42,834 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 16:53:42,835 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 16:53:44,112 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec arrière-plan figé
+2025-06-13 16:53:44,132 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.0MB
+2025-06-13 16:53:44,133 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:53:44,134 - core.screenshot_manager - INFO - Début sélection de zone avec arrière-plan figé
+2025-06-13 16:53:44,134 - core.screenshot_manager - INFO - Capture de l'écran pour créer l'arrière-plan figé...
+2025-06-13 16:53:44,187 - core.screenshot_manager - INFO - Écran capturé: (1920, 1080)
+2025-06-13 16:53:44,424 - core.screenshot_manager - INFO - Interface de sélection créée avec arrière-plan figé
+2025-06-13 16:53:50,542 - core.screenshot_manager - INFO - Ressources de sélection nettoyées
+2025-06-13 16:53:50,542 - core.screenshot_manager - INFO - Zone sélectionnée: 176,288 1440x689
+2025-06-13 16:53:51,188 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_165351.png
+2025-06-13 16:53:51,197 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:53:57,046 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec arrière-plan figé
+2025-06-13 16:53:57,075 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: -0.0MB
+2025-06-13 16:53:57,076 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:53:57,077 - core.screenshot_manager - INFO - Début sélection de zone avec arrière-plan figé
+2025-06-13 16:53:57,077 - core.screenshot_manager - INFO - Capture de l'écran pour créer l'arrière-plan figé...
+2025-06-13 16:53:57,139 - core.screenshot_manager - INFO - Écran capturé: (1920, 1080)
+2025-06-13 16:53:57,404 - core.screenshot_manager - INFO - Interface de sélection créée avec arrière-plan figé
+2025-06-13 16:54:01,676 - core.screenshot_manager - INFO - Ressources de sélection nettoyées
+2025-06-13 16:54:01,678 - core.screenshot_manager - INFO - Zone sélectionnée: 63,134 1642x926
+2025-06-13 16:54:02,653 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_165402.png
+2025-06-13 16:54:02,667 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:54:44,145 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 16:54:57,092 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 16:58:44,445 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:58:46,213 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:58:46,224 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 16:58:46,224 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:58:46,387 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:58:46,388 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:58:46,418 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:58:46,418 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:58:51,429 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 16:58:51,429 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-13 16:58:51,439 - core.screenshot_manager - INFO - Application marquée comme inactive, callbacks désactivés
+2025-06-13 16:58:51,440 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:58:57,744 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 16:58:57,747 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 16:58:57,747 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 16:58:57,751 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 16:58:57,754 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 16:58:57,759 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:58:57,785 - core.screenshot_manager - INFO - ScreenshotManager initialisé avec effets visuels et protection
+2025-06-13 16:58:57,786 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 16:58:57,786 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:58:57,787 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 16:58:57,787 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 16:58:57,788 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 16:58:59,722 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 16:58:59,722 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 16:58:59,723 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 16:58:59,723 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 16:58:59,723 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 16:58:59,723 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 16:58:59,724 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 16:58:59,724 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 16:58:59,896 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 16:58:59,896 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 16:58:59,897 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 16:58:59,898 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 16:58:59,898 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 16:58:59,898 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 16:58:59,898 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 16:58:59,899 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 16:58:59,899 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 16:58:59,899 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 16:58:59,899 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 16:58:59,975 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 16:58:59,975 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 16:58:59,976 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 16:58:59,976 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 16:58:59,976 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 16:58:59,976 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 16:59:01,382 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec effets visuels
+2025-06-13 16:59:01,398 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.0MB
+2025-06-13 16:59:01,398 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:59:01,399 - core.screenshot_manager - INFO - Début sélection de zone avec effets visuels d'assombrissement
+2025-06-13 16:59:01,400 - core.screenshot_manager - INFO - Capture et préparation des images avec effets...
+2025-06-13 16:59:01,450 - core.screenshot_manager - INFO - Écran capturé: (1920, 1080)
+2025-06-13 16:59:01,471 - core.screenshot_manager - INFO - Version assombrie créée
+2025-06-13 16:59:02,106 - core.screenshot_manager - INFO - Interface de sélection créée avec effets visuels
+2025-06-13 16:59:06,744 - core.screenshot_manager - INFO - Zone sélectionnée: 1376x851 à (227, 148)
+2025-06-13 16:59:08,586 - core.screenshot_manager - INFO - Sélection confirmée par l'utilisateur
+2025-06-13 16:59:08,635 - core.screenshot_manager - INFO - Ressources de sélection nettoyées
+2025-06-13 16:59:08,636 - core.screenshot_manager - INFO - Zone sélectionnée: 227,148 1376x851
+2025-06-13 16:59:09,297 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_165909.png
+2025-06-13 16:59:09,305 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:59:18,414 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec effets visuels
+2025-06-13 16:59:18,447 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 16:59:18,447 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:59:18,448 - core.screenshot_manager - INFO - Début sélection de zone avec effets visuels d'assombrissement
+2025-06-13 16:59:18,448 - core.screenshot_manager - INFO - Capture et préparation des images avec effets...
+2025-06-13 16:59:18,518 - core.screenshot_manager - INFO - Écran capturé: (1920, 1080)
+2025-06-13 16:59:18,541 - core.screenshot_manager - INFO - Version assombrie créée
+2025-06-13 16:59:19,525 - core.screenshot_manager - INFO - Interface de sélection créée avec effets visuels
+2025-06-13 16:59:23,330 - core.screenshot_manager - INFO - Zone sélectionnée: 1753x848 à (65, 171)
+2025-06-13 16:59:30,492 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-13 16:59:30,495 - core.screenshot_manager - WARNING - Sélection de zone déjà active, lancement ignoré
+2025-06-13 16:59:32,473 - core.screenshot_manager - INFO - Zone sélectionnée: 1119x645 à (402, 239)
+2025-06-13 16:59:34,150 - core.screenshot_manager - INFO - Zone sélectionnée: 649x330 à (640, 479)
+2025-06-13 16:59:34,917 - core.screenshot_manager - INFO - Sélection confirmée par l'utilisateur
+2025-06-13 16:59:34,975 - core.screenshot_manager - INFO - Ressources de sélection nettoyées
+2025-06-13 16:59:34,975 - core.screenshot_manager - INFO - Zone sélectionnée: 640,479 649x330
+2025-06-13 16:59:35,606 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_165935.png
+2025-06-13 16:59:35,623 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 17:00:01,414 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 17:00:07,008 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-13 17:00:07,010 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec effets visuels
+2025-06-13 17:00:07,022 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 17:00:07,023 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 17:00:07,024 - core.screenshot_manager - INFO - Début sélection de zone avec effets visuels d'assombrissement
+2025-06-13 17:00:07,024 - core.screenshot_manager - INFO - Capture et préparation des images avec effets...
+2025-06-13 17:00:07,090 - core.screenshot_manager - INFO - Écran capturé: (1920, 1080)
+2025-06-13 17:00:07,117 - core.screenshot_manager - INFO - Version assombrie créée
+2025-06-13 17:00:08,082 - core.screenshot_manager - INFO - Interface de sélection créée avec effets visuels
+2025-06-13 17:00:10,738 - core.screenshot_manager - INFO - Zone sélectionnée: 1436x855 à (161, 151)
+2025-06-13 17:00:11,844 - core.screenshot_manager - INFO - Sélection confirmée par l'utilisateur
+2025-06-13 17:00:11,892 - core.screenshot_manager - INFO - Ressources de sélection nettoyées
+2025-06-13 17:00:11,893 - core.screenshot_manager - INFO - Zone sélectionnée: 161,151 1436x855
+2025-06-13 17:00:12,883 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_170012.png
+2025-06-13 17:00:12,906 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 17:00:18,457 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 17:00:27,884 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 17:00:29,196 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 17:00:29,206 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 17:00:29,206 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 17:00:34,211 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 17:00:34,211 - __main__ - INFO - SnapMaster fermé proprement

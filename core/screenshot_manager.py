@@ -1,7 +1,8 @@
-# core/screenshot_manager.py
+# core/screenshot_manager.py - VERSION FINALE AVEC EFFETS VISUELS
 """
-Gestionnaire de captures d'écran pour SnapMaster - VERSION CORRIGÉE
-Gère tous les types de captures avec optimisation mémoire et sélection de zone interactive FIGÉE
+Gestionnaire de captures d'écran pour SnapMaster - VERSION FINALE AVEC EFFETS VISUELS
+Gère tous les types de captures avec optimisation mémoire et sélection de zone interactive
+avec image figée assombrie et révélation de la sélection
 """
 
 import pyautogui
@@ -11,7 +12,7 @@ import tkinter as tk
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Tuple, Callable, Any, Dict
-from PIL import Image, ImageGrab, ImageTk
+from PIL import Image, ImageGrab, ImageTk, ImageEnhance
 import logging
 import threading
 import tempfile
@@ -22,15 +23,17 @@ from core.app_detector import AppDetector, AppInfo
 from config.settings import SettingsManager
 
 class AreaSelector:
-    """Interface de sélection de zone interactive avec arrière-plan FIGÉ comme Windows Snipping Tool"""
+    """Interface de sélection de zone avec effets visuels d'assombrissement et révélation"""
 
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.root = None
         self.canvas = None
         self.selected_area = None
-        self.frozen_screenshot = None  # L'image figée de l'écran
-        self.tk_image = None
+        self.frozen_screenshot = None  # L'image PIL figée originale
+        self.darkened_screenshot = None  # L'image assombrie
+        self.tk_image_dark = None  # Image Tkinter assombrie
+        self.tk_image_original = None  # Image Tkinter originale pour la révélation
 
         # Variables pour la sélection
         self.start_x = None
@@ -39,24 +42,24 @@ class AreaSelector:
         self.selecting = False
         self.selection_confirmed = False
 
+        # Effet visuel - assombrissement
+        self.darken_factor = 0.3  # 30% de luminosité (70% d'assombrissement)
+
         # Style de l'interface
-        self.overlay_color = '#000000'
-        self.selection_color = '#FF0000'  # Rouge pour la sélection
-        self.selection_width = 2
+        self.selection_color = '#00FF00'  # Vert vif pour la sélection
+        self.selection_width = 3
+        self.corner_color = '#FFFFFF'  # Coins blancs
 
     def select_area(self) -> Optional[Tuple[int, int, int, int]]:
         """Lance l'interface de sélection et retourne les coordonnées (x, y, width, height)"""
         try:
-            self.logger.info("Début sélection de zone avec arrière-plan figé")
+            self.logger.info("Début sélection de zone avec effets visuels d'assombrissement")
 
-            # 1. ÉTAPE CRITIQUE : Prendre une capture d'écran COMPLÈTE pour la figer
-            self._capture_screen_for_selection()
-
-            if not self.frozen_screenshot:
-                self.logger.error("Impossible de capturer l'écran pour la sélection")
+            # 1. Capturer et préparer les images
+            if not self._prepare_images():
                 return None
 
-            # 2. Créer l'interface de sélection avec l'image figée
+            # 2. Créer l'interface de sélection avec effets
             if not self._create_selection_interface():
                 return None
 
@@ -74,24 +77,30 @@ class AreaSelector:
             self._cleanup_selection_interface()
             return None
 
-    def _capture_screen_for_selection(self):
-        """Capture l'écran complet pour créer l'arrière-plan figé"""
+    def _prepare_images(self) -> bool:
+        """Prépare les images : capture l'écran et crée la version assombrie"""
         try:
-            self.logger.info("Capture de l'écran pour créer l'arrière-plan figé...")
+            self.logger.info("Capture et préparation des images avec effets...")
 
-            # Prend une capture d'écran complète avec pyautogui
+            # Capture l'écran complet
             self.frozen_screenshot = pyautogui.screenshot()
-
             self.logger.info(f"Écran capturé: {self.frozen_screenshot.size}")
 
+            # Crée la version assombrie
+            enhancer = ImageEnhance.Brightness(self.frozen_screenshot)
+            self.darkened_screenshot = enhancer.enhance(self.darken_factor)
+            self.logger.info("Version assombrie créée")
+
+            return True
+
         except Exception as e:
-            self.logger.error(f"Erreur capture écran pour sélection: {e}")
-            self.frozen_screenshot = None
+            self.logger.error(f"Erreur préparation images: {e}")
+            return False
 
     def _create_selection_interface(self) -> bool:
-        """Crée l'interface de sélection avec l'arrière-plan figé"""
+        """Crée l'interface de sélection avec effets visuels"""
         try:
-            if not self.frozen_screenshot:
+            if not self.frozen_screenshot or not self.darkened_screenshot:
                 return False
 
             # Obtient les dimensions de l'écran
@@ -119,11 +128,16 @@ class AreaSelector:
             )
             self.canvas.pack(fill=tk.BOTH, expand=True)
 
-            # Convertit l'image PIL en format Tkinter
-            self.tk_image = ImageTk.PhotoImage(self.frozen_screenshot)
+            # Prépare les images Tkinter avec références fortes
+            self.tk_image_dark = ImageTk.PhotoImage(self.darkened_screenshot, master=self.root)
+            self.tk_image_original = ImageTk.PhotoImage(self.frozen_screenshot, master=self.root)
 
-            # Affiche l'image figée en arrière-plan
-            self.canvas.create_image(0, 0, image=self.tk_image, anchor=tk.NW, tags='background')
+            # Maintient les références fortes pour éviter le garbage collection
+            self.canvas.image_dark = self.tk_image_dark
+            self.canvas.image_original = self.tk_image_original
+
+            # Affiche l'image assombrie en arrière-plan
+            self.canvas.create_image(0, 0, image=self.tk_image_dark, anchor=tk.NW, tags='background_dark')
 
             # Configuration des événements
             self._setup_event_bindings()
@@ -131,7 +145,7 @@ class AreaSelector:
             # Instructions pour l'utilisateur
             self._show_instructions()
 
-            self.logger.info("Interface de sélection créée avec arrière-plan figé")
+            self.logger.info("Interface de sélection créée avec effets visuels")
             return True
 
         except Exception as e:
@@ -155,31 +169,30 @@ class AreaSelector:
         self.canvas.focus_set()
 
     def _show_instructions(self):
-        """Affiche les instructions à l'utilisateur"""
-        # Instructions en haut de l'écran
+        """Affiche les instructions à l'utilisateur avec style moderne"""
         screen_width = self.frozen_screenshot.size[0]
 
-        # Fond semi-transparent pour les instructions
+        # Fond moderne pour les instructions avec bordure arrondie
         instructions_bg = self.canvas.create_rectangle(
-            0, 0, screen_width, 80,
-            fill='black', stipple='gray50', tags='instructions'
+            20, 20, screen_width - 20, 100,
+            fill='#2C3E50', outline='#3498DB', width=2, tags='instructions'
         )
 
-        # Texte principal
+        # Texte principal avec style moderne
         self.canvas.create_text(
-            screen_width // 2, 25,
-            text="Cliquez et glissez pour sélectionner une zone à capturer",
-            fill='white',
+            screen_width // 2, 45,
+            text="🎯 Cliquez et glissez pour révéler et sélectionner une zone à capturer",
+            fill='#ECF0F1',
             font=('Segoe UI', 16, 'bold'),
             tags='instructions'
         )
 
         # Instructions supplémentaires
         self.canvas.create_text(
-            screen_width // 2, 55,
-            text="Entrée/Espace = Capturer • Échap = Annuler",
-            fill='lightgray',
-            font=('Segoe UI', 12),
+            screen_width // 2, 75,
+            text="✨ Entrée/Espace = Capturer • Échap = Annuler • La zone sélectionnée révèle l'image originale",
+            fill='#BDC3C7',
+            font=('Segoe UI', 11),
             tags='instructions'
         )
 
@@ -189,19 +202,21 @@ class AreaSelector:
         self.start_y = event.y
         self.selecting = True
 
-        # Supprime l'ancien rectangle s'il existe
-        self.canvas.delete('selection')
+        # Supprime l'ancienne sélection
+        self._clear_selection()
 
         # Supprime les instructions
         self.canvas.delete('instructions')
 
+        self.logger.debug(f"Début sélection à ({event.x}, {event.y})")
+
     def _on_drag(self, event):
-        """Pendant le glissement de la souris"""
+        """Pendant le glissement - révèle l'image originale dans la zone sélectionnée"""
         if not self.selecting:
             return
 
-        # Supprime l'ancien rectangle
-        self.canvas.delete('selection')
+        # Supprime l'ancienne sélection
+        self._clear_selection()
 
         # Calcule les coordonnées
         x1, y1 = self.start_x, self.start_y
@@ -211,45 +226,100 @@ class AreaSelector:
         min_x, max_x = min(x1, x2), max(x1, x2)
         min_y, max_y = min(y1, y2), max(y1, y2)
 
-        # Crée le rectangle de sélection
-        self.canvas.create_rectangle(
-            min_x, min_y, max_x, max_y,
-            outline=self.selection_color,
-            width=self.selection_width,
-            tags='selection'
-        )
-
-        # Affiche les dimensions
         width = max_x - min_x
         height = max_y - min_y
 
-        if width > 10 and height > 10:  # Seulement si assez grand
-            # Info sur les dimensions
-            info_text = f"{width} × {height} pixels"
-            self.canvas.create_text(
-                min_x + width // 2, min_y - 20,
-                text=info_text,
-                fill='white',
-                font=('Segoe UI', 12, 'bold'),
-                tags='selection'
+        if width > 5 and height > 5:
+            # Révèle l'image originale dans la zone sélectionnée
+            self._reveal_selection_area(min_x, min_y, width, height)
+
+            # Crée le rectangle de sélection avec style moderne
+            self.canvas.create_rectangle(
+                min_x, min_y, max_x, max_y,
+                outline=self.selection_color,
+                width=self.selection_width,
+                tags='selection_border'
             )
 
-            # Coins de sélection pour clarté
-            corner_size = 6
-            # Coin supérieur gauche
+            # Affiche les dimensions avec style
+            self._show_selection_info(min_x, min_y, width, height)
+
+            # Coins de sélection modernes
+            self._draw_selection_corners(min_x, min_y, max_x, max_y)
+
+    def _reveal_selection_area(self, x: int, y: int, width: int, height: int):
+        """Révèle l'image originale dans la zone sélectionnée"""
+        try:
+            # Crée un crop de l'image originale pour la zone sélectionnée
+            selection_crop = self.frozen_screenshot.crop((x, y, x + width, y + height))
+
+            # Convertit en image Tkinter
+            tk_selection = ImageTk.PhotoImage(selection_crop, master=self.root)
+
+            # Affiche la zone révélée par-dessus l'image assombrie
+            self.canvas.create_image(x, y, image=tk_selection, anchor=tk.NW, tags='revealed_area')
+
+            # Stocke la référence pour éviter le garbage collection
+            self.canvas.current_selection_image = tk_selection
+
+        except Exception as e:
+            self.logger.error(f"Erreur révélation zone: {e}")
+
+    def _show_selection_info(self, x: int, y: int, width: int, height: int):
+        """Affiche les informations de la sélection avec style moderne"""
+        # Fond pour les informations
+        info_y = max(y - 40, 10)  # Au-dessus de la sélection ou en haut si pas de place
+
+        info_bg = self.canvas.create_rectangle(
+            x + width // 2 - 80, info_y - 5,
+            x + width // 2 + 80, info_y + 25,
+            fill='#34495E', outline='#3498DB', width=1,
+            tags='selection_info'
+        )
+
+        # Texte des dimensions
+        info_text = f"📐 {width} × {height} pixels"
+        self.canvas.create_text(
+            x + width // 2, info_y + 10,
+            text=info_text,
+            fill='#ECF0F1',
+            font=('Segoe UI', 12, 'bold'),
+            tags='selection_info'
+        )
+
+    def _draw_selection_corners(self, min_x: int, min_y: int, max_x: int, max_y: int):
+        """Dessine les coins de sélection modernes"""
+        corner_size = 8
+        corner_thickness = 3
+
+        # Coins avec style moderne
+        corners = [
+            (min_x, min_y),  # Coin supérieur gauche
+            (max_x, min_y),  # Coin supérieur droit
+            (min_x, max_y),  # Coin inférieur gauche
+            (max_x, max_y),  # Coin inférieur droit
+        ]
+
+        for i, (cx, cy) in enumerate(corners):
+            # Carré central du coin
             self.canvas.create_rectangle(
-                min_x - corner_size, min_y - corner_size,
-                min_x + corner_size, min_y + corner_size,
-                fill='white', outline=self.selection_color, width=1,
-                tags='selection'
+                cx - corner_size//2, cy - corner_size//2,
+                cx + corner_size//2, cy + corner_size//2,
+                fill=self.corner_color, outline=self.selection_color,
+                width=corner_thickness, tags='selection_corners'
             )
-            # Coin inférieur droit
-            self.canvas.create_rectangle(
-                max_x - corner_size, max_y - corner_size,
-                max_x + corner_size, max_y + corner_size,
-                fill='white', outline=self.selection_color, width=1,
-                tags='selection'
-            )
+
+    def _clear_selection(self):
+        """Supprime tous les éléments de sélection"""
+        self.canvas.delete('selection_border')
+        self.canvas.delete('selection_info')
+        self.canvas.delete('selection_corners')
+        self.canvas.delete('revealed_area')
+        self.canvas.delete('confirmation')
+
+        # Libère l'image de sélection courante
+        if hasattr(self.canvas, 'current_selection_image'):
+            delattr(self.canvas, 'current_selection_image')
 
     def _on_release(self, event):
         """Fin de la sélection"""
@@ -270,50 +340,48 @@ class AreaSelector:
         height = max_y - min_y
 
         # Vérifie que la sélection est valide
-        if width > 5 and height > 5:
+        if width > 10 and height > 10:
             self.selected_area = (min_x, min_y, width, height)
             self._show_confirmation()
+            self.logger.info(f"Zone sélectionnée: {width}x{height} à ({min_x}, {min_y})")
         else:
             # Sélection trop petite, recommence
-            self.canvas.delete('selection')
+            self._clear_selection()
             self._show_instructions()
 
     def _on_mouse_move(self, event):
-        """Mouvement de la souris sans clic"""
-        pass  # Peut être étendu pour afficher des infos supplémentaires
+        """Mouvement de la souris sans clic - peut ajouter des effets de survol"""
+        pass
 
     def _show_confirmation(self):
-        """Affiche l'interface de confirmation"""
+        """Affiche l'interface de confirmation moderne"""
         if not self.selected_area:
             return
 
         x, y, w, h = self.selected_area
 
-        # Supprime les éléments de sélection précédents
-        self.canvas.delete('confirmation')
-
-        # Cadre de confirmation en bas de la sélection
-        confirm_y = y + h + 10
+        # Position pour la confirmation
+        confirm_y = y + h + 20
         screen_height = self.frozen_screenshot.size[1]
 
         # Ajuste si trop proche du bord
-        if confirm_y > screen_height - 60:
-            confirm_y = y - 40
+        if confirm_y > screen_height - 80:
+            confirm_y = max(y - 60, 10)
 
-        # Fond pour les boutons
+        # Fond moderne pour la confirmation
         self.canvas.create_rectangle(
-            x + w//2 - 120, confirm_y - 10,
-            x + w//2 + 120, confirm_y + 30,
-            fill='black', outline='white', width=1,
-            stipple='gray75', tags='confirmation'
+            x + w//2 - 200, confirm_y - 15,
+            x + w//2 + 200, confirm_y + 35,
+            fill='#27AE60', outline='#2ECC71', width=2,
+            tags='confirmation'
         )
 
-        # Instructions de confirmation
+        # Icône et texte de confirmation
         self.canvas.create_text(
             x + w//2, confirm_y + 10,
-            text="Entrée = Capturer • Échap = Annuler • Clic = Nouvelle sélection",
+            text="✨ Zone révélée ! Entrée = Capturer • Échap = Annuler • Clic = Nouvelle sélection",
             fill='white',
-            font=('Segoe UI', 11, 'bold'),
+            font=('Segoe UI', 12, 'bold'),
             tags='confirmation'
         )
 
@@ -321,43 +389,67 @@ class AreaSelector:
         """Confirme la sélection"""
         if self.selected_area:
             self.selection_confirmed = True
+            self.logger.info("Sélection confirmée par l'utilisateur")
             self.root.quit()
 
     def _cancel_selection(self, event=None):
         """Annule la sélection"""
         self.selected_area = None
         self.selection_confirmed = False
+        self.logger.info("Sélection annulée par l'utilisateur")
         self.root.quit()
 
     def _cleanup_selection_interface(self):
-        """Nettoie les ressources de l'interface"""
+        """Nettoie toutes les ressources de l'interface"""
         try:
             if self.root:
                 self.root.destroy()
                 self.root = None
 
-            # Libère l'image Tkinter
-            if self.tk_image:
-                del self.tk_image
-                self.tk_image = None
+            # Libère toutes les images Tkinter
+            if self.tk_image_dark:
+                if hasattr(self, 'canvas') and self.canvas:
+                    if hasattr(self.canvas, 'image_dark'):
+                        delattr(self.canvas, 'image_dark')
+                    if hasattr(self.canvas, 'image_original'):
+                        delattr(self.canvas, 'image_original')
+                    if hasattr(self.canvas, 'current_selection_image'):
+                        delattr(self.canvas, 'current_selection_image')
 
-            # Libère l'image figée
+                del self.tk_image_dark
+                self.tk_image_dark = None
+
+            if self.tk_image_original:
+                del self.tk_image_original
+                self.tk_image_original = None
+
+            # Libère les images PIL
             if self.frozen_screenshot:
                 del self.frozen_screenshot
                 self.frozen_screenshot = None
+
+            if self.darkened_screenshot:
+                del self.darkened_screenshot
+                self.darkened_screenshot = None
+
+            self.logger.info("Ressources de sélection nettoyées")
 
         except Exception as e:
             self.logger.error(f"Erreur nettoyage interface sélection: {e}")
 
 
 class ScreenshotManager:
-    """Gestionnaire principal des captures d'écran - VERSION CORRIGÉE"""
+    """Gestionnaire principal des captures d'écran avec protection contre les lancements multiples"""
 
     def __init__(self, settings_manager: SettingsManager, memory_manager: MemoryManager):
         self.logger = logging.getLogger(__name__)
         self.settings = settings_manager
         self.memory_manager = memory_manager
         self.app_detector = AppDetector()
+
+        # Protection contre les lancements multiples
+        self._area_selection_active = False
+        self._area_selection_lock = threading.Lock()
 
         # Configuration PyAutoGUI
         pyautogui.PAUSE = 0.1
@@ -382,7 +474,7 @@ class ScreenshotManager:
             'memory_usage_mb': 0
         }
 
-        self.logger.info("ScreenshotManager initialisé (version corrigée)")
+        self.logger.info("ScreenshotManager initialisé avec effets visuels et protection")
 
     def capture_fullscreen(self, save_path: Optional[str] = None,
                            folder_override: Optional[str] = None) -> Optional[str]:
@@ -471,12 +563,21 @@ class ScreenshotManager:
 
     def capture_area_selection(self, save_path: Optional[str] = None,
                                folder_override: Optional[str] = None) -> Optional[str]:
-        """Capture une zone sélectionnée par l'utilisateur avec interface FIGÉE"""
+        """Capture une zone sélectionnée avec protection contre les lancements multiples"""
+        # Protection contre les lancements multiples
+        with self._area_selection_lock:
+            if self._area_selection_active:
+                self.logger.warning("Sélection de zone déjà active, lancement ignoré")
+                self._notify_error("area", "Une sélection de zone est déjà en cours")
+                return None
+
+            self._area_selection_active = True
+
         try:
-            self.logger.info("Début capture zone sélectionnée avec arrière-plan figé")
+            self.logger.info("Début capture zone sélectionnée avec effets visuels")
             self._prepare_capture()
 
-            # Interface de sélection avec arrière-plan figé
+            # Interface de sélection avec effets visuels
             selector = AreaSelector()
             region = selector.select_area()
 
@@ -487,7 +588,7 @@ class ScreenshotManager:
             x, y, width, height = region
             self.logger.info(f"Zone sélectionnée: {x},{y} {width}x{height}")
 
-            # IMPORTANT: Petit délai pour que l'interface de sélection disparaisse complètement
+            # Délai pour que l'interface disparaisse complètement
             time.sleep(0.5)
 
             # Délai configurable additionnel
@@ -495,7 +596,7 @@ class ScreenshotManager:
             if delay > 0:
                 time.sleep(delay)
 
-            # Capture de la région sélectionnée sur l'écran RÉEL (pas l'image figée)
+            # Capture de la région sélectionnée sur l'écran RÉEL
             with self._memory_optimized_capture():
                 screenshot = pyautogui.screenshot(region=(x, y, width, height))
 
@@ -513,6 +614,12 @@ class ScreenshotManager:
             self._update_stats(False)
             self._notify_error("area", str(e))
             return None
+
+        finally:
+            # Libère le verrou dans tous les cas
+            with self._area_selection_lock:
+                self._area_selection_active = False
+            self.logger.debug("Verrou de sélection de zone libéré")
 
     def capture_app_direct(self, app_name: str, save_path: Optional[str] = None) -> Optional[str]:
         """Capture directe d'une application spécifique"""
@@ -536,6 +643,10 @@ class ScreenshotManager:
             self._update_stats(False)
             self._notify_error("direct", str(e))
             return None
+
+    def is_area_selection_active(self) -> bool:
+        """Vérifie si une sélection de zone est active"""
+        return self._area_selection_active
 
     def _prepare_capture(self):
         """Prépare l'environnement pour la capture"""
@@ -697,21 +808,19 @@ class ScreenshotManager:
 
     def _notify_capture_complete(self, capture_type: str, save_path: str,
                                  app_info: Optional[AppInfo] = None):
-        """Notifie la completion d'une capture - VERSION SÉCURISÉE"""
-        # Vérifie si l'application est encore active avant les callbacks
+        """Notifie la completion d'une capture"""
         if not self._app_active:
             self.logger.warning("Application fermée, callbacks ignorés")
             return
 
         for callback in self.capture_callbacks:
             try:
-                # Exécute le callback dans un thread séparé pour éviter les blocages
                 def safe_callback():
                     try:
-                        if self._app_active:  # Double vérification
+                        if self._app_active:
                             callback(capture_type, save_path, app_info)
                     except Exception as e:
-                        self.logger.error(f"Erreur callback capture sécurisé: {e}")
+                        self.logger.error(f"Erreur callback capture: {e}")
 
                 threading.Thread(target=safe_callback, daemon=True).start()
 
@@ -719,21 +828,19 @@ class ScreenshotManager:
                 self.logger.error(f"Erreur callback capture: {e}")
 
     def _notify_error(self, capture_type: str, error_message: str):
-        """Notifie une erreur de capture - VERSION SÉCURISÉE"""
-        # Vérifie si l'application est encore active avant les callbacks
+        """Notifie une erreur de capture"""
         if not self._app_active:
             self.logger.warning("Application fermée, callbacks d'erreur ignorés")
             return
 
         for callback in self.error_callbacks:
             try:
-                # Exécute le callback dans un thread séparé pour éviter les blocages
                 def safe_error_callback():
                     try:
-                        if self._app_active:  # Double vérification
+                        if self._app_active:
                             callback(capture_type, error_message)
                     except Exception as e:
-                        self.logger.error(f"Erreur callback erreur sécurisé: {e}")
+                        self.logger.error(f"Erreur callback erreur: {e}")
 
                 threading.Thread(target=safe_error_callback, daemon=True).start()
 
