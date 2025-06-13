@@ -6,13 +6,11 @@
     },
     "applications": {
         "app_folder_mapping": {
-            "Spotify.exe": "Spotify",
-            "python.exe": "python"
+            "Spotify.exe": "Spotify"
         },
         "monitored_apps": [
             "Spotify",
-            "Spotify.exe",
-            "python.exe"
+            "Spotify.exe"
         ]
     },
     "hotkeys": {

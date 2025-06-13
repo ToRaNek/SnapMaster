@@ -6,13 +6,11 @@
     },
     "applications": {
         "app_folder_mapping": {
-            "Spotify.exe": "Spotify",
-            "python.exe": "python"
+            "Spotify.exe": "Spotify"
         },
         "monitored_apps": [
             "Spotify",
-            "Spotify.exe",
-            "python.exe"
+            "Spotify.exe"
         ]
     },
     "hotkeys": {
@@ -22,7 +20,7 @@
         "quick_capture": "ctrl+shift+q"
     },
     "capture_settings": {
-        "image_format": "PNG",
+        "image_format": "JPEG",
         "image_quality": 100,
         "include_cursor": false,
         "auto_filename": true,

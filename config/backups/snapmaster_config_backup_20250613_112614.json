@@ -5,8 +5,13 @@
         "custom_folders": {}
     },
     "applications": {
-        "app_folder_mapping": {},
-        "monitored_apps": []
+        "app_folder_mapping": {
+            "Spotify.exe": "Spotify"
+        },
+        "monitored_apps": [
+            "Spotify",
+            "Spotify.exe"
+        ]
     },
     "hotkeys": {
         "fullscreen_capture": "ctrl+shift+f",
@@ -16,14 +21,14 @@
     },
     "capture_settings": {
         "image_format": "PNG",
-        "image_quality": 94,
+        "image_quality": 99,
         "include_cursor": false,
         "auto_filename": true,
         "filename_pattern": "Screenshot_%Y%m%d_%H%M%S",
         "delay_seconds": 0
     },
     "ui_settings": {
-        "theme": "dark",
+        "theme": "light",
         "show_notifications": true,
         "minimize_to_tray": true,
         "auto_start": false,
@@ -35,7 +40,7 @@
         "cleanup_interval_seconds": 30
     },
     "advanced": {
-        "debug_mode": false,
+        "debug_mode": true,
         "log_level": "INFO",
         "backup_settings": true
     }

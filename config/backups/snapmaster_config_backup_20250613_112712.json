@@ -6,13 +6,11 @@
     },
     "applications": {
         "app_folder_mapping": {
-            "Spotify.exe": "Spotify",
-            "python.exe": "python"
+            "Spotify.exe": "Spotify"
         },
         "monitored_apps": [
             "Spotify",
-            "Spotify.exe",
-            "python.exe"
+            "Spotify.exe"
         ]
     },
     "hotkeys": {
@@ -23,7 +21,7 @@
     },
     "capture_settings": {
         "image_format": "PNG",
-        "image_quality": 100,
+        "image_quality": 99,
         "include_cursor": false,
         "auto_filename": true,
         "filename_pattern": "Screenshot_%Y%m%d_%H%M%S",
@@ -34,7 +32,7 @@
         "show_notifications": true,
         "minimize_to_tray": true,
         "auto_start": false,
-        "language": "fr"
+        "language": "en"
     },
     "memory_settings": {
         "auto_cleanup": true,
