@@ -17,7 +17,7 @@
     },
     "hotkeys": {
         "fullscreen_capture": "ctrl+shift+f",
-        "window_capture": "ctrl+shift+w",
+        "window_capture": "shift+ctrl+r",
         "area_capture": "ctrl+shift+a",
         "quick_capture": "ctrl+shift+q"
     },
