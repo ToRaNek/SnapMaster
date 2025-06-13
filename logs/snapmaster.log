@@ -1,0 +1,115 @@
+2025-06-13 10:23:36,179 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 10:23:36,191 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 10:23:36,192 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 10:23:36,194 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 10:23:36,196 - config.settings - INFO - Fichier de configuration introuvable, utilisation des valeurs par défaut
+2025-06-13 10:23:36,200 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 10:23:36,200 - core.screenshot_manager - INFO - ScreenshotManager initialisé
+2025-06-13 10:23:36,201 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 10:23:36,201 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 10:23:36,202 - gui.main_window - INFO - SnapMasterGUI initialisé
+2025-06-13 10:23:36,202 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 10:23:37,489 - gui.main_window - ERROR - Erreur lancement GUI: name 'tk' is not defined
+2025-06-13 10:23:40,921 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 10:23:40,923 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 10:23:40,973 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:23:40,976 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: -0.9MB
+2025-06-13 10:23:40,980 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 10:23:45,988 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 10:23:45,988 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-13 10:24:07,934 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 10:24:07,936 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 10:24:07,937 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 10:24:07,940 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 10:24:07,942 - config.settings - INFO - Fichier de configuration introuvable, utilisation des valeurs par défaut
+2025-06-13 10:24:07,945 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 10:24:07,945 - core.screenshot_manager - INFO - ScreenshotManager initialisé
+2025-06-13 10:24:07,945 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 10:24:07,947 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 10:24:07,947 - gui.main_window - INFO - SnapMasterGUI initialisé
+2025-06-13 10:24:07,948 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 10:24:08,923 - gui.main_window - ERROR - Erreur lancement GUI: name 'tk' is not defined
+2025-06-13 10:24:12,973 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 10:24:12,973 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 10:24:12,999 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:24:13,000 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: -0.6MB
+2025-06-13 10:24:13,000 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 10:24:18,011 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 10:24:18,012 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-13 10:25:21,312 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 10:25:21,321 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 10:25:21,321 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 10:25:21,323 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 10:25:21,324 - config.settings - INFO - Fichier de configuration introuvable, utilisation des valeurs par défaut
+2025-06-13 10:25:21,326 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 10:25:21,326 - core.screenshot_manager - INFO - ScreenshotManager initialisé
+2025-06-13 10:25:21,327 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 10:25:21,327 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 10:25:21,327 - gui.main_window - INFO - SnapMasterGUI initialisé
+2025-06-13 10:25:21,328 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 10:25:22,824 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 10:25:23,063 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 10:25:23,065 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> ctrl+shift+w
+2025-06-13 10:25:23,065 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 10:25:23,065 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 10:25:23,067 - core.hotkey_manager - ERROR - Erreur surveillance modificateurs: ("Key 'right alt' is not mapped to any known key.", ValueError("Key name 'right alt' is not mapped to any known key."))
+2025-06-13 10:25:23,067 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 10:25:23,068 - gui.main_window - INFO - Hotkeys activés
+2025-06-13 10:25:23,102 - gui.main_window - INFO - Interface graphique démarrée
+2025-06-13 10:25:25,792 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 10:25:26,351 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 10:25:26,674 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 10:25:32,216 - core.screenshot_manager - INFO - Début capture directe app: python.exe
+2025-06-13 10:25:32,249 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:25:32,250 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 185, Mémoire libérée: -0.4MB
+2025-06-13 10:25:32,250 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 10:25:32,252 - core.screenshot_manager - INFO - Début capture fenêtre active
+2025-06-13 10:25:32,270 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:25:32,271 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: -0.0MB
+2025-06-13 10:25:32,271 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 10:25:33,201 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\python.exe_SnapMaster - Capture d'écran avancée_Screenshot_20250613_102532.png
+2025-06-13 10:25:33,221 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:25:33,222 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 10:26:08,203 - core.screenshot_manager - INFO - Début capture zone sélectionnée
+2025-06-13 10:26:08,233 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:26:08,234 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 14, Mémoire libérée: -0.0MB
+2025-06-13 10:26:08,235 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 10:26:13,992 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\area_selection_Screenshot_20250613_102613.png
+2025-06-13 10:26:14,019 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:26:14,020 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: 0.0MB
+2025-06-13 10:26:32,261 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 10:26:32,277 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 10:26:54,621 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:26:54,622 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 14, Mémoire libérée: 0.1MB
+2025-06-13 10:27:06,571 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:27:06,572 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: -0.0MB
+2025-06-13 10:27:08,158 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:27:08,159 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: -0.0MB
+2025-06-13 10:27:08,246 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 10:28:08,872 - core.screenshot_manager - INFO - Début capture directe app: python.exe
+2025-06-13 10:28:08,899 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:28:08,901 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: -0.0MB
+2025-06-13 10:28:08,901 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 10:28:08,903 - core.screenshot_manager - INFO - Début capture fenêtre active
+2025-06-13 10:28:08,931 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:28:08,932 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: 0.0MB
+2025-06-13 10:28:08,933 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 10:28:09,382 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\python.exe_SnapMaster - Capture d'écran avancée_Screenshot_20250613_102808.png
+2025-06-13 10:28:09,400 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:28:09,400 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: 0.0MB
+2025-06-13 10:28:19,280 - core.hotkey_manager - INFO - Hotkey supprimé: fullscreen_capture
+2025-06-13 10:28:19,281 - core.hotkey_manager - INFO - Hotkey supprimé: window_capture
+2025-06-13 10:28:19,281 - core.hotkey_manager - INFO - Hotkey supprimé: area_capture
+2025-06-13 10:28:19,282 - core.hotkey_manager - INFO - Hotkey supprimé: quick_capture
+2025-06-13 10:28:19,282 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 10:28:20,128 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 10:28:20,146 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:28:20,146 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 86, Mémoire libérée: 0.0MB
+2025-06-13 10:28:20,147 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 10:28:20,302 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 10:28:20,303 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 10:28:20,337 - core.memory_manager - ERROR - Erreur libération mémoire: Could not find module 'cache_clear' (or one of its dependencies). Try using the full path with constructor syntax.
+2025-06-13 10:28:20,338 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 6, Mémoire libérée: 0.0MB
+2025-06-13 10:28:20,338 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 10:28:21,382 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 10:28:21,382 - __main__ - INFO - SnapMaster fermé proprement
