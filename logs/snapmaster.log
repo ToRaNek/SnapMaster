@@ -430,3 +430,77 @@
 2025-06-13 16:36:06,889 - gui.main_window - INFO - Nettoyage terminé
 2025-06-13 16:36:11,891 - core.memory_manager - INFO - Surveillance mémoire arrêtée
 2025-06-13 16:36:11,891 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-13 16:45:22,029 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 16:45:22,030 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 16:45:22,030 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 16:45:22,032 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 16:45:22,033 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 16:45:22,034 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:45:22,035 - core.screenshot_manager - INFO - ScreenshotManager initialisé (version corrigée)
+2025-06-13 16:45:22,035 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 16:45:22,035 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 16:45:22,035 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 16:45:22,036 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 16:45:22,036 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 16:45:23,222 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 16:45:23,223 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 16:45:23,223 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 16:45:23,224 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 16:45:23,224 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 16:45:23,224 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 16:45:23,225 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 16:45:23,226 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 16:45:23,391 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 16:45:23,392 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 16:45:23,393 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 16:45:23,393 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 16:45:23,394 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 16:45:23,394 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 16:45:23,394 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 16:45:23,394 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 16:45:23,395 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 16:45:23,395 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 16:45:23,395 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 16:45:23,460 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 16:45:23,460 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 16:45:23,461 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 16:45:23,461 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 16:45:23,461 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 16:45:23,461 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 16:45:24,590 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec arrière-plan figé
+2025-06-13 16:45:24,604 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.0MB
+2025-06-13 16:45:24,604 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:45:24,605 - core.screenshot_manager - INFO - Début sélection de zone avec arrière-plan figé
+2025-06-13 16:45:24,605 - core.screenshot_manager - INFO - Capture de l'écran pour créer l'arrière-plan figé...
+2025-06-13 16:45:24,660 - core.screenshot_manager - INFO - Écran capturé: (1920, 1080)
+2025-06-13 16:45:24,787 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec arrière-plan figé
+2025-06-13 16:45:24,798 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:45:24,798 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:45:24,799 - core.screenshot_manager - INFO - Début sélection de zone avec arrière-plan figé
+2025-06-13 16:45:24,799 - core.screenshot_manager - INFO - Capture de l'écran pour créer l'arrière-plan figé...
+2025-06-13 16:45:24,859 - core.screenshot_manager - INFO - Écran capturé: (1920, 1080)
+2025-06-13 16:45:24,963 - core.screenshot_manager - ERROR - Erreur création interface sélection: image "pyimage1" doesn't exist
+2025-06-13 16:45:24,964 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-13 16:45:24,977 - core.screenshot_manager - ERROR - Erreur création interface sélection: image "pyimage2" doesn't exist
+2025-06-13 16:45:24,977 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-13 16:46:24,621 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 16:46:24,811 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 16:46:37,901 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec arrière-plan figé
+2025-06-13 16:46:37,922 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:46:37,922 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 16:46:37,923 - core.screenshot_manager - INFO - Début sélection de zone avec arrière-plan figé
+2025-06-13 16:46:37,924 - core.screenshot_manager - INFO - Capture de l'écran pour créer l'arrière-plan figé...
+2025-06-13 16:46:37,977 - core.screenshot_manager - INFO - Écran capturé: (1920, 1080)
+2025-06-13 16:46:38,085 - core.screenshot_manager - ERROR - Erreur création interface sélection: image "pyimage3" doesn't exist
+2025-06-13 16:46:38,085 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-13 16:47:37,930 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 16:47:53,516 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:47:54,132 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:47:54,142 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:47:54,143 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:47:54,246 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 16:47:54,247 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 16:47:54,274 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 16:47:54,274 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 16:47:59,296 - core.screenshot_manager - INFO - Application marquée comme inactive, callbacks désactivés
+2025-06-13 16:47:59,297 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
