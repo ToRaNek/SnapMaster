@@ -1,7 +1,7 @@
 # gui/main_window.py
 """
 Interface graphique principale pour SnapMaster avec thème bleu moderne
-Fenêtre principale avec tous les contrôles et paramètres - Version colorée
+Fenêtre principale avec tous les contrôles et paramètres - Version avec associations améliorées
 """
 
 import tkinter as tk
@@ -12,6 +12,9 @@ from pathlib import Path
 from typing import Optional, Dict, Any
 import sys
 import os
+import psutil
+import subprocess
+import platform
 
 # Imports des modules SnapMaster
 from config.settings import SettingsManager
@@ -1135,41 +1138,41 @@ class SnapMasterGUI:
             self._cleanup()
             self.root.destroy()
 
-    # Méthodes de gestion des associations
+    # MÉTHODES D'ASSOCIATION AMÉLIORÉES
     def _add_association(self):
-        """Ajoute une association application/dossier"""
+        """Ajoute une association application/dossier avec interface améliorée"""
         try:
-            # Dialogue pour saisir le nom de l'application
-            app_name = simpledialog.askstring("Nouvelle association",
-                                              "Nom de l'application (ex: notepad.exe):",
-                                              parent=self.root)
-            if not app_name:
-                return
+            # Crée la fenêtre de dialogue pour l'association
+            dialog = AdvancedAssociationDialog(self.root, self.settings)
+            result = dialog.show()
 
-            # Liste des dossiers disponibles
-            folders = ["default"] + list(self.settings.get_custom_folders().keys())
+            if result:
+                app_name, folder_path = result
 
-            # Dialogue pour choisir le dossier
-            folder_name = simpledialog.askstring("Dossier de destination",
-                                                 f"Nom du dossier pour '{app_name}':\n\nDossiers disponibles: {', '.join(folders)}",
-                                                 parent=self.root)
-            if not folder_name:
-                return
+                # Détermine le nom du dossier pour les paramètres
+                folder_name = self._get_folder_name_from_path(folder_path)
 
-            # Ajoute l'association
-            if self.settings.link_app_to_folder(app_name, folder_name):
-                self._update_associations_list()
-                self._update_status(f"✅ Association ajoutée: {app_name} → {folder_name}", self.colors['success'])
-                messagebox.showinfo("Succès", f"Association créée avec succès !\n\n{app_name} → {folder_name}")
-            else:
-                self._show_error("Erreur", "Impossible d'ajouter l'association")
+                # Ajoute le dossier personnalisé s'il n'existe pas déjà
+                if folder_path != self.settings.get_default_folder():
+                    self.settings.add_custom_folder(folder_name, folder_path)
+
+                # Crée l'association
+                if self.settings.link_app_to_folder(app_name, folder_name):
+                    self._update_associations_list()
+                    self._update_status(f"✅ Association ajoutée: {app_name} → {folder_name}", self.colors['success'])
+                    messagebox.showinfo("Succès",
+                                        f"Association créée avec succès !\n\n"
+                                        f"🎮 Application: {app_name}\n"
+                                        f"📁 Dossier: {folder_path}")
+                else:
+                    self._show_error("Erreur", "Impossible d'ajouter l'association")
 
         except Exception as e:
             self.logger.error(f"Erreur ajout association: {e}")
             self._show_error("Erreur", f"Erreur lors de l'ajout: {str(e)}")
 
     def _edit_association(self):
-        """Modifie une association existante"""
+        """Modifie une association existante avec interface améliorée"""
         try:
             selection = self.associations_tree.selection()
             if not selection:
@@ -1178,34 +1181,40 @@ class SnapMasterGUI:
 
             item = self.associations_tree.item(selection[0])
             current_app = item['values'][0]
-            current_folder = item['values'][1]
+            current_folder_display = item['values'][1]
 
-            # Dialogue pour modifier l'application
-            new_app = simpledialog.askstring("Modifier association",
-                                             f"Modifier le nom de l'application:",
-                                             initialvalue=current_app,
-                                             parent=self.root)
-            if not new_app:
-                return
+            # Récupère le chemin réel du dossier
+            current_folder_path = self._get_folder_path_from_display(current_folder_display)
 
-            # Liste des dossiers disponibles
-            folders = ["default"] + list(self.settings.get_custom_folders().keys())
+            # Crée la fenêtre de dialogue avec les valeurs actuelles
+            dialog = AdvancedAssociationDialog(self.root, self.settings, current_app, current_folder_path)
+            result = dialog.show()
 
-            # Dialogue pour modifier le dossier
-            new_folder = simpledialog.askstring("Modifier dossier",
-                                                f"Nouveau dossier pour '{new_app}':\n\nDossiers disponibles: {', '.join(folders)}",
-                                                initialvalue=current_folder if current_folder in folders else "default",
-                                                parent=self.root)
-            if not new_folder:
-                return
+            if result:
+                new_app_name, new_folder_path = result
 
-            # Met à jour l'association
-            if self.settings.link_app_to_folder(new_app, new_folder):
-                self._update_associations_list()
-                self._update_status(f"✅ Association modifiée: {new_app} → {new_folder}", self.colors['success'])
-                messagebox.showinfo("Succès", f"Association modifiée avec succès !\n\n{new_app} → {new_folder}")
-            else:
-                self._show_error("Erreur", "Impossible de modifier l'association")
+                # Détermine le nom du dossier pour les paramètres
+                new_folder_name = self._get_folder_name_from_path(new_folder_path)
+
+                # Ajoute le dossier personnalisé s'il n'existe pas déjà
+                if new_folder_path != self.settings.get_default_folder():
+                    self.settings.add_custom_folder(new_folder_name, new_folder_path)
+
+                # Supprime l'ancienne association si le nom d'app a changé
+                if new_app_name != current_app:
+                    if current_app in self.settings.config['applications']['app_folder_mapping']:
+                        del self.settings.config['applications']['app_folder_mapping'][current_app]
+
+                # Met à jour l'association
+                if self.settings.link_app_to_folder(new_app_name, new_folder_name):
+                    self._update_associations_list()
+                    self._update_status(f"✅ Association modifiée: {new_app_name} → {new_folder_name}", self.colors['success'])
+                    messagebox.showinfo("Succès",
+                                        f"Association modifiée avec succès !\n\n"
+                                        f"🎮 Application: {new_app_name}\n"
+                                        f"📁 Dossier: {new_folder_path}")
+                else:
+                    self._show_error("Erreur", "Impossible de modifier l'association")
 
         except Exception as e:
             self.logger.error(f"Erreur modification association: {e}")
@@ -1275,6 +1284,29 @@ class SnapMasterGUI:
 
         except Exception as e:
             self.logger.error(f"Erreur mise à jour associations: {e}")
+
+    def _get_folder_name_from_path(self, folder_path: str) -> str:
+        """Récupère le nom du dossier à partir du chemin"""
+        if folder_path == self.settings.get_default_folder():
+            return "default"
+
+        # Utilise le nom du dossier comme nom
+        folder_name = Path(folder_path).name
+        if not folder_name:
+            folder_name = "CustomFolder"
+
+        return folder_name
+
+    def _get_folder_path_from_display(self, folder_display: str) -> str:
+        """Récupère le chemin réel à partir de l'affichage"""
+        if "par défaut" in folder_display:
+            return self.settings.get_default_folder()
+
+        # Extrait le nom du dossier de l'affichage
+        folder_name = folder_display.replace("📁 ", "").split(" (")[0]
+        custom_folders = self.settings.get_custom_folders()
+
+        return custom_folders.get(folder_name, self.settings.get_default_folder())
 
     # Méthodes à implémenter (stubs pour éviter les erreurs)
     def _open_screenshots_folder(self):
@@ -1444,3 +1476,684 @@ class SnapMasterGUI:
                 self.root.iconbitmap(str(icon_path))
         except Exception:
             pass
+
+
+class AdvancedAssociationDialog:
+    """Dialogue avancé pour ajouter/modifier une association avec liste d'applications et explorateur"""
+
+    def __init__(self, parent, settings_manager: SettingsManager, app_name: str = "", folder_path: str = ""):
+        self.parent = parent
+        self.settings = settings_manager
+        self.initial_app_name = app_name
+        self.initial_folder_path = folder_path or settings_manager.get_default_folder()
+
+        self.result = None
+        self.window = None
+
+        # Variables d'interface
+        self.selected_app_name = tk.StringVar(value=app_name)
+        self.selected_folder_path = tk.StringVar(value=self.initial_folder_path)
+
+        # Liste des applications
+        self.running_apps = []
+        self.all_processes = []
+
+        # Widgets
+        self.apps_listbox = None
+        self.search_var = tk.StringVar()
+        self.search_var.trace('w', self._filter_apps)
+
+    def show(self):
+        """Affiche le dialogue et retourne le résultat"""
+        self._create_dialog()
+        self._load_applications()
+        self.window.wait_window()
+        return self.result
+
+    def _create_dialog(self):
+        """Crée la fenêtre de dialogue avancée"""
+        self.window = tk.Toplevel(self.parent)
+        self.window.title("🔗 Nouvelle association Application → Dossier")
+        self.window.geometry("800x600")
+        self.window.resizable(True, True)
+        self.window.transient(self.parent)
+        self.window.grab_set()
+
+        # Configuration de la fenêtre
+        self.window.configure(bg='#1a202c')
+
+        # Centre le dialogue
+        self._center_dialog()
+
+        # Création de l'interface
+        self._create_header()
+        self._create_app_selection_section()
+        self._create_folder_selection_section()
+        self._create_buttons()
+
+    def _center_dialog(self):
+        """Centre le dialogue sur l'écran parent"""
+        self.window.update_idletasks()
+        width = self.window.winfo_width()
+        height = self.window.winfo_height()
+
+        parent_x = self.parent.winfo_x()
+        parent_y = self.parent.winfo_y()
+        parent_width = self.parent.winfo_width()
+        parent_height = self.parent.winfo_height()
+
+        x = parent_x + (parent_width // 2) - (width // 2)
+        y = parent_y + (parent_height // 2) - (height // 2)
+
+        self.window.geometry(f"{width}x{height}+{x}+{y}")
+
+    def _create_header(self):
+        """Crée l'en-tête du dialogue"""
+        header_frame = tk.Frame(self.window, bg='#1e3a8a', height=80)
+        header_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+        header_frame.pack_propagate(False)
+
+        # Titre principal
+        title_label = tk.Label(header_frame,
+                               text="🔗 Association Application → Dossier",
+                               bg='#1e3a8a',
+                               fg='white',
+                               font=('Segoe UI', 18, 'bold'))
+        title_label.pack(expand=True, pady=15)
+
+        # Sous-titre
+        subtitle = "Modifiez" if self.initial_app_name else "Créez une nouvelle"
+        subtitle_label = tk.Label(header_frame,
+                                  text=f"{subtitle} association pour capturer automatiquement dans le bon dossier",
+                                  bg='#1e3a8a',
+                                  fg='#60a5fa',
+                                  font=('Segoe UI', 11))
+        subtitle_label.pack()
+
+    def _create_app_selection_section(self):
+        """Crée la section de sélection d'application"""
+        # Frame principal pour la sélection d'app
+        app_frame = tk.LabelFrame(self.window,
+                                  text="🎮 Sélection de l'application",
+                                  bg='#1a202c',
+                                  fg='#3b82f6',
+                                  font=('Segoe UI', 12, 'bold'),
+                                  relief='flat',
+                                  bd=2)
+        app_frame.pack(fill=tk.BOTH, expand=True, padx=15, pady=10)
+
+        # Zone de recherche
+        search_frame = tk.Frame(app_frame, bg='#1a202c')
+        search_frame.pack(fill=tk.X, padx=10, pady=10)
+
+        tk.Label(search_frame,
+                 text="🔍 Rechercher une application:",
+                 bg='#1a202c',
+                 fg='white',
+                 font=('Segoe UI', 10, 'bold')).pack(anchor=tk.W)
+
+        search_entry = tk.Entry(search_frame,
+                                textvariable=self.search_var,
+                                bg='#2d3748',
+                                fg='white',
+                                font=('Segoe UI', 11),
+                                relief='flat',
+                                bd=5)
+        search_entry.pack(fill=tk.X, pady=(5, 0))
+
+        # Liste des applications avec onglets
+        apps_notebook = ttk.Notebook(app_frame)
+        apps_notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        # Onglet applications en cours
+        running_frame = tk.Frame(apps_notebook, bg='#1a202c')
+        apps_notebook.add(running_frame, text="🔴 Applications en cours")
+
+        self.running_listbox = tk.Listbox(running_frame,
+                                          bg='#2d3748',
+                                          fg='white',
+                                          selectbackground='#3b82f6',
+                                          font=('Segoe UI', 10),
+                                          relief='flat',
+                                          bd=0)
+
+        running_scrollbar = tk.Scrollbar(running_frame, orient=tk.VERTICAL)
+        self.running_listbox.configure(yscrollcommand=running_scrollbar.set)
+        running_scrollbar.configure(command=self.running_listbox.yview)
+
+        self.running_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        running_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        # Onglet tous les processus
+        all_frame = tk.Frame(apps_notebook, bg='#1a202c')
+        apps_notebook.add(all_frame, text="📋 Tous les processus")
+
+        self.all_listbox = tk.Listbox(all_frame,
+                                      bg='#2d3748',
+                                      fg='white',
+                                      selectbackground='#3b82f6',
+                                      font=('Segoe UI', 10),
+                                      relief='flat',
+                                      bd=0)
+
+        all_scrollbar = tk.Scrollbar(all_frame, orient=tk.VERTICAL)
+        self.all_listbox.configure(yscrollcommand=all_scrollbar.set)
+        all_scrollbar.configure(command=self.all_listbox.yview)
+
+        self.all_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        all_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        # Boutons pour sélection alternative
+        alt_buttons_frame = tk.Frame(app_frame, bg='#1a202c')
+        alt_buttons_frame.pack(fill=tk.X, padx=10, pady=(0, 10))
+
+        # Bouton pour parcourir un exécutable
+        browse_exe_btn = tk.Button(alt_buttons_frame,
+                                   text="📂 Parcourir un exécutable...",
+                                   command=self._browse_executable,
+                                   bg='#f59e0b',
+                                   fg='white',
+                                   font=('Segoe UI', 10, 'bold'),
+                                   relief='flat',
+                                   bd=0,
+                                   padx=15,
+                                   pady=8)
+        browse_exe_btn.pack(side=tk.LEFT, padx=5)
+
+        # Bouton pour saisie manuelle
+        manual_btn = tk.Button(alt_buttons_frame,
+                               text="✏️ Saisie manuelle...",
+                               command=self._manual_entry,
+                               bg='#6b7280',
+                               fg='white',
+                               font=('Segoe UI', 10, 'bold'),
+                               relief='flat',
+                               bd=0,
+                               padx=15,
+                               pady=8)
+        manual_btn.pack(side=tk.LEFT, padx=5)
+
+        # Affichage de l'application sélectionnée
+        selection_frame = tk.Frame(app_frame, bg='#374151', relief='flat', bd=2)
+        selection_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+
+        tk.Label(selection_frame,
+                 text="🎯 Application sélectionnée:",
+                 bg='#374151',
+                 fg='#10b981',
+                 font=('Segoe UI', 10, 'bold')).pack(anchor=tk.W, padx=10, pady=(10, 5))
+
+        self.selected_app_label = tk.Label(selection_frame,
+                                           textvariable=self.selected_app_name,
+                                           bg='#374151',
+                                           fg='white',
+                                           font=('Segoe UI', 12, 'bold'))
+        self.selected_app_label.pack(anchor=tk.W, padx=10, pady=(0, 10))
+
+        # Bind des événements de sélection
+        self.running_listbox.bind('<<ListboxSelect>>', self._on_running_app_select)
+        self.all_listbox.bind('<<ListboxSelect>>', self._on_all_app_select)
+
+    def _create_folder_selection_section(self):
+        """Crée la section de sélection de dossier"""
+        folder_frame = tk.LabelFrame(self.window,
+                                     text="📁 Dossier de destination",
+                                     bg='#1a202c',
+                                     fg='#3b82f6',
+                                     font=('Segoe UI', 12, 'bold'),
+                                     relief='flat',
+                                     bd=2)
+        folder_frame.pack(fill=tk.X, padx=15, pady=10)
+
+        # Dossier sélectionné
+        folder_display_frame = tk.Frame(folder_frame, bg='#1a202c')
+        folder_display_frame.pack(fill=tk.X, padx=10, pady=10)
+
+        tk.Label(folder_display_frame,
+                 text="📂 Dossier sélectionné:",
+                 bg='#1a202c',
+                 fg='white',
+                 font=('Segoe UI', 10, 'bold')).pack(anchor=tk.W)
+
+        folder_entry = tk.Entry(folder_display_frame,
+                                textvariable=self.selected_folder_path,
+                                state='readonly',
+                                bg='#2d3748',
+                                fg='white',
+                                font=('Segoe UI', 11),
+                                relief='flat',
+                                bd=5)
+        folder_entry.pack(fill=tk.X, pady=(5, 0))
+
+        # Boutons de sélection de dossier
+        folder_buttons_frame = tk.Frame(folder_frame, bg='#1a202c')
+        folder_buttons_frame.pack(fill=tk.X, padx=10, pady=10)
+
+        # Bouton par défaut
+        default_btn = tk.Button(folder_buttons_frame,
+                                text="🏠 Dossier par défaut",
+                                command=self._select_default_folder,
+                                bg='#3b82f6',
+                                fg='white',
+                                font=('Segoe UI', 10, 'bold'),
+                                relief='flat',
+                                bd=0,
+                                padx=15,
+                                pady=8)
+        default_btn.pack(side=tk.LEFT, padx=5)
+
+        # Bouton parcourir
+        browse_folder_btn = tk.Button(folder_buttons_frame,
+                                      text="📂 Parcourir...",
+                                      command=self._browse_folder,
+                                      bg='#10b981',
+                                      fg='white',
+                                      font=('Segoe UI', 11, 'bold'),
+                                      relief='flat',
+                                      bd=0,
+                                      padx=20,
+                                      pady=8)
+        browse_folder_btn.pack(side=tk.RIGHT, padx=5)
+
+    def _create_buttons(self):
+        """Crée les boutons de contrôle"""
+        buttons_frame = tk.Frame(self.window, bg='#1a202c')
+        buttons_frame.pack(fill=tk.X, padx=15, pady=15)
+
+        # Bouton Annuler
+        cancel_btn = tk.Button(buttons_frame,
+                               text="❌ Annuler",
+                               command=self._cancel,
+                               bg='#ef4444',
+                               fg='white',
+                               font=('Segoe UI', 11, 'bold'),
+                               relief='flat',
+                               bd=0,
+                               padx=20,
+                               pady=10)
+        cancel_btn.pack(side=tk.RIGHT, padx=5)
+
+        # Bouton OK
+        ok_btn = tk.Button(buttons_frame,
+                           text="✅ Créer l'association",
+                           command=self._ok,
+                           bg='#10b981',
+                           fg='white',
+                           font=('Segoe UI', 11, 'bold'),
+                           relief='flat',
+                           bd=0,
+                           padx=20,
+                           pady=10)
+        ok_btn.pack(side=tk.RIGHT, padx=5)
+
+    def _load_applications(self):
+        """Charge la liste des applications en cours d'exécution"""
+        try:
+            # Applications en cours avec fenêtres (comme dans le gestionnaire des tâches)
+            self.running_apps = self._get_running_applications()
+
+            # Tous les processus
+            self.all_processes = self._get_all_processes()
+
+            # Remplit les listes
+            self._populate_running_list()
+            self._populate_all_list()
+
+            # Sélectionne l'app initiale si fournie
+            if self.initial_app_name:
+                self._select_initial_app()
+
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur lors du chargement des applications: {e}")
+
+    def _get_running_applications(self):
+        """Récupère les applications en cours avec fenêtres (équivalent Apps du gestionnaire des tâches)"""
+        running_apps = []
+
+        try:
+            if platform.system() == "Windows":
+                # Méthode Windows pour obtenir les apps avec fenêtres
+                running_apps = self._get_windows_applications()
+            else:
+                # Méthode générique pour Linux/macOS
+                running_apps = self._get_generic_applications()
+
+        except Exception as e:
+            print(f"Erreur récupération applications en cours: {e}")
+
+        return running_apps
+
+    def _get_windows_applications(self):
+        """Récupère les applications Windows avec fenêtres visibles"""
+        apps = []
+        seen_names = set()
+
+        try:
+            # Utilise PowerShell pour obtenir les processus avec fenêtres
+            cmd = ['powershell', '-Command',
+                   'Get-Process | Where-Object {$_.MainWindowTitle -ne ""} | Select-Object ProcessName, Id, MainWindowTitle, Path | ConvertTo-Json']
+
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
+
+            if result.returncode == 0 and result.stdout:
+                import json
+                try:
+                    processes = json.loads(result.stdout)
+                    if not isinstance(processes, list):
+                        processes = [processes]
+
+                    for proc in processes:
+                        name = proc.get('ProcessName', '')
+                        if name and name not in seen_names:
+                            apps.append({
+                                'name': name + '.exe' if not name.endswith('.exe') else name,
+                                'pid': proc.get('Id', 0),
+                                'title': proc.get('MainWindowTitle', ''),
+                                'path': proc.get('Path', ''),
+                                'is_running': True
+                            })
+                            seen_names.add(name)
+
+                except json.JSONDecodeError:
+                    pass
+
+        except Exception as e:
+            print(f"Erreur PowerShell: {e}")
+
+        # Fallback avec psutil
+        if not apps:
+            apps = self._get_psutil_applications()
+
+        return sorted(apps, key=lambda x: x['name'].lower())
+
+    def _get_psutil_applications(self):
+        """Récupère les applications avec psutil (fallback)"""
+        apps = []
+        seen_names = set()
+
+        try:
+            for proc in psutil.process_iter(['pid', 'name', 'exe']):
+                try:
+                    proc_info = proc.info
+                    name = proc_info['name']
+
+                    if name and name not in seen_names:
+                        # Filtre les processus système courants
+                        if not self._is_system_process(name):
+                            apps.append({
+                                'name': name,
+                                'pid': proc_info['pid'],
+                                'title': '',
+                                'path': proc_info.get('exe', ''),
+                                'is_running': True
+                            })
+                            seen_names.add(name)
+
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    continue
+
+        except Exception as e:
+            print(f"Erreur psutil: {e}")
+
+        return sorted(apps, key=lambda x: x['name'].lower())
+
+    def _get_generic_applications(self):
+        """Récupère les applications génériques (Linux/macOS)"""
+        apps = []
+        seen_names = set()
+
+        try:
+            for proc in psutil.process_iter(['pid', 'name', 'exe']):
+                try:
+                    proc_info = proc.info
+                    name = proc_info['name']
+
+                    if name and name not in seen_names and not self._is_system_process(name):
+                        apps.append({
+                            'name': name,
+                            'pid': proc_info['pid'],
+                            'title': '',
+                            'path': proc_info.get('exe', ''),
+                            'is_running': True
+                        })
+                        seen_names.add(name)
+
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    continue
+
+        except Exception as e:
+            print(f"Erreur applications génériques: {e}")
+
+        return sorted(apps, key=lambda x: x['name'].lower())
+
+    def _get_all_processes(self):
+        """Récupère tous les processus système"""
+        processes = []
+
+        try:
+            for proc in psutil.process_iter(['pid', 'name', 'exe']):
+                try:
+                    proc_info = proc.info
+                    name = proc_info['name']
+
+                    if name:
+                        processes.append({
+                            'name': name,
+                            'pid': proc_info['pid'],
+                            'title': '',
+                            'path': proc_info.get('exe', ''),
+                            'is_running': True
+                        })
+
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    continue
+
+        except Exception as e:
+            print(f"Erreur récupération processus: {e}")
+
+        return sorted(processes, key=lambda x: x['name'].lower())
+
+    def _is_system_process(self, process_name: str) -> bool:
+        """Vérifie si un processus est un processus système à exclure"""
+        system_processes = {
+            'system', 'registry', 'smss.exe', 'csrss.exe', 'wininit.exe',
+            'winlogon.exe', 'services.exe', 'lsass.exe', 'svchost.exe',
+            'dllhost.exe', 'conhost.exe', 'dwm.exe', 'explorer.exe',
+            'spoolsv.exe', 'taskhostw.exe', 'runtimebroker.exe',
+            'searchindexer.exe', 'audiodg.exe', 'fontdrvhost.exe',
+            'kthreadd', 'ksoftirqd', 'migration', 'rcu_gp', 'rcu_par_gp',
+            'systemd', 'kernel', 'init'
+        }
+
+        return process_name.lower() in system_processes
+
+    def _populate_running_list(self):
+        """Remplit la liste des applications en cours"""
+        self.running_listbox.delete(0, tk.END)
+
+        for app in self.running_apps:
+            display_text = f"🎮 {app['name']}"
+            if app['title']:
+                display_text += f" - {app['title'][:50]}"
+
+            self.running_listbox.insert(tk.END, display_text)
+
+    def _populate_all_list(self):
+        """Remplit la liste de tous les processus"""
+        self.all_listbox.delete(0, tk.END)
+
+        for proc in self.all_processes:
+            display_text = f"⚙️ {proc['name']} (PID: {proc['pid']})"
+            self.all_listbox.insert(tk.END, display_text)
+
+    def _filter_apps(self, *args):
+        """Filtre les applications selon la recherche"""
+        search_term = self.search_var.get().lower()
+
+        # Filtre les applications en cours
+        self.running_listbox.delete(0, tk.END)
+        for app in self.running_apps:
+            if search_term in app['name'].lower() or search_term in app.get('title', '').lower():
+                display_text = f"🎮 {app['name']}"
+                if app['title']:
+                    display_text += f" - {app['title'][:50]}"
+                self.running_listbox.insert(tk.END, display_text)
+
+        # Filtre tous les processus
+        self.all_listbox.delete(0, tk.END)
+        for proc in self.all_processes:
+            if search_term in proc['name'].lower():
+                display_text = f"⚙️ {proc['name']} (PID: {proc['pid']})"
+                self.all_listbox.insert(tk.END, display_text)
+
+    def _on_running_app_select(self, event):
+        """Gère la sélection d'une application en cours"""
+        selection = self.running_listbox.curselection()
+        if selection:
+            index = selection[0]
+            if index < len(self.running_apps):
+                app = self.running_apps[index]
+                self.selected_app_name.set(app['name'])
+                # Désélectionne l'autre liste
+                self.all_listbox.selection_clear(0, tk.END)
+
+    def _on_all_app_select(self, event):
+        """Gère la sélection d'un processus"""
+        selection = self.all_listbox.curselection()
+        if selection:
+            index = selection[0]
+            if index < len(self.all_processes):
+                proc = self.all_processes[index]
+                self.selected_app_name.set(proc['name'])
+                # Désélectionne l'autre liste
+                self.running_listbox.selection_clear(0, tk.END)
+
+    def _browse_executable(self):
+        """Parcourt pour sélectionner un fichier exécutable"""
+        try:
+            file_types = [
+                ("Fichiers exécutables", "*.exe"),
+                ("Tous les fichiers", "*.*")
+            ]
+
+            if platform.system() != "Windows":
+                file_types = [
+                    ("Fichiers exécutables", "*"),
+                    ("Tous les fichiers", "*.*")
+                ]
+
+            filename = filedialog.askopenfilename(
+                title="Sélectionner un fichier exécutable",
+                filetypes=file_types,
+                parent=self.window
+            )
+
+            if filename:
+                app_name = Path(filename).name
+                self.selected_app_name.set(app_name)
+                # Désélectionne les listes
+                self.running_listbox.selection_clear(0, tk.END)
+                self.all_listbox.selection_clear(0, tk.END)
+
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur lors de la sélection: {e}", parent=self.window)
+
+    def _manual_entry(self):
+        """Permet la saisie manuelle du nom d'application"""
+        try:
+            from tkinter import simpledialog
+
+            app_name = simpledialog.askstring(
+                "Saisie manuelle",
+                "Nom de l'application (ex: notepad.exe, chrome.exe):",
+                initialvalue=self.selected_app_name.get(),
+                parent=self.window
+            )
+
+            if app_name and app_name.strip():
+                self.selected_app_name.set(app_name.strip())
+                # Désélectionne les listes
+                self.running_listbox.selection_clear(0, tk.END)
+                self.all_listbox.selection_clear(0, tk.END)
+
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur lors de la saisie: {e}", parent=self.window)
+
+    def _select_default_folder(self):
+        """Sélectionne le dossier par défaut"""
+        default_folder = self.settings.get_default_folder()
+        self.selected_folder_path.set(default_folder)
+
+    def _browse_folder(self):
+        """Parcourt pour sélectionner un dossier"""
+        try:
+            folder = filedialog.askdirectory(
+                title="Sélectionner le dossier de destination",
+                initialdir=self.selected_folder_path.get(),
+                parent=self.window
+            )
+
+            if folder:
+                self.selected_folder_path.set(folder)
+
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur lors de la sélection du dossier: {e}", parent=self.window)
+
+    def _select_initial_app(self):
+        """Sélectionne l'application initiale dans les listes"""
+        try:
+            # Cherche dans les applications en cours
+            for i, app in enumerate(self.running_apps):
+                if app['name'] == self.initial_app_name:
+                    self.running_listbox.selection_set(i)
+                    self.running_listbox.see(i)
+                    return
+
+            # Cherche dans tous les processus
+            for i, proc in enumerate(self.all_processes):
+                if proc['name'] == self.initial_app_name:
+                    self.all_listbox.selection_set(i)
+                    self.all_listbox.see(i)
+                    return
+
+        except Exception as e:
+            print(f"Erreur sélection app initiale: {e}")
+
+    def _validate_selection(self):
+        """Valide la sélection actuelle"""
+        app_name = self.selected_app_name.get().strip()
+        folder_path = self.selected_folder_path.get().strip()
+
+        if not app_name:
+            messagebox.showerror("Erreur", "Veuillez sélectionner une application", parent=self.window)
+            return False
+
+        if not folder_path:
+            messagebox.showerror("Erreur", "Veuillez sélectionner un dossier", parent=self.window)
+            return False
+
+        if not Path(folder_path).exists():
+            # Demande confirmation pour créer le dossier
+            if messagebox.askyesno("Dossier introuvable",
+                                   f"Le dossier n'existe pas:\n{folder_path}\n\nVoulez-vous le créer?",
+                                   parent=self.window):
+                try:
+                    Path(folder_path).mkdir(parents=True, exist_ok=True)
+                except Exception as e:
+                    messagebox.showerror("Erreur", f"Impossible de créer le dossier:\n{e}", parent=self.window)
+                    return False
+            else:
+                return False
+
+        return True
+
+    def _ok(self):
+        """Confirme la sélection"""
+        if self._validate_selection():
+            self.result = (self.selected_app_name.get().strip(), self.selected_folder_path.get().strip())
+            self.window.destroy()
+
+    def _cancel(self):
+        """Annule la sélection"""
+        self.result = None
+        self.window.destroy()

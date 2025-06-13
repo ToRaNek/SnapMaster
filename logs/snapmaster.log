@@ -888,3 +888,270 @@
 2025-06-13 18:23:54,336 - gui.main_window - INFO - Nettoyage terminé
 2025-06-13 18:23:59,363 - core.screenshot_manager - INFO - Application marquée comme inactive, callbacks désactivés
 2025-06-13 18:23:59,364 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:05:07,618 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 23:05:07,620 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 23:05:07,620 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 23:05:07,622 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 23:05:07,624 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 23:05:07,626 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 23:05:07,626 - core.screenshot_manager - INFO - ScreenshotManager initialisé avec capture de fenêtre corrigée
+2025-06-13 23:05:07,627 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 23:05:07,627 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 23:05:07,627 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 23:05:07,628 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 23:05:07,628 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 23:05:09,229 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 23:05:09,229 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 23:05:09,230 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 23:05:09,230 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 23:05:09,230 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 23:05:09,231 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 23:05:09,232 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 23:05:09,232 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 23:05:09,421 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 23:05:09,421 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 23:05:09,422 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 23:05:09,423 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 23:05:09,424 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 23:05:09,424 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 23:05:09,424 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 23:05:09,425 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 23:05:09,425 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 23:05:09,426 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 23:05:09,426 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 23:05:09,541 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 23:05:09,541 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 23:05:09,542 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 23:05:09,542 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 23:05:09,542 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 23:05:09,543 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 23:05:24,723 - core.screenshot_manager - INFO - Début capture directe app: Spotify.exe
+2025-06-13 23:05:24,753 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.0MB
+2025-06-13 23:05:24,753 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:05:24,757 - core.screenshot_manager - ERROR - Erreur capture directe Spotify.exe: Application Spotify.exe non active
+2025-06-13 23:05:30,696 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 23:05:31,729 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 23:05:31,741 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:05:31,741 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 23:05:31,889 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 23:05:31,889 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 23:05:31,944 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:05:31,945 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 23:05:36,955 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 23:05:36,956 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-13 23:05:36,974 - core.screenshot_manager - INFO - Application marquée comme inactive, callbacks désactivés
+2025-06-13 23:05:36,975 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:08:33,426 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-13 23:08:33,453 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-13 23:08:33,454 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-13 23:08:33,457 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-13 23:08:33,459 - config.settings - INFO - Configuration chargée avec succès
+2025-06-13 23:08:33,464 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 23:08:33,464 - core.screenshot_manager - INFO - ScreenshotManager initialisé avec capture de fenêtre corrigée
+2025-06-13 23:08:33,466 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-13 23:08:33,467 - core.app_detector - INFO - AppDetector initialisé pour Windows
+2025-06-13 23:08:33,468 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-13 23:08:33,468 - __main__ - INFO - Interface graphique initialisée
+2025-06-13 23:08:33,469 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-13 23:08:35,371 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-13 23:08:35,372 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-13 23:08:35,372 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-13 23:08:35,372 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-13 23:08:35,373 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-13 23:08:35,373 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-13 23:08:35,374 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-13 23:08:35,374 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-13 23:08:35,596 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-13 23:08:35,596 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-13 23:08:35,597 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-13 23:08:35,598 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-13 23:08:35,598 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-13 23:08:35,598 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-13 23:08:35,598 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-13 23:08:35,599 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-13 23:08:35,599 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-13 23:08:35,599 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-13 23:08:35,600 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-13 23:08:35,685 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-13 23:08:35,686 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-13 23:08:35,686 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-13 23:08:35,686 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-13 23:08:35,687 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-13 23:08:35,687 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-13 23:08:41,800 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 23:08:46,108 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 23:09:36,761 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 23:09:36,763 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 23:09:41,904 - core.screenshot_manager - INFO - Début capture directe app: Spotify.exe
+2025-06-13 23:09:41,934 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 81, Mémoire libérée: -0.0MB
+2025-06-13 23:09:41,934 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:09:41,936 - core.screenshot_manager - ERROR - Erreur capture directe Spotify.exe: Application Spotify.exe non active
+2025-06-13 23:10:04,437 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-13 23:10:04,455 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION CORRIGÉE
+2025-06-13 23:10:04,466 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:10:04,467 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:10:04,468 - core.screenshot_manager - INFO - Application détectée: Spotify.exe
+2025-06-13 23:10:04,468 - core.screenshot_manager - INFO - Coordonnées fenêtre: (0, 0, 0, 0)
+2025-06-13 23:10:04,477 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-13 23:10:04,477 - core.screenshot_manager - INFO - Tentative capture région: x=0, y=0, w=0, h=0
+2025-06-13 23:10:04,478 - core.screenshot_manager - WARNING - Coordonnées invalides: (0, 0, 0, 0)
+2025-06-13 23:10:04,493 - core.screenshot_manager - INFO - Capture GDI réussie: 1018x1020
+2025-06-13 23:10:04,494 - core.screenshot_manager - INFO - Capture Windows native réussie
+2025-06-13 23:10:04,529 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Spotify\Spotify.exe_Spotify_Screenshot_20250613_231004.png
+2025-06-13 23:10:04,544 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:10:41,937 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 23:10:45,793 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 23:10:45,795 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 23:11:02,157 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-13 23:11:02,160 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec effets visuels
+2025-06-13 23:11:02,177 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 74, Mémoire libérée: 0.0MB
+2025-06-13 23:11:02,177 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:11:02,178 - core.screenshot_manager - INFO - Début sélection de zone avec effets visuels d'assombrissement
+2025-06-13 23:11:02,179 - core.screenshot_manager - INFO - Capture et préparation des images avec effets...
+2025-06-13 23:11:02,228 - core.screenshot_manager - INFO - Écran capturé: (1920, 1080)
+2025-06-13 23:11:02,242 - core.screenshot_manager - INFO - Version assombrie créée
+2025-06-13 23:11:02,731 - core.screenshot_manager - INFO - Interface de sélection créée avec effets visuels
+2025-06-13 23:11:04,472 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 23:11:07,073 - core.screenshot_manager - INFO - Zone sélectionnée: 492x367 à (697, 426)
+2025-06-13 23:11:07,568 - core.screenshot_manager - INFO - Sélection annulée par l'utilisateur
+2025-06-13 23:11:07,631 - core.screenshot_manager - INFO - Ressources de sélection nettoyées
+2025-06-13 23:11:07,631 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-13 23:11:09,101 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-13 23:11:09,103 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec effets visuels
+2025-06-13 23:11:09,115 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:11:09,116 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:11:09,116 - core.screenshot_manager - INFO - Début sélection de zone avec effets visuels d'assombrissement
+2025-06-13 23:11:09,116 - core.screenshot_manager - INFO - Capture et préparation des images avec effets...
+2025-06-13 23:11:09,156 - core.screenshot_manager - INFO - Écran capturé: (1920, 1080)
+2025-06-13 23:11:09,171 - core.screenshot_manager - INFO - Version assombrie créée
+2025-06-13 23:11:09,631 - core.screenshot_manager - INFO - Interface de sélection créée avec effets visuels
+2025-06-13 23:11:11,366 - core.screenshot_manager - INFO - Sélection annulée par l'utilisateur
+2025-06-13 23:11:11,424 - core.screenshot_manager - INFO - Ressources de sélection nettoyées
+2025-06-13 23:11:11,424 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-13 23:11:23,163 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-13 23:11:23,166 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION CORRIGÉE
+2025-06-13 23:11:23,181 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:11:23,181 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:11:23,183 - core.screenshot_manager - INFO - Application détectée: Discord.exe
+2025-06-13 23:11:23,183 - core.screenshot_manager - INFO - Coordonnées fenêtre: (0, 0, 0, 0)
+2025-06-13 23:11:23,184 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-13 23:11:23,185 - core.screenshot_manager - INFO - Tentative capture région: x=0, y=0, w=0, h=0
+2025-06-13 23:11:23,185 - core.screenshot_manager - WARNING - Coordonnées invalides: (0, 0, 0, 0)
+2025-06-13 23:11:23,235 - core.screenshot_manager - INFO - Capture GDI réussie: 1938x1038
+2025-06-13 23:11:23,236 - core.screenshot_manager - INFO - Capture Windows native réussie
+2025-06-13 23:11:23,272 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Discord\Discord.exe_#gnral _ La Team - Discord_Screenshot_20250613_231123.png
+2025-06-13 23:11:23,292 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:11:33,505 - core.memory_manager - WARNING - Seuil mémoire dépassé: 109.5MB > 108.0MB
+2025-06-13 23:11:33,526 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 23:11:45,632 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-13 23:11:48,183 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-13 23:11:52,766 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION CORRIGÉE
+2025-06-13 23:11:52,767 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION CORRIGÉE
+2025-06-13 23:11:52,801 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:11:52,833 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:11:52,834 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: -0.0MB
+2025-06-13 23:11:52,835 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:11:52,837 - core.screenshot_manager - INFO - Application détectée: Discord.exe
+2025-06-13 23:11:52,837 - core.screenshot_manager - INFO - Application détectée: Discord.exe
+2025-06-13 23:11:52,837 - core.screenshot_manager - INFO - Coordonnées fenêtre: (0, 0, 0, 0)
+2025-06-13 23:11:52,838 - core.screenshot_manager - INFO - Coordonnées fenêtre: (0, 0, 0, 0)
+2025-06-13 23:11:52,838 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-13 23:11:52,838 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-13 23:11:52,839 - core.screenshot_manager - INFO - Tentative capture région: x=0, y=0, w=0, h=0
+2025-06-13 23:11:52,840 - core.screenshot_manager - INFO - Tentative capture région: x=0, y=0, w=0, h=0
+2025-06-13 23:11:52,840 - core.screenshot_manager - WARNING - Coordonnées invalides: (0, 0, 0, 0)
+2025-06-13 23:11:52,840 - core.screenshot_manager - WARNING - Coordonnées invalides: (0, 0, 0, 0)
+2025-06-13 23:11:52,884 - core.screenshot_manager - INFO - Capture GDI réussie: 1938x1038
+2025-06-13 23:11:52,886 - core.screenshot_manager - INFO - Capture Windows native réussie
+2025-06-13 23:11:52,901 - core.screenshot_manager - INFO - Capture GDI réussie: 1938x1038
+2025-06-13 23:11:52,903 - core.screenshot_manager - INFO - Capture Windows native réussie
+2025-06-13 23:11:52,933 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Discord\Discord.exe_#gnral _ La Team - Discord_Screenshot_20250613_231152.png
+2025-06-13 23:11:52,972 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: -0.0MB
+2025-06-13 23:11:52,973 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Discord\Discord.exe_#gnral _ La Team - Discord_Screenshot_20250613_231152_1.png
+2025-06-13 23:11:53,011 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 7.7MB
+2025-06-13 23:12:00,321 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-13 23:12:00,323 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION CORRIGÉE
+2025-06-13 23:12:00,348 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 23:12:00,348 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:12:00,349 - core.screenshot_manager - INFO - Application détectée: python.exe
+2025-06-13 23:12:00,350 - core.screenshot_manager - INFO - Coordonnées fenêtre: (0, 0, 0, 0)
+2025-06-13 23:12:00,350 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-13 23:12:00,351 - core.screenshot_manager - INFO - Tentative capture région: x=0, y=0, w=0, h=0
+2025-06-13 23:12:00,351 - core.screenshot_manager - WARNING - Coordonnées invalides: (0, 0, 0, 0)
+2025-06-13 23:12:00,415 - core.screenshot_manager - INFO - Capture GDI réussie: 1938x1038
+2025-06-13 23:12:00,417 - core.screenshot_manager - INFO - Capture Windows native réussie
+2025-06-13 23:12:00,534 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\python.exe_ SnapMaster - Capture d'cran avance_Screenshot_20250613_231200.png
+2025-06-13 23:12:00,549 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:12:02,182 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 23:12:09,130 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 23:12:23,189 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 23:12:31,979 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-13 23:12:31,980 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION CORRIGÉE
+2025-06-13 23:12:31,994 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 23:12:31,994 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:12:31,996 - core.screenshot_manager - INFO - Application détectée: python.exe
+2025-06-13 23:12:31,997 - core.screenshot_manager - INFO - Coordonnées fenêtre: (0, 0, 0, 0)
+2025-06-13 23:12:31,997 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-13 23:12:31,997 - core.screenshot_manager - INFO - Tentative capture région: x=0, y=0, w=0, h=0
+2025-06-13 23:12:31,998 - core.screenshot_manager - WARNING - Coordonnées invalides: (0, 0, 0, 0)
+2025-06-13 23:12:32,020 - core.screenshot_manager - INFO - Capture GDI réussie: 1938x1038
+2025-06-13 23:12:32,021 - core.screenshot_manager - INFO - Capture Windows native réussie
+2025-06-13 23:12:32,130 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\python.exe_ SnapMaster - Capture d'cran avance_Screenshot_20250613_231232.png
+2025-06-13 23:12:32,141 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:12:33,534 - core.memory_manager - WARNING - Seuil mémoire dépassé: 109.9MB > 108.0MB
+2025-06-13 23:12:33,551 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 23:12:52,841 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 23:12:52,841 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 23:12:55,276 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 23:12:55,279 - config.settings - INFO - Configuration sauvegardée avec succès
+2025-06-13 23:12:58,344 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-13 23:12:58,346 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION CORRIGÉE
+2025-06-13 23:12:58,361 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 66, Mémoire libérée: 0.0MB
+2025-06-13 23:12:58,362 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:12:58,363 - core.screenshot_manager - INFO - Application détectée: python.exe
+2025-06-13 23:12:58,364 - core.screenshot_manager - INFO - Coordonnées fenêtre: (0, 0, 0, 0)
+2025-06-13 23:12:58,364 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-13 23:12:58,364 - core.screenshot_manager - INFO - Tentative capture région: x=0, y=0, w=0, h=0
+2025-06-13 23:12:58,365 - core.screenshot_manager - WARNING - Coordonnées invalides: (0, 0, 0, 0)
+2025-06-13 23:12:58,393 - core.screenshot_manager - INFO - Capture GDI réussie: 1938x1038
+2025-06-13 23:12:58,394 - core.screenshot_manager - INFO - Capture Windows native réussie
+2025-06-13 23:12:58,492 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Spotify\python.exe_ SnapMaster - Capture d'cran avance_Screenshot_20250613_231258.png
+2025-06-13 23:12:58,503 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:13:00,377 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 23:13:03,556 - core.memory_manager - WARNING - Seuil mémoire dépassé: 110.3MB > 38.879999999999995MB
+2025-06-13 23:13:03,569 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 23:13:09,685 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-13 23:13:09,686 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION CORRIGÉE
+2025-06-13 23:13:09,704 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:13:09,704 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:13:09,706 - core.screenshot_manager - INFO - Application détectée: Spotify.exe
+2025-06-13 23:13:09,707 - core.screenshot_manager - INFO - Coordonnées fenêtre: (0, 0, 0, 0)
+2025-06-13 23:13:09,707 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-13 23:13:09,708 - core.screenshot_manager - INFO - Tentative capture région: x=0, y=0, w=0, h=0
+2025-06-13 23:13:09,708 - core.screenshot_manager - WARNING - Coordonnées invalides: (0, 0, 0, 0)
+2025-06-13 23:13:09,754 - core.screenshot_manager - INFO - Capture GDI réussie: 1938x1038
+2025-06-13 23:13:09,755 - core.screenshot_manager - INFO - Capture Windows native réussie
+2025-06-13 23:13:09,795 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Spotify\Spotify.exe_Spotify_Screenshot_20250613_231309.png
+2025-06-13 23:13:09,815 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:13:32,003 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-13 23:13:32,688 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-13 23:13:32,690 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION CORRIGÉE
+2025-06-13 23:13:32,710 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 23:13:32,711 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-13 23:13:32,712 - core.screenshot_manager - INFO - Application détectée: Spotify.exe
+2025-06-13 23:13:32,713 - core.screenshot_manager - INFO - Coordonnées fenêtre: (0, 0, 0, 0)
+2025-06-13 23:13:32,714 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-13 23:13:32,715 - core.screenshot_manager - INFO - Tentative capture région: x=0, y=0, w=0, h=0
+2025-06-13 23:13:32,715 - core.screenshot_manager - WARNING - Coordonnées invalides: (0, 0, 0, 0)
+2025-06-13 23:13:32,730 - core.screenshot_manager - INFO - Capture GDI réussie: 1016x1020
+2025-06-13 23:13:32,730 - core.screenshot_manager - INFO - Capture Windows native réussie
+2025-06-13 23:13:32,750 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Spotify\Spotify.exe_Spotify_Screenshot_20250613_231332.png
+2025-06-13 23:13:32,764 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:13:33,577 - core.memory_manager - WARNING - Seuil mémoire dépassé: 110.4MB > 108.0MB
+2025-06-13 23:13:33,588 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-13 23:13:43,736 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-13 23:13:44,000 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-13 23:13:44,013 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-13 23:13:44,013 - gui.main_window - INFO - Nettoyage terminé
+2025-06-13 23:13:49,015 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-13 23:13:49,015 - __main__ - INFO - SnapMaster fermé proprement

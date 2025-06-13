@@ -2,16 +2,21 @@
     "version": "1.0.0",
     "folders": {
         "default_screenshots": "C:\\Users\\admin\\Pictures\\SnapMaster",
-        "custom_folders": {}
+        "custom_folders": {
+            "Spotify": "C:\\Users\\admin\\Pictures\\SnapMaster\\Spotify",
+            "Discord": "C:\\Users\\admin\\Pictures\\SnapMaster\\Discord"
+        }
     },
     "applications": {
         "app_folder_mapping": {
             "Spotify.exe": "Spotify",
-            "python.exe": "python"
+            "Discord.exe": "Discord",
+            "python.exe": "Spotify"
         },
         "monitored_apps": [
             "Spotify",
             "Spotify.exe",
+            "Discord.exe",
             "python.exe"
         ]
     },

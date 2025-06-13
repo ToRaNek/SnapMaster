@@ -1,7 +1,7 @@
 # gui/main_window_methods.py
 """
-Méthodes supplémentaires pour SnapMasterGUI
-Complément à main_window.py
+Méthodes supplémentaires pour SnapMasterGUI - Version améliorée
+Complément à main_window.py avec support des associations avancées
 """
 
 import os
@@ -12,6 +12,8 @@ import tkinter as tk
 from tkinter import ttk, filedialog, simpledialog, messagebox
 import threading
 import time
+import platform
+import psutil
 
 def add_methods_to_gui(gui_class):
     """Ajoute les méthodes manquantes à la classe SnapMasterGUI"""
@@ -27,7 +29,10 @@ def add_methods_to_gui(gui_class):
             if os.name == 'nt':  # Windows
                 os.startfile(folder_path)
             elif os.name == 'posix':  # Linux/macOS
-                subprocess.run(['xdg-open', folder_path])
+                if platform.system() == "Darwin":  # macOS
+                    subprocess.run(['open', folder_path])
+                else:  # Linux
+                    subprocess.run(['xdg-open', folder_path])
 
         except Exception as e:
             self.logger.error(f"Erreur ouverture dossier: {e}")
@@ -82,37 +87,64 @@ def add_methods_to_gui(gui_class):
             app_caps = self.app_detector.get_capabilities()
 
             def show_results():
-                result_text = "Résultats des tests de capacités:\n\n"
+                result_text = "🧪 Résultats des tests de capacités:\n\n"
                 result_text += "📸 Captures d'écran:\n"
-                result_text += f"  • Plein écran: {'✅' if capabilities.get('fullscreen') else '❌'}\n"
-                result_text += f"  • Fenêtre: {'✅' if capabilities.get('window') else '❌'}\n"
-                result_text += f"  • Zone sélectionnée: {'✅' if capabilities.get('area_selection') else '❌'}\n"
-                result_text += f"  • Détection d'app: {'✅' if capabilities.get('app_detection') else '❌'}\n\n"
+                result_text += f"  • Plein écran: {'✅ Disponible' if capabilities.get('fullscreen') else '❌ Indisponible'}\n"
+                result_text += f"  • Fenêtre: {'✅ Disponible' if capabilities.get('window') else '❌ Indisponible'}\n"
+                result_text += f"  • Zone sélectionnée: {'✅ Disponible' if capabilities.get('area_selection') else '❌ Indisponible'}\n"
+                result_text += f"  • Détection d'app: {'✅ Disponible' if capabilities.get('app_detection') else '❌ Indisponible'}\n\n"
 
                 result_text += "🔍 Détection d'applications:\n"
-                result_text += f"  • Détection fenêtre: {'✅' if app_caps.get('window_detection') else '❌'}\n"
-                result_text += f"  • Détection plein écran: {'✅' if app_caps.get('fullscreen_detection') else '❌'}\n"
-                result_text += f"  • Géométrie fenêtre: {'✅' if app_caps.get('window_geometry') else '❌'}\n"
-                result_text += f"  • Classification app: {'✅' if app_caps.get('app_classification') else '❌'}\n\n"
+                result_text += f"  • Détection fenêtre: {'✅ Disponible' if app_caps.get('window_detection') else '❌ Indisponible'}\n"
+                result_text += f"  • Détection plein écran: {'✅ Disponible' if app_caps.get('fullscreen_detection') else '❌ Indisponible'}\n"
+                result_text += f"  • Géométrie fenêtre: {'✅ Disponible' if app_caps.get('window_geometry') else '❌ Indisponible'}\n"
+                result_text += f"  • Classification app: {'✅ Disponible' if app_caps.get('app_classification') else '❌ Indisponible'}\n\n"
 
                 # Test hotkeys
                 hotkey_stats = self.hotkey_manager.get_stats()
                 result_text += "⌨️ Raccourcis clavier:\n"
-                result_text += f"  • Surveillance active: {'✅' if hotkey_stats.get('monitoring') else '❌'}\n"
+                result_text += f"  • Surveillance active: {'✅ Active' if hotkey_stats.get('monitoring') else '❌ Inactive'}\n"
                 result_text += f"  • Raccourcis actifs: {hotkey_stats.get('active_hotkeys', 0)}\n"
+                result_text += f"  • Déclenchements: {hotkey_stats.get('total_triggers', 0)}\n"
+
+                # Test des permissions
+                result_text += f"\n🔐 Permissions système:\n"
+                result_text += f"  • Lecture processus: {'✅ OK' if self._test_process_access() else '❌ Limitée'}\n"
+                result_text += f"  • Capture écran: {'✅ OK' if self._test_screen_access() else '❌ Limitée'}\n"
 
                 messagebox.showinfo("Test des capacités", result_text)
-                self._update_status("Test terminé")
+                self._update_status("✅ Test terminé")
 
             self.root.after(0, show_results)
 
         threading.Thread(target=test_thread, daemon=True).start()
 
+    def _test_process_access(self):
+        """Teste l'accès aux informations des processus"""
+        try:
+            process_count = len(list(psutil.process_iter()))
+            return process_count > 10  # Au moins 10 processus détectés
+        except:
+            return False
+
+    def _test_screen_access(self):
+        """Teste l'accès à la capture d'écran"""
+        try:
+            import pyautogui
+            test_screenshot = pyautogui.screenshot()
+            return test_screenshot.size[0] > 0 and test_screenshot.size[1] > 0
+        except:
+            return False
+
     def _open_settings(self):
         """Ouvre la fenêtre de paramètres"""
         if not self.settings_window:
-            from gui.settings_window import SettingsWindow
-            self.settings_window = SettingsWindow(self.root, self.settings, self.hotkey_manager)
+            try:
+                from gui.settings_window import SettingsWindow
+                self.settings_window = SettingsWindow(self.root, self.settings, self.hotkey_manager)
+            except ImportError:
+                messagebox.showinfo("Paramètres", "Fenêtre de paramètres non disponible")
+                return
 
         self.settings_window.show()
 
@@ -133,13 +165,21 @@ def add_methods_to_gui(gui_class):
             freed_memory = max(0, before_memory - after_memory)
 
             def show_result():
-                message = f"Nettoyage terminé:\n"
-                message += f"• Objets nettoyés: {cleaned_objects}\n"
-                message += f"• Mémoire libérée: {freed_memory:.1f} MB\n"
-                message += f"• Mémoire actuelle: {after_memory:.1f} MB"
+                message = f"🧹 Nettoyage mémoire terminé:\n\n"
+                message += f"💾 Mémoire avant: {before_memory:.1f} MB\n"
+                message += f"💾 Mémoire après: {after_memory:.1f} MB\n"
+                message += f"🗑️ Objets nettoyés: {cleaned_objects}\n"
+                message += f"💨 Mémoire libérée: {freed_memory:.1f} MB"
+
+                if freed_memory > 10:
+                    message += f"\n\n✅ Nettoyage efficace!"
+                elif freed_memory > 0:
+                    message += f"\n\n🔄 Nettoyage partiel"
+                else:
+                    message += f"\n\n💡 Aucune mémoire à libérer"
 
                 messagebox.showinfo("Nettoyage mémoire", message)
-                self._update_status("Nettoyage terminé")
+                self._update_status("✅ Nettoyage terminé")
 
             self.root.after(0, show_result)
 
@@ -153,50 +193,197 @@ def add_methods_to_gui(gui_class):
             memory_stats = self.memory_manager.get_stats()
             hotkey_stats = self.hotkey_manager.get_stats()
 
-            stats_text = "📊 Statistiques SnapMaster\n\n"
-
-            # Stats captures
-            stats_text += "📸 Captures d'écran:\n"
-            stats_text += f"  • Total: {screenshot_stats.get('total_captures', 0)}\n"
-            stats_text += f"  • Réussies: {screenshot_stats.get('successful_captures', 0)}\n"
-            stats_text += f"  • Échouées: {screenshot_stats.get('failed_captures', 0)}\n"
-            stats_text += f"  • Taux de réussite: {self._calculate_success_rate(screenshot_stats):.1f}%\n\n"
-
-            # Stats mémoire
-            stats_text += "🧠 Gestion mémoire:\n"
-            stats_text += f"  • Usage actuel: {memory_stats.get('current_memory_mb', 0):.1f} MB\n"
-            stats_text += f"  • Nettoyages: {memory_stats.get('total_cleanups', 0)}\n"
-            stats_text += f"  • Mémoire libérée: {memory_stats.get('memory_saved_mb', 0):.1f} MB\n"
-            stats_text += f"  • Surveillance: {'Activée' if memory_stats.get('monitoring') else 'Désactivée'}\n\n"
-
-            # Stats hotkeys
-            stats_text += "⌨️ Raccourcis clavier:\n"
-            stats_text += f"  • Déclenchements: {hotkey_stats.get('total_triggers', 0)}\n"
-            stats_text += f"  • Réussis: {hotkey_stats.get('successful_triggers', 0)}\n"
-            stats_text += f"  • Répétitions bloquées: {hotkey_stats.get('blocked_repeats', 0)}\n"
-            stats_text += f"  • Raccourcis actifs: {hotkey_stats.get('active_hotkeys', 0)}\n"
-
-            # Fenêtre de statistiques
+            # Crée la fenêtre de statistiques
             stats_window = tk.Toplevel(self.root)
-            stats_window.title("Statistiques - SnapMaster")
-            stats_window.geometry("500x400")
+            stats_window.title("📊 Statistiques SnapMaster")
+            stats_window.geometry("600x500")
             stats_window.resizable(False, False)
             stats_window.transient(self.root)
+            stats_window.configure(bg='#1a202c')
 
-            # Texte des statistiques
-            text_widget = tk.Text(stats_window, wrap=tk.WORD, padx=10, pady=10,
-                                  font=('Courier', 10))
-            text_widget.pack(fill=tk.BOTH, expand=True)
+            # Centre la fenêtre
+            stats_window.update_idletasks()
+            x = (stats_window.winfo_screenwidth() // 2) - (stats_window.winfo_width() // 2)
+            y = (stats_window.winfo_screenheight() // 2) - (stats_window.winfo_height() // 2)
+            stats_window.geometry(f"+{x}+{y}")
+
+            # En-tête
+            header_frame = tk.Frame(stats_window, bg='#1e3a8a', height=60)
+            header_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+            header_frame.pack_propagate(False)
+
+            tk.Label(header_frame,
+                     text="📊 Statistiques détaillées",
+                     bg='#1e3a8a',
+                     fg='white',
+                     font=('Segoe UI', 16, 'bold')).pack(expand=True, pady=15)
+
+            # Contenu avec scrollbar
+            content_frame = tk.Frame(stats_window, bg='#1a202c')
+            content_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+            # Zone de texte avec scrollbar
+            text_frame = tk.Frame(content_frame, bg='#1a202c')
+            text_frame.pack(fill=tk.BOTH, expand=True)
+
+            text_widget = tk.Text(text_frame,
+                                  wrap=tk.WORD,
+                                  padx=15,
+                                  pady=15,
+                                  bg='#2d3748',
+                                  fg='white',
+                                  font=('Consolas', 10),
+                                  relief='flat',
+                                  bd=0)
+
+            scrollbar = tk.Scrollbar(text_frame, orient=tk.VERTICAL, command=text_widget.yview)
+            text_widget.configure(yscrollcommand=scrollbar.set)
+
+            text_widget.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+            # Contenu des statistiques
+            stats_text = self._generate_stats_text(screenshot_stats, memory_stats, hotkey_stats)
             text_widget.insert(1.0, stats_text)
             text_widget.config(state=tk.DISABLED)
 
-            # Bouton fermer
-            ttk.Button(stats_window, text="Fermer",
-                       command=stats_window.destroy).pack(pady=5)
+            # Boutons
+            buttons_frame = tk.Frame(stats_window, bg='#1a202c')
+            buttons_frame.pack(fill=tk.X, padx=10, pady=10)
+
+            tk.Button(buttons_frame,
+                      text="🔄 Actualiser",
+                      command=lambda: self._refresh_statistics(text_widget),
+                      bg='#3b82f6',
+                      fg='white',
+                      font=('Segoe UI', 10, 'bold'),
+                      relief='flat',
+                      padx=15,
+                      pady=8).pack(side=tk.LEFT, padx=5)
+
+            tk.Button(buttons_frame,
+                      text="📋 Copier",
+                      command=lambda: self._copy_statistics(stats_text),
+                      bg='#10b981',
+                      fg='white',
+                      font=('Segoe UI', 10, 'bold'),
+                      relief='flat',
+                      padx=15,
+                      pady=8).pack(side=tk.LEFT, padx=5)
+
+            tk.Button(buttons_frame,
+                      text="❌ Fermer",
+                      command=stats_window.destroy,
+                      bg='#ef4444',
+                      fg='white',
+                      font=('Segoe UI', 10, 'bold'),
+                      relief='flat',
+                      padx=15,
+                      pady=8).pack(side=tk.RIGHT, padx=5)
 
         except Exception as e:
             self.logger.error(f"Erreur affichage statistiques: {e}")
             self._show_error("Erreur", str(e))
+
+    def _generate_stats_text(self, screenshot_stats, memory_stats, hotkey_stats):
+        """Génère le texte des statistiques"""
+        stats_text = "📊 STATISTIQUES SNAPMASTER\n"
+        stats_text += "=" * 50 + "\n\n"
+
+        # Stats captures
+        stats_text += "📸 CAPTURES D'ÉCRAN\n"
+        stats_text += "-" * 30 + "\n"
+        stats_text += f"Total des captures      : {screenshot_stats.get('total_captures', 0)}\n"
+        stats_text += f"Captures réussies       : {screenshot_stats.get('successful_captures', 0)}\n"
+        stats_text += f"Captures échouées       : {screenshot_stats.get('failed_captures', 0)}\n"
+        stats_text += f"Taux de réussite        : {self._calculate_success_rate(screenshot_stats):.1f}%\n"
+        stats_text += f"Utilisation mémoire     : {screenshot_stats.get('memory_usage_mb', 0):.1f} MB\n\n"
+
+        # Stats mémoire
+        stats_text += "🧠 GESTION MÉMOIRE\n"
+        stats_text += "-" * 30 + "\n"
+        stats_text += f"Usage actuel            : {memory_stats.get('current_memory_mb', 0):.1f} MB\n"
+        stats_text += f"Nettoyages effectués    : {memory_stats.get('total_cleanups', 0)}\n"
+        stats_text += f"Mémoire libérée (total) : {memory_stats.get('memory_saved_mb', 0):.1f} MB\n"
+        stats_text += f"Surveillance active     : {'✅ Oui' if memory_stats.get('monitoring') else '❌ Non'}\n"
+
+        # Objets trackés
+        tracked_objects = memory_stats.get('tracked_objects', {})
+        if tracked_objects:
+            stats_text += f"Objets trackés          :\n"
+            for category, count in tracked_objects.items():
+                stats_text += f"  - {category}: {count}\n"
+        stats_text += "\n"
+
+        # Stats hotkeys
+        stats_text += "⌨️ RACCOURCIS CLAVIER\n"
+        stats_text += "-" * 30 + "\n"
+        stats_text += f"Raccourcis actifs       : {hotkey_stats.get('active_hotkeys', 0)}\n"
+        stats_text += f"Déclenchements totaux   : {hotkey_stats.get('total_triggers', 0)}\n"
+        stats_text += f"Déclenchements réussis  : {hotkey_stats.get('successful_triggers', 0)}\n"
+        stats_text += f"Répétitions bloquées    : {hotkey_stats.get('blocked_repeats', 0)}\n"
+        stats_text += f"Surveillance active     : {'✅ Oui' if hotkey_stats.get('monitoring') else '❌ Non'}\n"
+        stats_text += f"Callbacks enregistrés   : {hotkey_stats.get('registered_callbacks', 0)}\n\n"
+
+        # Informations système
+        stats_text += "🖥️ SYSTÈME\n"
+        stats_text += "-" * 30 + "\n"
+        stats_text += f"Système d'exploitation  : {platform.system()} {platform.release()}\n"
+        stats_text += f"Architecture            : {platform.architecture()[0]}\n"
+        stats_text += f"Processeur              : {platform.processor()}\n"
+        stats_text += f"Nom de la machine       : {platform.node()}\n"
+        stats_text += f"Python                  : {platform.python_version()}\n"
+
+        # Informations de performance
+        try:
+            import psutil
+            stats_text += f"Processus actifs        : {len(list(psutil.process_iter()))}\n"
+            stats_text += f"Utilisation CPU         : {psutil.cpu_percent()}%\n"
+            stats_text += f"Mémoire système         : {psutil.virtual_memory().percent}%\n"
+        except:
+            pass
+
+        stats_text += "\n"
+
+        # Configuration actuelle
+        stats_text += "⚙️ CONFIGURATION\n"
+        stats_text += "-" * 30 + "\n"
+        capture_settings = self.settings.get_capture_settings()
+        stats_text += f"Format d'image          : {capture_settings.get('image_format', 'PNG')}\n"
+        stats_text += f"Qualité d'image         : {capture_settings.get('image_quality', 95)}%\n"
+        stats_text += f"Inclure curseur         : {'✅ Oui' if capture_settings.get('include_cursor') else '❌ Non'}\n"
+        stats_text += f"Délai de capture        : {capture_settings.get('delay_seconds', 0)}s\n"
+        stats_text += f"Dossier par défaut      : {self.settings.get_default_folder()}\n"
+        stats_text += f"Dossiers personnalisés  : {len(self.settings.get_custom_folders())}\n"
+        stats_text += f"Associations d'apps     : {len(self.settings.config.get('applications', {}).get('app_folder_mapping', {}))}\n"
+
+        return stats_text
+
+    def _refresh_statistics(self, text_widget):
+        """Actualise les statistiques"""
+        try:
+            screenshot_stats = self.screenshot_manager.get_stats()
+            memory_stats = self.memory_manager.get_stats()
+            hotkey_stats = self.hotkey_manager.get_stats()
+
+            stats_text = self._generate_stats_text(screenshot_stats, memory_stats, hotkey_stats)
+
+            text_widget.config(state=tk.NORMAL)
+            text_widget.delete(1.0, tk.END)
+            text_widget.insert(1.0, stats_text)
+            text_widget.config(state=tk.DISABLED)
+
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur lors de l'actualisation: {e}")
+
+    def _copy_statistics(self, stats_text):
+        """Copie les statistiques dans le presse-papier"""
+        try:
+            self.root.clipboard_clear()
+            self.root.clipboard_append(stats_text)
+            messagebox.showinfo("Copié", "Statistiques copiées dans le presse-papier")
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur lors de la copie: {e}")
 
     def _calculate_success_rate(self, stats):
         """Calcule le taux de réussite"""
@@ -207,55 +394,178 @@ def add_methods_to_gui(gui_class):
         return (successful / total) * 100
 
     def _show_hotkeys(self):
-        """Affiche les raccourcis clavier"""
+        """Affiche les raccourcis clavier dans une fenêtre moderne"""
         try:
             active_hotkeys = self.hotkey_manager.get_active_hotkeys()
 
-            hotkeys_text = "⌨️ Raccourcis clavier actifs:\n\n"
+            # Crée la fenêtre
+            hotkeys_window = tk.Toplevel(self.root)
+            hotkeys_window.title("⌨️ Raccourcis clavier")
+            hotkeys_window.geometry("500x400")
+            hotkeys_window.resizable(False, False)
+            hotkeys_window.transient(self.root)
+            hotkeys_window.configure(bg='#1a202c')
+
+            # Centre la fenêtre
+            hotkeys_window.update_idletasks()
+            x = (hotkeys_window.winfo_screenwidth() // 2) - (hotkeys_window.winfo_width() // 2)
+            y = (hotkeys_window.winfo_screenheight() // 2) - (hotkeys_window.winfo_height() // 2)
+            hotkeys_window.geometry(f"+{x}+{y}")
+
+            # En-tête
+            header_frame = tk.Frame(hotkeys_window, bg='#1e3a8a', height=60)
+            header_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+            header_frame.pack_propagate(False)
+
+            tk.Label(header_frame,
+                     text="⌨️ Raccourcis clavier actifs",
+                     bg='#1e3a8a',
+                     fg='white',
+                     font=('Segoe UI', 16, 'bold')).pack(expand=True, pady=15)
+
+            # Contenu
+            content_frame = tk.Frame(hotkeys_window, bg='#2d3748', relief='flat', bd=2)
+            content_frame.pack(fill=tk.BOTH, expand=True, padx=15, pady=15)
 
             descriptions = {
-                'fullscreen_capture': 'Capture plein écran',
-                'window_capture': 'Capture fenêtre active',
-                'area_capture': 'Capture zone sélectionnée',
-                'quick_capture': 'Capture rapide application'
+                'fullscreen_capture': '🖥️ Capture plein écran',
+                'window_capture': '🪟 Capture fenêtre active',
+                'area_capture': '✂️ Capture zone sélectionnée',
+                'quick_capture': '⚡ Capture rapide application'
             }
 
-            for action, hotkey in active_hotkeys.items():
-                desc = descriptions.get(action, action)
-                hotkeys_text += f"• {desc}: {hotkey}\n"
+            if active_hotkeys:
+                for i, (action, hotkey) in enumerate(active_hotkeys.items()):
+                    desc = descriptions.get(action, action)
 
-            if not active_hotkeys:
-                hotkeys_text += "Aucun raccourci configuré.\n"
+                    # Frame pour chaque raccourci
+                    hotkey_frame = tk.Frame(content_frame, bg='#374151', relief='flat', bd=1)
+                    hotkey_frame.pack(fill=tk.X, padx=10, pady=5)
 
-            hotkeys_text += "\n💡 Conseils:\n"
-            hotkeys_text += "• Utilisez les modificateurs Ctrl, Shift, Alt\n"
-            hotkeys_text += "• Évitez les conflits avec d'autres applications\n"
-            hotkeys_text += "• Modifiez les raccourcis dans les Paramètres"
+                    # Description
+                    tk.Label(hotkey_frame,
+                             text=desc,
+                             bg='#374151',
+                             fg='white',
+                             font=('Segoe UI', 12, 'bold')).pack(side=tk.LEFT, padx=15, pady=10)
 
-            messagebox.showinfo("Raccourcis clavier", hotkeys_text)
+                    # Raccourci
+                    tk.Label(hotkey_frame,
+                             text=hotkey.upper(),
+                             bg='#3b82f6',
+                             fg='white',
+                             font=('Segoe UI', 11, 'bold'),
+                             relief='flat',
+                             padx=10,
+                             pady=5).pack(side=tk.RIGHT, padx=15, pady=10)
+            else:
+                tk.Label(content_frame,
+                         text="❌ Aucun raccourci configuré",
+                         bg='#2d3748',
+                         fg='#ef4444',
+                         font=('Segoe UI', 14, 'bold')).pack(expand=True, pady=20)
+
+            # Informations
+            info_frame = tk.Frame(hotkeys_window, bg='#1a202c')
+            info_frame.pack(fill=tk.X, padx=15, pady=10)
+
+            info_text = "💡 Conseils :\n• Utilisez les modificateurs Ctrl, Shift, Alt, Win\n• Évitez les conflits avec d'autres applications\n• Modifiez les raccourcis dans les Paramètres"
+            tk.Label(info_frame,
+                     text=info_text,
+                     bg='#1a202c',
+                     fg='#94a3b8',
+                     font=('Segoe UI', 10),
+                     justify=tk.LEFT).pack(anchor=tk.W)
+
+            # Bouton fermer
+            tk.Button(hotkeys_window,
+                      text="❌ Fermer",
+                      command=hotkeys_window.destroy,
+                      bg='#ef4444',
+                      fg='white',
+                      font=('Segoe UI', 11, 'bold'),
+                      relief='flat',
+                      padx=20,
+                      pady=10).pack(pady=15)
 
         except Exception as e:
             self.logger.error(f"Erreur affichage hotkeys: {e}")
             self._show_error("Erreur", str(e))
 
     def _show_about(self):
-        """Affiche la fenêtre À propos"""
-        about_text = """
-🎯 SnapMaster v1.0.0
+        """Affiche la fenêtre À propos moderne"""
+        about_window = tk.Toplevel(self.root)
+        about_window.title("ℹ️ À propos de SnapMaster")
+        about_window.geometry("500x400")
+        about_window.resizable(False, False)
+        about_window.transient(self.root)
+        about_window.configure(bg='#1a202c')
 
-Application de capture d'écran avancée avec:
+        # Centre la fenêtre
+        about_window.update_idletasks()
+        x = (about_window.winfo_screenwidth() // 2) - (about_window.winfo_width() // 2)
+        y = (about_window.winfo_screenheight() // 2) - (about_window.winfo_height() // 2)
+        about_window.geometry(f"+{x}+{y}")
+
+        # Logo et titre
+        header_frame = tk.Frame(about_window, bg='#1e3a8a', height=100)
+        header_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+        header_frame.pack_propagate(False)
+
+        tk.Label(header_frame,
+                 text="🎯 SnapMaster",
+                 bg='#1e3a8a',
+                 fg='white',
+                 font=('Segoe UI', 24, 'bold')).pack(expand=True, pady=10)
+
+        tk.Label(header_frame,
+                 text="v1.0.0",
+                 bg='#1e3a8a',
+                 fg='#60a5fa',
+                 font=('Segoe UI', 12)).pack()
+
+        # Contenu
+        content_frame = tk.Frame(about_window, bg='#2d3748', relief='flat', bd=2)
+        content_frame.pack(fill=tk.BOTH, expand=True, padx=15, pady=15)
+
+        about_text = """
+Application de capture d'écran avancée
+
+✨ Fonctionnalités :
 • Gestion automatique de la mémoire
 • Détection d'applications au premier plan
 • Raccourcis clavier configurables
 • Organisation par dossiers
 • Formats multiples (PNG, JPEG, BMP)
+• Interface moderne avec thème bleu
 
-Développé avec Python et amour ❤️
+🛠️ Développé avec :
+• Python 3.9+
+• Tkinter (Interface utilisateur)
+• PyAutoGUI (Captures d'écran)
+• psutil (Gestion des processus)
+• keyboard (Raccourcis globaux)
 
 © 2024 - Tous droits réservés
         """.strip()
 
-        messagebox.showinfo("À propos de SnapMaster", about_text)
+        tk.Label(content_frame,
+                 text=about_text,
+                 bg='#2d3748',
+                 fg='white',
+                 font=('Segoe UI', 11),
+                 justify=tk.LEFT).pack(padx=20, pady=20)
+
+        # Bouton fermer
+        tk.Button(about_window,
+                  text="❌ Fermer",
+                  command=about_window.destroy,
+                  bg='#ef4444',
+                  fg='white',
+                  font=('Segoe UI', 11, 'bold'),
+                  relief='flat',
+                  padx=20,
+                  pady=10).pack(pady=15)
 
     def _on_format_change(self, event):
         """Callback changement de format"""
@@ -305,99 +615,28 @@ Développé avec Python et amour ❤️
         for folder_name in custom_folders.keys():
             self.folders_listbox.insert(tk.END, folder_name)
 
-    def _add_association(self):
-        """Ajoute une association application/dossier"""
-        dialog = AssociationDialog(self.root, self.settings)
-        result = dialog.show()
-
-        if result:
-            app_name, folder_name = result
-            if self.settings.link_app_to_folder(app_name, folder_name):
-                self._update_associations_list()
-                self._update_status(f"Association ajoutée: {app_name} → {folder_name}")
-            else:
-                self._show_error("Erreur", "Impossible d'ajouter l'association")
-
-    def _edit_association(self):
-        """Modifie une association existante"""
-        selection = self.associations_tree.selection()
-        if not selection:
-            self._show_warning("Sélection", "Veuillez sélectionner une association à modifier")
-            return
-
-        item = self.associations_tree.item(selection[0])
-        app_name = item['values'][0]
-        current_folder = item['values'][1]
-
-        dialog = AssociationDialog(self.root, self.settings, app_name, current_folder)
-        result = dialog.show()
-
-        if result:
-            new_app_name, new_folder_name = result
-            if self.settings.link_app_to_folder(new_app_name, new_folder_name):
-                self._update_associations_list()
-                self._update_status(f"Association modifiée: {new_app_name} → {new_folder_name}")
-
-    def _remove_association(self):
-        """Supprime une association"""
-        selection = self.associations_tree.selection()
-        if not selection:
-            self._show_warning("Sélection", "Veuillez sélectionner une association à supprimer")
-            return
-
-        item = self.associations_tree.item(selection[0])
-        app_name = item['values'][0]
-
-        if messagebox.askyesno("Confirmation", f"Supprimer l'association pour {app_name}?"):
-            # Supprime de la configuration
-            if app_name in self.settings.config['applications']['app_folder_mapping']:
-                del self.settings.config['applications']['app_folder_mapping'][app_name]
-                self.settings.save_config()
-                self._update_associations_list()
-                self._update_status(f"Association supprimée: {app_name}")
-
-    def _update_associations_list(self):
-        """Met à jour la liste des associations"""
-        if not hasattr(self, 'associations_tree'):
-            return
-
-        # Nettoie l'arbre
-        for item in self.associations_tree.get_children():
-            self.associations_tree.delete(item)
-
-        # Ajoute les associations
-        app_mappings = self.settings.config['applications']['app_folder_mapping']
-        custom_folders = self.settings.get_custom_folders()
-
-        for app_name, folder_name in app_mappings.items():
-            if folder_name == "default":
-                folder_display = "Dossier par défaut"
-            else:
-                folder_display = custom_folders.get(folder_name, folder_name)
-
-            self.associations_tree.insert('', tk.END, values=(app_name, folder_display))
-
     def _show_memory_stats(self):
         """Affiche les statistiques mémoire détaillées"""
         stats = self.memory_manager.get_stats()
 
         stats_text = f"""
-📊 Statistiques mémoire détaillées:
+💾 Statistiques mémoire détaillées:
 
-💾 Usage actuel: {stats.get('current_memory_mb', 0):.1f} MB
+📊 Utilisation actuelle: {stats.get('current_memory_mb', 0):.1f} MB
 🧹 Nettoyages effectués: {stats.get('total_cleanups', 0)}
-💨 Mémoire libérée: {stats.get('memory_saved_mb', 0):.1f} MB
+💨 Mémoire libérée (total): {stats.get('memory_saved_mb', 0):.1f} MB
 📈 Objets trackés: {len(stats.get('tracked_objects', {}))}
-⚡ Surveillance: {'Active' if stats.get('monitoring') else 'Inactive'}
+⚡ Surveillance: {'✅ Active' if stats.get('monitoring') else '❌ Inactive'}
 
-🔧 Configuration:
+🔧 Configuration actuelle:
 • Seuil de nettoyage: {self.memory_manager.memory_threshold_mb} MB
 • Intervalle de vérification: {self.memory_manager.check_interval}s
 
-💡 Conseils:
+💡 Conseils d'optimisation:
 • Le nettoyage automatique optimise les performances
 • Un usage élevé peut indiquer une fuite mémoire
 • Les captures fréquentes augmentent temporairement l'usage
+• Redémarrez l'application si l'usage reste élevé
         """.strip()
 
         messagebox.showinfo("Statistiques mémoire", stats_text)
@@ -409,22 +648,22 @@ Développé avec Python et amour ❤️
 
         active_hotkeys = self.hotkey_manager.get_active_hotkeys()
 
-        display_text = "Raccourcis clavier actifs:\n\n"
+        display_text = "⌨️ Raccourcis clavier actifs:\n\n"
 
         descriptions = {
-            'fullscreen_capture': 'Capture plein écran',
-            'window_capture': 'Capture fenêtre active',
-            'area_capture': 'Capture zone sélectionnée',
-            'quick_capture': 'Capture rapide application'
+            'fullscreen_capture': '🖥️ Capture plein écran',
+            'window_capture': '🪟 Capture fenêtre active',
+            'area_capture': '✂️ Capture zone sélectionnée',
+            'quick_capture': '⚡ Capture rapide application'
         }
 
         for action, hotkey in active_hotkeys.items():
             desc = descriptions.get(action, action)
-            display_text += f"• {desc}:\n  {hotkey}\n\n"
+            display_text += f"• {desc}:\n  {hotkey.upper()}\n\n"
 
         if not active_hotkeys:
-            display_text += "Aucun raccourci configuré.\n\n"
-            display_text += "Configurez vos raccourcis dans les Paramètres."
+            display_text += "❌ Aucun raccourci configuré.\n\n"
+            display_text += "💡 Configurez vos raccourcis dans les Paramètres."
 
         self.hotkeys_text.config(state=tk.NORMAL)
         self.hotkeys_text.delete(1.0, tk.END)
@@ -436,10 +675,15 @@ Développé avec Python et amour ❤️
     gui_class._export_config = _export_config
     gui_class._import_config = _import_config
     gui_class._test_capabilities = _test_capabilities
+    gui_class._test_process_access = _test_process_access
+    gui_class._test_screen_access = _test_screen_access
     gui_class._open_settings = _open_settings
     gui_class._open_folder_manager = _open_folder_manager
     gui_class._force_memory_cleanup = _force_memory_cleanup
     gui_class._show_statistics = _show_statistics
+    gui_class._generate_stats_text = _generate_stats_text
+    gui_class._refresh_statistics = _refresh_statistics
+    gui_class._copy_statistics = _copy_statistics
     gui_class._show_hotkeys = _show_hotkeys
     gui_class._show_about = _show_about
     gui_class._on_format_change = _on_format_change
@@ -447,10 +691,6 @@ Développé avec Python et amour ❤️
     gui_class._browse_folder = _browse_folder
     gui_class._select_custom_folder = _select_custom_folder
     gui_class._update_folders_list = _update_folders_list
-    gui_class._add_association = _add_association
-    gui_class._edit_association = _edit_association
-    gui_class._remove_association = _remove_association
-    gui_class._update_associations_list = _update_associations_list
     gui_class._show_memory_stats = _show_memory_stats
     gui_class._update_hotkeys_display = _update_hotkeys_display
     gui_class._calculate_success_rate = _calculate_success_rate
@@ -458,7 +698,7 @@ Développé avec Python et amour ❤️
 
 # Classes de dialogue helper
 class FolderManagerDialog:
-    """Gestionnaire de dossiers personnalisés"""
+    """Gestionnaire de dossiers personnalisés moderne"""
 
     def __init__(self, parent, settings_manager):
         self.parent = parent
@@ -471,45 +711,130 @@ class FolderManagerDialog:
             return
 
         self.window = tk.Toplevel(self.parent)
-        self.window.title("Gestionnaire de dossiers")
-        self.window.geometry("600x400")
+        self.window.title("📁 Gestionnaire de dossiers")
+        self.window.geometry("700x500")
         self.window.transient(self.parent)
         self.window.grab_set()
+        self.window.configure(bg='#1a202c')
 
-        # Interface simplifiée
-        label = ttk.Label(self.window, text="Gestionnaire de dossiers - À implémenter")
-        label.pack(expand=True)
+        # Centre la fenêtre
+        self.window.update_idletasks()
+        x = (self.window.winfo_screenwidth() // 2) - (self.window.winfo_width() // 2)
+        y = (self.window.winfo_screenheight() // 2) - (self.window.winfo_height() // 2)
+        self.window.geometry(f"+{x}+{y}")
 
-        ttk.Button(self.window, text="Fermer",
-                   command=self.window.destroy).pack(pady=10)
+        # En-tête
+        header_frame = tk.Frame(self.window, bg='#1e3a8a', height=80)
+        header_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+        header_frame.pack_propagate(False)
 
+        tk.Label(header_frame,
+                 text="📁 Gestionnaire de dossiers personnalisés",
+                 bg='#1e3a8a',
+                 fg='white',
+                 font=('Segoe UI', 16, 'bold')).pack(expand=True, pady=20)
 
-class AssociationDialog:
-    """Dialogue pour ajouter/modifier une association"""
+        # Contenu
+        content_frame = tk.Frame(self.window, bg='#2d3748', relief='flat', bd=2)
+        content_frame.pack(fill=tk.BOTH, expand=True, padx=15, pady=15)
 
-    def __init__(self, parent, settings_manager, app_name="", folder_name=""):
-        self.parent = parent
-        self.settings = settings_manager
-        self.app_name = app_name
-        self.folder_name = folder_name
-        self.result = None
+        # Liste des dossiers
+        folders_frame = tk.Frame(content_frame, bg='#2d3748')
+        folders_frame.pack(fill=tk.BOTH, expand=True, padx=15, pady=15)
 
-    def show(self):
-        """Affiche le dialogue et retourne le résultat"""
-        app = simpledialog.askstring("Application",
-                                     "Nom de l'application:",
-                                     initialvalue=self.app_name)
-        if not app:
-            return None
+        tk.Label(folders_frame,
+                 text="📋 Dossiers personnalisés configurés:",
+                 bg='#2d3748',
+                 fg='white',
+                 font=('Segoe UI', 12, 'bold')).pack(anchor=tk.W, pady=(0, 10))
 
-        # Liste des dossiers disponibles
-        folders = ["default"] + list(self.settings.get_custom_folders().keys())
+        # Treeview pour les dossiers
+        columns = ('name', 'path', 'exists')
+        tree = ttk.Treeview(folders_frame, columns=columns, show='headings', height=12)
+        tree.heading('name', text='Nom du dossier')
+        tree.heading('path', text='Chemin')
+        tree.heading('exists', text='Statut')
+        tree.column('name', width=150)
+        tree.column('path', width=350)
+        tree.column('exists', width=100)
 
-        # Pour l'instant, dialogue simple
-        folder = simpledialog.askstring("Dossier",
-                                        f"Dossier pour {app} (disponibles: {', '.join(folders)}):",
-                                        initialvalue=self.folder_name)
+        # Scrollbar
+        scrollbar = ttk.Scrollbar(folders_frame, orient=tk.VERTICAL, command=tree.yview)
+        tree.configure(yscrollcommand=scrollbar.set)
+
+        tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        # Remplit la liste
+        custom_folders = self.settings.get_custom_folders()
+        for name, path in custom_folders.items():
+            status = "✅ Existe" if Path(path).exists() else "❌ Introuvable"
+            tree.insert('', tk.END, values=(name, path, status))
+
+        if not custom_folders:
+            tree.insert('', tk.END, values=("Aucun dossier configuré", "Utilisez le bouton Ajouter", ""))
+
+        # Boutons
+        buttons_frame = tk.Frame(self.window, bg='#1a202c')
+        buttons_frame.pack(fill=tk.X, padx=15, pady=15)
+
+        tk.Button(buttons_frame,
+                  text="➕ Ajouter un dossier",
+                  command=self._add_folder,
+                  bg='#10b981',
+                  fg='white',
+                  font=('Segoe UI', 10, 'bold'),
+                  relief='flat',
+                  padx=15,
+                  pady=8).pack(side=tk.LEFT, padx=5)
+
+        tk.Button(buttons_frame,
+                  text="📂 Ouvrir le dossier par défaut",
+                  command=self._open_default_folder,
+                  bg='#3b82f6',
+                  fg='white',
+                  font=('Segoe UI', 10, 'bold'),
+                  relief='flat',
+                  padx=15,
+                  pady=8).pack(side=tk.LEFT, padx=5)
+
+        tk.Button(buttons_frame,
+                  text="❌ Fermer",
+                  command=self.window.destroy,
+                  bg='#ef4444',
+                  fg='white',
+                  font=('Segoe UI', 10, 'bold'),
+                  relief='flat',
+                  padx=15,
+                  pady=8).pack(side=tk.RIGHT, padx=5)
+
+    def _add_folder(self):
+        """Ajoute un nouveau dossier personnalisé"""
+        name = simpledialog.askstring("Nouveau dossier", "Nom du dossier:", parent=self.window)
+        if not name:
+            return
+
+        folder = filedialog.askdirectory(title="Sélectionner le dossier", parent=self.window)
         if not folder:
-            return None
+            return
 
-        return (app, folder)
+        if self.settings.add_custom_folder(name, folder):
+            messagebox.showinfo("Succès", f"Dossier '{name}' ajouté avec succès!", parent=self.window)
+            # Recrée la fenêtre pour actualiser
+            self.window.destroy()
+            self.show()
+        else:
+            messagebox.showerror("Erreur", "Impossible d'ajouter le dossier", parent=self.window)
+
+    def _open_default_folder(self):
+        """Ouvre le dossier par défaut"""
+        try:
+            folder_path = self.settings.get_default_folder()
+            if platform.system() == "Windows":
+                os.startfile(folder_path)
+            elif platform.system() == "Darwin":
+                subprocess.run(["open", folder_path])
+            else:
+                subprocess.run(["xdg-open", folder_path])
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Impossible d'ouvrir le dossier: {e}", parent=self.window)
