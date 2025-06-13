@@ -1,8 +1,8 @@
-# core/screenshot_manager.py - VERSION CORRIGÉE CAPTURE ZONE FIGÉE
+# core/screenshot_manager.py - VERSION CORRIGÉE POUR CAPTURE FENÊTRE
 """
 Gestionnaire de captures d'écran pour SnapMaster - VERSION CORRIGÉE
 Gère tous les types de captures avec optimisation mémoire et sélection de zone interactive
-avec image figée assombrie et révélation de la sélection - CAPTURE SUR IMAGE FIGÉE
+CORRECTION : Capture réelle de la fenêtre active au lieu de l'écran complet
 """
 
 import pyautogui
@@ -17,6 +17,20 @@ import logging
 import threading
 import tempfile
 import weakref
+import platform
+
+# Import conditionnel pour Windows
+if platform.system() == "Windows":
+    try:
+        import win32gui
+        import win32ui
+        import win32con
+        import win32api
+        WINDOWS_AVAILABLE = True
+    except ImportError:
+        WINDOWS_AVAILABLE = False
+else:
+    WINDOWS_AVAILABLE = False
 
 from core.memory_manager import MemoryManager
 from core.app_detector import AppDetector, AppInfo
@@ -50,8 +64,8 @@ class AreaSelector:
         self.selection_width = 3
         self.corner_color = '#FFFFFF'  # Coins blancs
 
-    def select_area(self) -> Optional[Tuple[int, int, int, int, Image.Image]]:
-        """Lance l'interface de sélection et retourne les coordonnées + image figée (x, y, width, height, frozen_image)"""
+    def select_area(self) -> Optional[Tuple[int, int, int, int]]:
+        """Lance l'interface de sélection et retourne les coordonnées (x, y, width, height)"""
         try:
             self.logger.info("Début sélection de zone avec effets visuels d'assombrissement")
 
@@ -67,16 +81,10 @@ class AreaSelector:
             self.root.mainloop()
 
             # 4. Nettoyer les ressources
-            result = None
-            if self.selected_area:
-                # Retourne les coordonnées ET l'image figée
-                x, y, width, height = self.selected_area
-                result = (x, y, width, height, self.frozen_screenshot.copy())
-
             self._cleanup_selection_interface()
 
-            # 5. Retourner les coordonnées sélectionnées + image figée
-            return result
+            # 5. Retourner les coordonnées sélectionnées
+            return self.selected_area
 
         except Exception as e:
             self.logger.error(f"Erreur sélection de zone: {e}")
@@ -90,7 +98,7 @@ class AreaSelector:
 
             # Capture l'écran complet
             self.frozen_screenshot = pyautogui.screenshot()
-            self.logger.info(f"Écran capturé et figé: {self.frozen_screenshot.size}")
+            self.logger.info(f"Écran capturé: {self.frozen_screenshot.size}")
 
             # Crée la version assombrie
             enhancer = ImageEnhance.Brightness(self.frozen_screenshot)
@@ -196,7 +204,7 @@ class AreaSelector:
         # Instructions supplémentaires
         self.canvas.create_text(
             screen_width // 2, 75,
-            text="✨ Entrée/Espace = Capturer • Échap = Annuler • La zone sélectionnée révèle l'image figée",
+            text="✨ Entrée/Espace = Capturer • Échap = Annuler • La zone sélectionnée révèle l'image originale",
             fill='#BDC3C7',
             font=('Segoe UI', 11),
             tags='instructions'
@@ -256,7 +264,7 @@ class AreaSelector:
     def _reveal_selection_area(self, x: int, y: int, width: int, height: int):
         """Révèle l'image originale dans la zone sélectionnée"""
         try:
-            # Crée un crop de l'image originale FIGÉE pour la zone sélectionnée
+            # Crée un crop de l'image originale pour la zone sélectionnée
             selection_crop = self.frozen_screenshot.crop((x, y, x + width, y + height))
 
             # Convertit en image Tkinter
@@ -349,7 +357,7 @@ class AreaSelector:
         if width > 10 and height > 10:
             self.selected_area = (min_x, min_y, width, height)
             self._show_confirmation()
-            self.logger.info(f"Zone sélectionnée: {width}x{height} à ({min_x}, {min_y}) sur IMAGE FIGÉE")
+            self.logger.info(f"Zone sélectionnée: {width}x{height} à ({min_x}, {min_y})")
         else:
             # Sélection trop petite, recommence
             self._clear_selection()
@@ -376,8 +384,8 @@ class AreaSelector:
 
         # Fond moderne pour la confirmation
         self.canvas.create_rectangle(
-            x + w//2 - 250, confirm_y - 15,
-            x + w//2 + 250, confirm_y + 35,
+            x + w//2 - 200, confirm_y - 15,
+            x + w//2 + 200, confirm_y + 35,
             fill='#27AE60', outline='#2ECC71', width=2,
             tags='confirmation'
         )
@@ -385,7 +393,7 @@ class AreaSelector:
         # Icône et texte de confirmation
         self.canvas.create_text(
             x + w//2, confirm_y + 10,
-            text="✨ Zone révélée (IMAGE FIGÉE) ! Entrée = Capturer • Échap = Annuler • Clic = Nouvelle sélection",
+            text="✨ Zone révélée ! Entrée = Capturer • Échap = Annuler • Clic = Nouvelle sélection",
             fill='white',
             font=('Segoe UI', 12, 'bold'),
             tags='confirmation'
@@ -395,7 +403,7 @@ class AreaSelector:
         """Confirme la sélection"""
         if self.selected_area:
             self.selection_confirmed = True
-            self.logger.info("Sélection confirmée par l'utilisateur - capture sur image figée")
+            self.logger.info("Sélection confirmée par l'utilisateur")
             self.root.quit()
 
     def _cancel_selection(self, event=None):
@@ -430,21 +438,22 @@ class AreaSelector:
                 self.tk_image_original = None
 
             # Libère les images PIL
+            if self.frozen_screenshot:
+                del self.frozen_screenshot
+                self.frozen_screenshot = None
+
             if self.darkened_screenshot:
                 del self.darkened_screenshot
                 self.darkened_screenshot = None
 
-            # IMPORTANT: On garde self.frozen_screenshot pour la capture finale
-            # Elle sera libérée après la capture finale dans ScreenshotManager
-
-            self.logger.info("Ressources de sélection nettoyées (image figée conservée)")
+            self.logger.info("Ressources de sélection nettoyées")
 
         except Exception as e:
             self.logger.error(f"Erreur nettoyage interface sélection: {e}")
 
 
 class ScreenshotManager:
-    """Gestionnaire principal des captures d'écran avec protection contre les lancements multiples"""
+    """Gestionnaire principal des captures d'écran avec capture RÉELLE de fenêtre"""
 
     def __init__(self, settings_manager: SettingsManager, memory_manager: MemoryManager):
         self.logger = logging.getLogger(__name__)
@@ -479,7 +488,7 @@ class ScreenshotManager:
             'memory_usage_mb': 0
         }
 
-        self.logger.info("ScreenshotManager initialisé avec capture sur image figée")
+        self.logger.info("ScreenshotManager initialisé avec capture de fenêtre corrigée")
 
     def capture_fullscreen(self, save_path: Optional[str] = None,
                            folder_override: Optional[str] = None) -> Optional[str]:
@@ -515,15 +524,19 @@ class ScreenshotManager:
 
     def capture_active_window(self, save_path: Optional[str] = None,
                               folder_override: Optional[str] = None) -> Optional[str]:
-        """Capture la fenêtre active"""
+        """Capture RÉELLE de la fenêtre active - CORRIGÉ"""
         try:
-            self.logger.info("Début capture fenêtre active")
+            self.logger.info("Début capture fenêtre active - VERSION CORRIGÉE")
             self._prepare_capture()
 
             # Récupère l'application active
             current_app = self.app_detector.get_current_app()
             if not current_app:
                 raise Exception("Impossible de détecter l'application active")
+
+            self.logger.info(f"Application détectée: {current_app.name}")
+            self.logger.info(f"Coordonnées fenêtre: {current_app.window_rect}")
+            self.logger.info(f"Plein écran: {current_app.is_fullscreen}")
 
             # Délai configurable
             delay = self.settings.get_capture_settings().get('delay_seconds', 0)
@@ -534,18 +547,42 @@ class ScreenshotManager:
             if not folder_override:
                 folder_override = self.settings.get_app_folder(current_app.name)
 
-            # Capture selon le type de fenêtre
+            # CORRECTION : Capture RÉELLE de la fenêtre
             with self._memory_optimized_capture():
-                if current_app.is_fullscreen:
-                    screenshot = pyautogui.screenshot()
-                else:
-                    # Capture de la région de la fenêtre
+                screenshot = None
+
+                # Méthode 1 : Utiliser les coordonnées de fenêtre si disponibles
+                if not current_app.is_fullscreen:
                     x, y, width, height = current_app.window_rect
-                    if width > 0 and height > 0:
-                        screenshot = pyautogui.screenshot(region=(x, y, width, height))
+                    self.logger.info(f"Tentative capture région: x={x}, y={y}, w={width}, h={height}")
+
+                    # Valide les coordonnées
+                    if self._validate_window_coordinates(x, y, width, height):
+                        try:
+                            screenshot = pyautogui.screenshot(region=(x, y, width, height))
+                            self.logger.info(f"Capture région réussie: {width}x{height}")
+                        except Exception as e:
+                            self.logger.warning(f"Échec capture région: {e}")
+                            screenshot = None
                     else:
-                        # Fallback sur capture plein écran
-                        screenshot = pyautogui.screenshot()
+                        self.logger.warning(f"Coordonnées invalides: {current_app.window_rect}")
+
+                # Méthode 2 : Capture Windows native si disponible
+                if screenshot is None and WINDOWS_AVAILABLE and platform.system() == "Windows":
+                    screenshot = self._capture_window_native_windows(current_app)
+                    if screenshot:
+                        self.logger.info("Capture Windows native réussie")
+
+                # Méthode 3 : Capture par focus de fenêtre
+                if screenshot is None:
+                    screenshot = self._capture_window_by_focus(current_app)
+                    if screenshot:
+                        self.logger.info("Capture par focus réussie")
+
+                # Fallback : Capture plein écran seulement si vraiment nécessaire
+                if screenshot is None:
+                    self.logger.warning("Toutes les méthodes de capture de fenêtre ont échoué - Fallback plein écran")
+                    screenshot = pyautogui.screenshot()
 
                 # Sauvegarde avec nom incluant l'app
                 filename_prefix = f"{current_app.name}_{current_app.window_title}"
@@ -566,9 +603,139 @@ class ScreenshotManager:
             self._notify_error("window", str(e))
             return None
 
+    def _validate_window_coordinates(self, x: int, y: int, width: int, height: int) -> bool:
+        """Valide les coordonnées de fenêtre"""
+        try:
+            # Vérifie que les coordonnées sont des nombres positifs
+            if x < 0 or y < 0 or width <= 0 or height <= 0:
+                self.logger.debug(f"Coordonnées négatives ou nulles: {x}, {y}, {width}, {height}")
+                return False
+
+            # Vérifie que la fenêtre n'est pas trop petite
+            if width < 50 or height < 50:
+                self.logger.debug(f"Fenêtre trop petite: {width}x{height}")
+                return False
+
+            # Vérifie que la fenêtre n'est pas trop grande (plus grande que l'écran)
+            screen_width, screen_height = pyautogui.size()
+            if width > screen_width * 2 or height > screen_height * 2:
+                self.logger.debug(f"Fenêtre trop grande: {width}x{height} vs écran {screen_width}x{screen_height}")
+                return False
+
+            # Vérifie que la fenêtre n'est pas complètement hors écran
+            if x > screen_width or y > screen_height:
+                self.logger.debug(f"Fenêtre hors écran: {x}, {y} vs écran {screen_width}x{screen_height}")
+                return False
+
+            return True
+
+        except Exception as e:
+            self.logger.error(f"Erreur validation coordonnées: {e}")
+            return False
+
+    def _capture_window_native_windows(self, app_info: AppInfo) -> Optional[Image.Image]:
+        """Capture native Windows avec GDI"""
+        if not WINDOWS_AVAILABLE:
+            return None
+
+        try:
+            # Trouve la fenêtre par PID
+            hwnd = None
+
+            def enum_windows_proc(hwnd_temp, lParam):
+                nonlocal hwnd
+                _, pid = win32process.GetWindowThreadProcessId(hwnd_temp)
+                if pid == app_info.pid:
+                    # Vérifie que c'est une fenêtre visible
+                    if win32gui.IsWindowVisible(hwnd_temp):
+                        # Prend la première fenêtre visible du processus
+                        hwnd = hwnd_temp
+                        return False  # Arrête l'énumération
+                return True
+
+            # Import manquant
+            import win32process
+            win32gui.EnumWindows(enum_windows_proc, 0)
+
+            if not hwnd:
+                self.logger.warning("Impossible de trouver la fenêtre Windows")
+                return None
+
+            # Capture la fenêtre avec GDI
+            left, top, right, bottom = win32gui.GetWindowRect(hwnd)
+            width = right - left
+            height = bottom - top
+
+            if width <= 0 or height <= 0:
+                self.logger.warning(f"Dimensions invalides pour capture GDI: {width}x{height}")
+                return None
+
+            # Capture avec GDI
+            hwnd_dc = win32gui.GetWindowDC(hwnd)
+            mfc_dc = win32ui.CreateDCFromHandle(hwnd_dc)
+            save_dc = mfc_dc.CreateCompatibleDC()
+
+            save_bitmap = win32ui.CreateBitmap()
+            save_bitmap.CreateCompatibleBitmap(mfc_dc, width, height)
+            save_dc.SelectObject(save_bitmap)
+
+            save_dc.BitBlt((0, 0), (width, height), mfc_dc, (0, 0), win32con.SRCCOPY)
+
+            # Convertit en PIL Image
+            bmp_info = save_bitmap.GetInfo()
+            bmp_str = save_bitmap.GetBitmapBits(True)
+
+            screenshot = Image.frombuffer(
+                'RGB',
+                (bmp_info['bmWidth'], bmp_info['bmHeight']),
+                bmp_str, 'raw', 'BGRX', 0, 1
+            )
+
+            # Nettoyage
+            win32gui.DeleteObject(save_bitmap.GetHandle())
+            save_dc.DeleteDC()
+            mfc_dc.DeleteDC()
+            win32gui.ReleaseDC(hwnd, hwnd_dc)
+
+            self.logger.info(f"Capture GDI réussie: {width}x{height}")
+            return screenshot
+
+        except Exception as e:
+            self.logger.error(f"Erreur capture GDI: {e}")
+            return None
+
+    def _capture_window_by_focus(self, app_info: AppInfo) -> Optional[Image.Image]:
+        """Capture par focus de fenêtre (méthode alternative)"""
+        try:
+            # Utilise les coordonnées de fenêtre mais avec ajustements
+            x, y, width, height = app_info.window_rect
+
+            # Ajustements pour les bordures de fenêtre
+            if platform.system() == "Windows":
+                # Compense les bordures Windows
+                border_width = 8
+                title_height = 30
+                x += border_width
+                y += title_height
+                width -= border_width * 2
+                height -= title_height + border_width
+
+            # Vérifie les coordonnées ajustées
+            if not self._validate_window_coordinates(x, y, width, height):
+                return None
+
+            # Capture avec les coordonnées ajustées
+            screenshot = pyautogui.screenshot(region=(x, y, width, height))
+            self.logger.info(f"Capture avec ajustements réussie: {width}x{height}")
+            return screenshot
+
+        except Exception as e:
+            self.logger.error(f"Erreur capture par focus: {e}")
+            return None
+
     def capture_area_selection(self, save_path: Optional[str] = None,
                                folder_override: Optional[str] = None) -> Optional[str]:
-        """Capture une zone sélectionnée avec protection contre les lancements multiples - CORRIGÉ"""
+        """Capture une zone sélectionnée avec protection contre les lancements multiples"""
         # Protection contre les lancements multiples
         with self._area_selection_lock:
             if self._area_selection_active:
@@ -579,20 +746,19 @@ class ScreenshotManager:
             self._area_selection_active = True
 
         try:
-            self.logger.info("Début capture zone sélectionnée avec effets visuels - VERSION CORRIGÉE")
+            self.logger.info("Début capture zone sélectionnée avec effets visuels")
             self._prepare_capture()
 
             # Interface de sélection avec effets visuels
             selector = AreaSelector()
-            selection_result = selector.select_area()
+            region = selector.select_area()
 
-            if not selection_result:
+            if not region:
                 self.logger.info("Sélection de zone annulée par l'utilisateur")
                 return None
 
-            # Décompose le résultat (coordonnées + image figée)
-            x, y, width, height, frozen_image = selection_result
-            self.logger.info(f"Zone sélectionnée: {x},{y} {width}x{height} sur image figée")
+            x, y, width, height = region
+            self.logger.info(f"Zone sélectionnée: {x},{y} {width}x{height}")
 
             # Délai pour que l'interface disparaisse complètement
             time.sleep(0.5)
@@ -602,18 +768,13 @@ class ScreenshotManager:
             if delay > 0:
                 time.sleep(delay)
 
-            # CORRECTION : Capture de la région sélectionnée sur l'IMAGE FIGÉE
+            # Capture de la région sélectionnée sur l'écran RÉEL
             with self._memory_optimized_capture():
-                # Découpe la zone sélectionnée directement dans l'image figée
-                screenshot = frozen_image.crop((x, y, x + width, y + height))
-                self.logger.info(f"Zone découpée dans l'image figée: {screenshot.size}")
+                screenshot = pyautogui.screenshot(region=(x, y, width, height))
 
                 save_path = self._process_and_save_image(
                     screenshot, save_path, folder_override, "area_selection"
                 )
-
-            # Libère l'image figée
-            del frozen_image
 
             self._update_stats(True)
             self._notify_capture_complete("area", save_path)
@@ -732,7 +893,9 @@ class ScreenshotManager:
             cache_key = f"{prefix}_{int(time.time())}"
             self._image_cache[cache_key] = weakref.ref(image)
 
-            self.logger.info(f"Image sauvegardée: {save_path}")
+            # Nettoie le chemin pour les logs (évite les erreurs d'encodage)
+            safe_path = self._clean_path_for_logging(save_path)
+            self.logger.info(f"Image sauvegardée: {safe_path}")
             return save_path
 
         except Exception as e:
@@ -741,6 +904,34 @@ class ScreenshotManager:
         finally:
             # Libère l'image de la mémoire
             del image
+
+    def _clean_path_for_logging(self, path: str) -> str:
+        """Nettoie un chemin de fichier pour les logs sans erreur d'encodage"""
+        import re
+        import unicodedata
+
+        if not isinstance(path, str):
+            path = str(path)
+
+        # Supprime les emojis du chemin pour éviter les erreurs de log
+        emoji_pattern = re.compile("["
+                                   u"\U0001F600-\U0001F64F"  # emoticons
+                                   u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                                   u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                                   u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                                   u"\U00002702-\U000027B0"  # dingbats
+                                   u"\U000024C2-\U0001F251"  # enclosed characters
+                                   "]+", flags=re.UNICODE)
+        path = emoji_pattern.sub('[emoji]', path)
+
+        # Sur Windows, assure l'encodage ASCII pour les logs
+        if platform.system() == "Windows":
+            try:
+                path = path.encode('ascii', 'replace').decode('ascii')
+            except:
+                pass
+
+        return path
 
     def _generate_filename(self, folder_override: Optional[str], prefix: str) -> str:
         """Génère un nom de fichier automatique"""
@@ -781,10 +972,38 @@ class ScreenshotManager:
         return str(full_path)
 
     def _sanitize_filename(self, filename: str) -> str:
-        """Nettoie un nom de fichier pour éviter les caractères invalides"""
+        """Nettoie un nom de fichier pour éviter les caractères invalides et unicode"""
+        import re
+        import unicodedata
+
+        # Supprime les caractères de contrôle et emojis
+        filename = ''.join(char for char in filename if ord(char) < 127 or not unicodedata.category(char).startswith('C'))
+
+        # Supprime les emojis et symboles unicode
+        emoji_pattern = re.compile("["
+                                   u"\U0001F600-\U0001F64F"  # emoticons
+                                   u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                                   u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                                   u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                                   u"\U00002702-\U000027B0"  # dingbats
+                                   u"\U000024C2-\U0001F251"  # enclosed characters
+                                   "]+", flags=re.UNICODE)
+        filename = emoji_pattern.sub('', filename)
+
+        # Supprime les caractères non-ASCII restants
+        filename = filename.encode('ascii', 'ignore').decode('ascii')
+
+        # Replace les caractères interdits
         invalid_chars = '<>:"/\\|?*'
         for char in invalid_chars:
             filename = filename.replace(char, '_')
+
+        # Supprime les espaces multiples et en début/fin
+        filename = re.sub(r'\s+', ' ', filename).strip()
+
+        # Évite les noms vides
+        if not filename or filename.isspace():
+            filename = "Screenshot"
 
         # Limite la longueur
         return filename[:50] if len(filename) > 50 else filename
@@ -895,7 +1114,8 @@ class ScreenshotManager:
             'fullscreen': True,
             'window': True,
             'area_selection': True,
-            'app_detection': False
+            'app_detection': False,
+            'native_window_capture': WINDOWS_AVAILABLE
         }
 
         try:
