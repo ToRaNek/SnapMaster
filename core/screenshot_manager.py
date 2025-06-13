@@ -1,8 +1,8 @@
-# core/screenshot_manager.py - VERSION FINALE AVEC EFFETS VISUELS
+# core/screenshot_manager.py - VERSION CORRIGÉE CAPTURE ZONE FIGÉE
 """
-Gestionnaire de captures d'écran pour SnapMaster - VERSION FINALE AVEC EFFETS VISUELS
+Gestionnaire de captures d'écran pour SnapMaster - VERSION CORRIGÉE
 Gère tous les types de captures avec optimisation mémoire et sélection de zone interactive
-avec image figée assombrie et révélation de la sélection
+avec image figée assombrie et révélation de la sélection - CAPTURE SUR IMAGE FIGÉE
 """
 
 import pyautogui
@@ -50,8 +50,8 @@ class AreaSelector:
         self.selection_width = 3
         self.corner_color = '#FFFFFF'  # Coins blancs
 
-    def select_area(self) -> Optional[Tuple[int, int, int, int]]:
-        """Lance l'interface de sélection et retourne les coordonnées (x, y, width, height)"""
+    def select_area(self) -> Optional[Tuple[int, int, int, int, Image.Image]]:
+        """Lance l'interface de sélection et retourne les coordonnées + image figée (x, y, width, height, frozen_image)"""
         try:
             self.logger.info("Début sélection de zone avec effets visuels d'assombrissement")
 
@@ -67,10 +67,16 @@ class AreaSelector:
             self.root.mainloop()
 
             # 4. Nettoyer les ressources
+            result = None
+            if self.selected_area:
+                # Retourne les coordonnées ET l'image figée
+                x, y, width, height = self.selected_area
+                result = (x, y, width, height, self.frozen_screenshot.copy())
+
             self._cleanup_selection_interface()
 
-            # 5. Retourner les coordonnées sélectionnées
-            return self.selected_area
+            # 5. Retourner les coordonnées sélectionnées + image figée
+            return result
 
         except Exception as e:
             self.logger.error(f"Erreur sélection de zone: {e}")
@@ -84,7 +90,7 @@ class AreaSelector:
 
             # Capture l'écran complet
             self.frozen_screenshot = pyautogui.screenshot()
-            self.logger.info(f"Écran capturé: {self.frozen_screenshot.size}")
+            self.logger.info(f"Écran capturé et figé: {self.frozen_screenshot.size}")
 
             # Crée la version assombrie
             enhancer = ImageEnhance.Brightness(self.frozen_screenshot)
@@ -190,7 +196,7 @@ class AreaSelector:
         # Instructions supplémentaires
         self.canvas.create_text(
             screen_width // 2, 75,
-            text="✨ Entrée/Espace = Capturer • Échap = Annuler • La zone sélectionnée révèle l'image originale",
+            text="✨ Entrée/Espace = Capturer • Échap = Annuler • La zone sélectionnée révèle l'image figée",
             fill='#BDC3C7',
             font=('Segoe UI', 11),
             tags='instructions'
@@ -250,7 +256,7 @@ class AreaSelector:
     def _reveal_selection_area(self, x: int, y: int, width: int, height: int):
         """Révèle l'image originale dans la zone sélectionnée"""
         try:
-            # Crée un crop de l'image originale pour la zone sélectionnée
+            # Crée un crop de l'image originale FIGÉE pour la zone sélectionnée
             selection_crop = self.frozen_screenshot.crop((x, y, x + width, y + height))
 
             # Convertit en image Tkinter
@@ -343,7 +349,7 @@ class AreaSelector:
         if width > 10 and height > 10:
             self.selected_area = (min_x, min_y, width, height)
             self._show_confirmation()
-            self.logger.info(f"Zone sélectionnée: {width}x{height} à ({min_x}, {min_y})")
+            self.logger.info(f"Zone sélectionnée: {width}x{height} à ({min_x}, {min_y}) sur IMAGE FIGÉE")
         else:
             # Sélection trop petite, recommence
             self._clear_selection()
@@ -370,8 +376,8 @@ class AreaSelector:
 
         # Fond moderne pour la confirmation
         self.canvas.create_rectangle(
-            x + w//2 - 200, confirm_y - 15,
-            x + w//2 + 200, confirm_y + 35,
+            x + w//2 - 250, confirm_y - 15,
+            x + w//2 + 250, confirm_y + 35,
             fill='#27AE60', outline='#2ECC71', width=2,
             tags='confirmation'
         )
@@ -379,7 +385,7 @@ class AreaSelector:
         # Icône et texte de confirmation
         self.canvas.create_text(
             x + w//2, confirm_y + 10,
-            text="✨ Zone révélée ! Entrée = Capturer • Échap = Annuler • Clic = Nouvelle sélection",
+            text="✨ Zone révélée (IMAGE FIGÉE) ! Entrée = Capturer • Échap = Annuler • Clic = Nouvelle sélection",
             fill='white',
             font=('Segoe UI', 12, 'bold'),
             tags='confirmation'
@@ -389,7 +395,7 @@ class AreaSelector:
         """Confirme la sélection"""
         if self.selected_area:
             self.selection_confirmed = True
-            self.logger.info("Sélection confirmée par l'utilisateur")
+            self.logger.info("Sélection confirmée par l'utilisateur - capture sur image figée")
             self.root.quit()
 
     def _cancel_selection(self, event=None):
@@ -424,15 +430,14 @@ class AreaSelector:
                 self.tk_image_original = None
 
             # Libère les images PIL
-            if self.frozen_screenshot:
-                del self.frozen_screenshot
-                self.frozen_screenshot = None
-
             if self.darkened_screenshot:
                 del self.darkened_screenshot
                 self.darkened_screenshot = None
 
-            self.logger.info("Ressources de sélection nettoyées")
+            # IMPORTANT: On garde self.frozen_screenshot pour la capture finale
+            # Elle sera libérée après la capture finale dans ScreenshotManager
+
+            self.logger.info("Ressources de sélection nettoyées (image figée conservée)")
 
         except Exception as e:
             self.logger.error(f"Erreur nettoyage interface sélection: {e}")
@@ -474,7 +479,7 @@ class ScreenshotManager:
             'memory_usage_mb': 0
         }
 
-        self.logger.info("ScreenshotManager initialisé avec effets visuels et protection")
+        self.logger.info("ScreenshotManager initialisé avec capture sur image figée")
 
     def capture_fullscreen(self, save_path: Optional[str] = None,
                            folder_override: Optional[str] = None) -> Optional[str]:
@@ -563,7 +568,7 @@ class ScreenshotManager:
 
     def capture_area_selection(self, save_path: Optional[str] = None,
                                folder_override: Optional[str] = None) -> Optional[str]:
-        """Capture une zone sélectionnée avec protection contre les lancements multiples"""
+        """Capture une zone sélectionnée avec protection contre les lancements multiples - CORRIGÉ"""
         # Protection contre les lancements multiples
         with self._area_selection_lock:
             if self._area_selection_active:
@@ -574,19 +579,20 @@ class ScreenshotManager:
             self._area_selection_active = True
 
         try:
-            self.logger.info("Début capture zone sélectionnée avec effets visuels")
+            self.logger.info("Début capture zone sélectionnée avec effets visuels - VERSION CORRIGÉE")
             self._prepare_capture()
 
             # Interface de sélection avec effets visuels
             selector = AreaSelector()
-            region = selector.select_area()
+            selection_result = selector.select_area()
 
-            if not region:
+            if not selection_result:
                 self.logger.info("Sélection de zone annulée par l'utilisateur")
                 return None
 
-            x, y, width, height = region
-            self.logger.info(f"Zone sélectionnée: {x},{y} {width}x{height}")
+            # Décompose le résultat (coordonnées + image figée)
+            x, y, width, height, frozen_image = selection_result
+            self.logger.info(f"Zone sélectionnée: {x},{y} {width}x{height} sur image figée")
 
             # Délai pour que l'interface disparaisse complètement
             time.sleep(0.5)
@@ -596,13 +602,18 @@ class ScreenshotManager:
             if delay > 0:
                 time.sleep(delay)
 
-            # Capture de la région sélectionnée sur l'écran RÉEL
+            # CORRECTION : Capture de la région sélectionnée sur l'IMAGE FIGÉE
             with self._memory_optimized_capture():
-                screenshot = pyautogui.screenshot(region=(x, y, width, height))
+                # Découpe la zone sélectionnée directement dans l'image figée
+                screenshot = frozen_image.crop((x, y, x + width, y + height))
+                self.logger.info(f"Zone découpée dans l'image figée: {screenshot.size}")
 
                 save_path = self._process_and_save_image(
                     screenshot, save_path, folder_override, "area_selection"
                 )
+
+            # Libère l'image figée
+            del frozen_image
 
             self._update_stats(True)
             self._notify_capture_complete("area", save_path)
