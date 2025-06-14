@@ -1,8 +1,8 @@
-# core/screenshot_manager.py - VERSION CORRIGÉE POUR CAPTURE FENÊTRE
+# core/screenshot_manager.py - VERSION CORRIGÉE POUR TOUTES LES APPLICATIONS
 """
 Gestionnaire de captures d'écran pour SnapMaster - VERSION CORRIGÉE
 Gère tous les types de captures avec optimisation mémoire et sélection de zone interactive
-CORRECTION : Capture réelle de la fenêtre active au lieu de l'écran complet
+CORRECTION : Capture réelle de toutes les fenêtres y compris Spotify, Chrome, etc.
 """
 
 import pyautogui
@@ -26,6 +26,10 @@ if platform.system() == "Windows":
         import win32ui
         import win32con
         import win32api
+        import win32process
+        from ctypes import windll, byref, c_ubyte
+        from ctypes.wintypes import RECT, HWND
+        import ctypes
         WINDOWS_AVAILABLE = True
     except ImportError:
         WINDOWS_AVAILABLE = False
@@ -453,7 +457,7 @@ class AreaSelector:
 
 
 class ScreenshotManager:
-    """Gestionnaire principal des captures d'écran avec capture RÉELLE de fenêtre"""
+    """Gestionnaire principal des captures d'écran avec capture UNIVERSELLE de fenêtre"""
 
     def __init__(self, settings_manager: SettingsManager, memory_manager: MemoryManager):
         self.logger = logging.getLogger(__name__)
@@ -488,7 +492,7 @@ class ScreenshotManager:
             'memory_usage_mb': 0
         }
 
-        self.logger.info("ScreenshotManager initialisé avec capture de fenêtre corrigée")
+        self.logger.info("ScreenshotManager initialisé avec capture universelle de fenêtre")
 
     def capture_fullscreen(self, save_path: Optional[str] = None,
                            folder_override: Optional[str] = None) -> Optional[str]:
@@ -524,9 +528,9 @@ class ScreenshotManager:
 
     def capture_active_window(self, save_path: Optional[str] = None,
                               folder_override: Optional[str] = None) -> Optional[str]:
-        """Capture RÉELLE de la fenêtre active - CORRIGÉ"""
+        """Capture UNIVERSELLE de la fenêtre active - CORRIGÉ POUR TOUTES LES APPS"""
         try:
-            self.logger.info("Début capture fenêtre active - VERSION CORRIGÉE")
+            self.logger.info("Début capture fenêtre active - VERSION UNIVERSELLE")
             self._prepare_capture()
 
             # Récupère l'application active
@@ -547,41 +551,31 @@ class ScreenshotManager:
             if not folder_override:
                 folder_override = self.settings.get_app_folder(current_app.name)
 
-            # CORRECTION : Capture RÉELLE de la fenêtre
+            # NOUVELLE MÉTHODE UNIVERSELLE DE CAPTURE
             with self._memory_optimized_capture():
                 screenshot = None
 
-                # Méthode 1 : Utiliser les coordonnées de fenêtre si disponibles
-                if not current_app.is_fullscreen:
-                    x, y, width, height = current_app.window_rect
-                    self.logger.info(f"Tentative capture région: x={x}, y={y}, w={width}, h={height}")
-
-                    # Valide les coordonnées
-                    if self._validate_window_coordinates(x, y, width, height):
-                        try:
-                            screenshot = pyautogui.screenshot(region=(x, y, width, height))
-                            self.logger.info(f"Capture région réussie: {width}x{height}")
-                        except Exception as e:
-                            self.logger.warning(f"Échec capture région: {e}")
-                            screenshot = None
-                    else:
-                        self.logger.warning(f"Coordonnées invalides: {current_app.window_rect}")
-
-                # Méthode 2 : Capture Windows native si disponible
-                if screenshot is None and WINDOWS_AVAILABLE and platform.system() == "Windows":
-                    screenshot = self._capture_window_native_windows(current_app)
+                # Méthode 1 : PrintWindow API (Windows) - LA PLUS EFFICACE
+                if WINDOWS_AVAILABLE and platform.system() == "Windows":
+                    screenshot = self._capture_window_printwindow(current_app)
                     if screenshot:
-                        self.logger.info("Capture Windows native réussie")
+                        self.logger.info("Capture PrintWindow réussie")
 
-                # Méthode 3 : Capture par focus de fenêtre
-                if screenshot is None:
-                    screenshot = self._capture_window_by_focus(current_app)
+                # Méthode 2 : BitBlt avec amélioration DWM
+                if screenshot is None and WINDOWS_AVAILABLE:
+                    screenshot = self._capture_window_bitblt_enhanced(current_app)
                     if screenshot:
-                        self.logger.info("Capture par focus réussie")
+                        self.logger.info("Capture BitBlt améliorée réussie")
 
-                # Fallback : Capture plein écran seulement si vraiment nécessaire
+                # Méthode 3 : Capture par région avec correction
                 if screenshot is None:
-                    self.logger.warning("Toutes les méthodes de capture de fenêtre ont échoué - Fallback plein écran")
+                    screenshot = self._capture_window_region_corrected(current_app)
+                    if screenshot:
+                        self.logger.info("Capture région corrigée réussie")
+
+                # Méthode 4 : Fallback capture d'écran complète
+                if screenshot is None:
+                    self.logger.warning("Toutes les méthodes spécialisées ont échoué - Capture plein écran")
                     screenshot = pyautogui.screenshot()
 
                 # Sauvegarde avec nom incluant l'app
@@ -603,93 +597,74 @@ class ScreenshotManager:
             self._notify_error("window", str(e))
             return None
 
-    def _validate_window_coordinates(self, x: int, y: int, width: int, height: int) -> bool:
-        """Valide les coordonnées de fenêtre"""
-        try:
-            # Vérifie que les coordonnées sont des nombres positifs
-            if x < 0 or y < 0 or width <= 0 or height <= 0:
-                self.logger.debug(f"Coordonnées négatives ou nulles: {x}, {y}, {width}, {height}")
-                return False
-
-            # Vérifie que la fenêtre n'est pas trop petite
-            if width < 50 or height < 50:
-                self.logger.debug(f"Fenêtre trop petite: {width}x{height}")
-                return False
-
-            # Vérifie que la fenêtre n'est pas trop grande (plus grande que l'écran)
-            screen_width, screen_height = pyautogui.size()
-            if width > screen_width * 2 or height > screen_height * 2:
-                self.logger.debug(f"Fenêtre trop grande: {width}x{height} vs écran {screen_width}x{screen_height}")
-                return False
-
-            # Vérifie que la fenêtre n'est pas complètement hors écran
-            if x > screen_width or y > screen_height:
-                self.logger.debug(f"Fenêtre hors écran: {x}, {y} vs écran {screen_width}x{screen_height}")
-                return False
-
-            return True
-
-        except Exception as e:
-            self.logger.error(f"Erreur validation coordonnées: {e}")
-            return False
-
-    def _capture_window_native_windows(self, app_info: AppInfo) -> Optional[Image.Image]:
-        """Capture native Windows avec GDI"""
+    def _capture_window_printwindow(self, app_info: AppInfo) -> Optional[Image.Image]:
+        """Capture avec PrintWindow API - Méthode la plus efficace"""
         if not WINDOWS_AVAILABLE:
             return None
 
         try:
+            self.logger.info("Tentative capture PrintWindow...")
+
             # Trouve la fenêtre par PID
-            hwnd = None
-
-            def enum_windows_proc(hwnd_temp, lParam):
-                nonlocal hwnd
-                _, pid = win32process.GetWindowThreadProcessId(hwnd_temp)
-                if pid == app_info.pid:
-                    # Vérifie que c'est une fenêtre visible
-                    if win32gui.IsWindowVisible(hwnd_temp):
-                        # Prend la première fenêtre visible du processus
-                        hwnd = hwnd_temp
-                        return False  # Arrête l'énumération
-                return True
-
-            # Import manquant
-            import win32process
-            win32gui.EnumWindows(enum_windows_proc, 0)
-
+            hwnd = self._find_main_window_by_pid(app_info.pid)
             if not hwnd:
-                self.logger.warning("Impossible de trouver la fenêtre Windows")
+                self.logger.warning("Impossible de trouver la fenêtre principale")
                 return None
 
-            # Capture la fenêtre avec GDI
-            left, top, right, bottom = win32gui.GetWindowRect(hwnd)
-            width = right - left
-            height = bottom - top
+            # Obtient les dimensions de la fenêtre
+            rect = win32gui.GetWindowRect(hwnd)
+            width = rect[2] - rect[0]
+            height = rect[3] - rect[1]
 
             if width <= 0 or height <= 0:
-                self.logger.warning(f"Dimensions invalides pour capture GDI: {width}x{height}")
+                self.logger.warning(f"Dimensions invalides: {width}x{height}")
                 return None
 
-            # Capture avec GDI
+            # Assure que la fenêtre est visible et au premier plan
+            if win32gui.IsIconic(hwnd):
+                win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
+                time.sleep(0.1)
+
+            win32gui.SetForegroundWindow(hwnd)
+            time.sleep(0.1)
+
+            # Crée le contexte de périphérique
             hwnd_dc = win32gui.GetWindowDC(hwnd)
+            if not hwnd_dc:
+                self.logger.error("Impossible d'obtenir le DC de la fenêtre")
+                return None
+
+            # Crée un DC compatible et un bitmap
             mfc_dc = win32ui.CreateDCFromHandle(hwnd_dc)
             save_dc = mfc_dc.CreateCompatibleDC()
-
             save_bitmap = win32ui.CreateBitmap()
             save_bitmap.CreateCompatibleBitmap(mfc_dc, width, height)
             save_dc.SelectObject(save_bitmap)
 
-            save_dc.BitBlt((0, 0), (width, height), mfc_dc, (0, 0), win32con.SRCCOPY)
+            # MÉTHODE PRINTWINDOW - Plus efficace que BitBlt pour les apps modernes
+            result = windll.user32.PrintWindow(hwnd, save_dc.GetSafeHdc(), 3)  # PW_RENDERFULLCONTENT
 
-            # Convertit en PIL Image
-            bmp_info = save_bitmap.GetInfo()
-            bmp_str = save_bitmap.GetBitmapBits(True)
+            if result == 0:
+                # Fallback sur PrintWindow classique
+                result = windll.user32.PrintWindow(hwnd, save_dc.GetSafeHdc(), 0)
 
-            screenshot = Image.frombuffer(
-                'RGB',
-                (bmp_info['bmWidth'], bmp_info['bmHeight']),
-                bmp_str, 'raw', 'BGRX', 0, 1
-            )
+            if result != 0:
+                # Conversion en PIL Image
+                bmp_info = save_bitmap.GetInfo()
+                bmp_str = save_bitmap.GetBitmapBits(True)
+
+                screenshot = Image.frombuffer(
+                    'RGB',
+                    (bmp_info['bmWidth'], bmp_info['bmHeight']),
+                    bmp_str, 'raw', 'BGRX', 0, 1
+                )
+
+                # Vérification que l'image n'est pas noire
+                if self._is_image_valid(screenshot):
+                    self.logger.info(f"PrintWindow réussi: {width}x{height}")
+                    return screenshot
+                else:
+                    self.logger.warning("Image capturée noire ou invalide avec PrintWindow")
 
             # Nettoyage
             win32gui.DeleteObject(save_bitmap.GetHandle())
@@ -697,41 +672,215 @@ class ScreenshotManager:
             mfc_dc.DeleteDC()
             win32gui.ReleaseDC(hwnd, hwnd_dc)
 
-            self.logger.info(f"Capture GDI réussie: {width}x{height}")
-            return screenshot
-
         except Exception as e:
-            self.logger.error(f"Erreur capture GDI: {e}")
+            self.logger.error(f"Erreur PrintWindow: {e}")
+
+        return None
+
+    def _capture_window_bitblt_enhanced(self, app_info: AppInfo) -> Optional[Image.Image]:
+        """Capture BitBlt avec gestion DWM et composition"""
+        if not WINDOWS_AVAILABLE:
             return None
 
-    def _capture_window_by_focus(self, app_info: AppInfo) -> Optional[Image.Image]:
-        """Capture par focus de fenêtre (méthode alternative)"""
         try:
-            # Utilise les coordonnées de fenêtre mais avec ajustements
-            x, y, width, height = app_info.window_rect
+            self.logger.info("Tentative capture BitBlt améliorée...")
 
-            # Ajustements pour les bordures de fenêtre
-            if platform.system() == "Windows":
-                # Compense les bordures Windows
-                border_width = 8
-                title_height = 30
-                x += border_width
-                y += title_height
-                width -= border_width * 2
-                height -= title_height + border_width
-
-            # Vérifie les coordonnées ajustées
-            if not self._validate_window_coordinates(x, y, width, height):
+            hwnd = self._find_main_window_by_pid(app_info.pid)
+            if not hwnd:
                 return None
 
-            # Capture avec les coordonnées ajustées
-            screenshot = pyautogui.screenshot(region=(x, y, width, height))
-            self.logger.info(f"Capture avec ajustements réussie: {width}x{height}")
-            return screenshot
+            # Force la mise à jour de la fenêtre
+            win32gui.UpdateWindow(hwnd)
+            win32gui.RedrawWindow(hwnd, None, None,
+                                  win32con.RDW_FRAME | win32con.RDW_INVALIDATE | win32con.RDW_UPDATENOW)
+
+            # Obtient les dimensions RÉELLES de la zone client
+            client_rect = win32gui.GetClientRect(hwnd)
+            client_width = client_rect[2] - client_rect[0]
+            client_height = client_rect[3] - client_rect[1]
+
+            if client_width <= 0 or client_height <= 0:
+                return None
+
+            # Obtient le DC de la fenêtre
+            hwnd_dc = win32gui.GetDC(hwnd)
+            if not hwnd_dc:
+                return None
+
+            # Crée les contextes compatibles
+            mfc_dc = win32ui.CreateDCFromHandle(hwnd_dc)
+            save_dc = mfc_dc.CreateCompatibleDC()
+            save_bitmap = win32ui.CreateBitmap()
+            save_bitmap.CreateCompatibleBitmap(mfc_dc, client_width, client_height)
+            save_dc.SelectObject(save_bitmap)
+
+            # BitBlt avec différents modes
+            result = save_dc.BitBlt((0, 0), (client_width, client_height), mfc_dc, (0, 0), win32con.SRCCOPY)
+
+            if result:
+                # Conversion en PIL Image
+                bmp_info = save_bitmap.GetInfo()
+                bmp_str = save_bitmap.GetBitmapBits(True)
+
+                screenshot = Image.frombuffer(
+                    'RGB',
+                    (bmp_info['bmWidth'], bmp_info['bmHeight']),
+                    bmp_str, 'raw', 'BGRX', 0, 1
+                )
+
+                if self._is_image_valid(screenshot):
+                    self.logger.info(f"BitBlt amélioré réussi: {client_width}x{client_height}")
+                    return screenshot
+
+            # Nettoyage
+            win32gui.DeleteObject(save_bitmap.GetHandle())
+            save_dc.DeleteDC()
+            mfc_dc.DeleteDC()
+            win32gui.ReleaseDC(hwnd, hwnd_dc)
 
         except Exception as e:
-            self.logger.error(f"Erreur capture par focus: {e}")
+            self.logger.error(f"Erreur BitBlt amélioré: {e}")
+
+        return None
+
+    def _capture_window_region_corrected(self, app_info: AppInfo) -> Optional[Image.Image]:
+        """Capture par région avec correction des coordonnées"""
+        try:
+            self.logger.info("Tentative capture région corrigée...")
+
+            # Obtient les coordonnées réelles de la fenêtre
+            if WINDOWS_AVAILABLE:
+                hwnd = self._find_main_window_by_pid(app_info.pid)
+                if hwnd:
+                    # Utilise GetWindowRect pour les coordonnées écran
+                    rect = win32gui.GetWindowRect(hwnd)
+                    x, y, right, bottom = rect
+                    width = right - x
+                    height = bottom - y
+
+                    # Correction pour les bordures et barre de titre Windows
+                    border_width = 8
+                    title_height = 32
+
+                    # Ajuste selon le style de fenêtre
+                    style = win32gui.GetWindowLong(hwnd, win32con.GWL_STYLE)
+                    if style & win32con.WS_BORDER:
+                        x += border_width
+                        y += title_height
+                        width -= border_width * 2
+                        height -= title_height + border_width
+                else:
+                    # Fallback sur les coordonnées du détecteur
+                    x, y, width, height = app_info.window_rect
+            else:
+                x, y, width, height = app_info.window_rect
+
+            # Valide les coordonnées
+            if not self._validate_window_coordinates(x, y, width, height):
+                self.logger.warning(f"Coordonnées invalides: {x}, {y}, {width}, {height}")
+                return None
+
+            # Assure que la région n'est pas hors écran
+            screen_width, screen_height = pyautogui.size()
+            x = max(0, min(x, screen_width - width))
+            y = max(0, min(y, screen_height - height))
+            width = min(width, screen_width - x)
+            height = min(height, screen_height - y)
+
+            self.logger.info(f"Capture région: x={x}, y={y}, w={width}, h={height}")
+
+            # Capture avec pyautogui
+            screenshot = pyautogui.screenshot(region=(x, y, width, height))
+
+            if self._is_image_valid(screenshot):
+                self.logger.info(f"Capture région réussie: {width}x{height}")
+                return screenshot
+            else:
+                self.logger.warning("Image capturée par région invalide")
+
+        except Exception as e:
+            self.logger.error(f"Erreur capture région: {e}")
+
+        return None
+
+    def _find_main_window_by_pid(self, pid: int) -> Optional[int]:
+        """Trouve la fenêtre principale d'un processus par PID"""
+        if not WINDOWS_AVAILABLE:
             return None
+
+        main_window = None
+
+        def enum_windows_proc(hwnd, lParam):
+            nonlocal main_window
+            try:
+                _, window_pid = win32process.GetWindowThreadProcessId(hwnd)
+                if window_pid == pid:
+                    # Vérifie que c'est une fenêtre principale visible
+                    if (win32gui.IsWindowVisible(hwnd) and
+                            win32gui.GetWindowText(hwnd) and
+                            not win32gui.GetParent(hwnd)):
+
+                        # Prend la plus grande fenêtre du processus
+                        rect = win32gui.GetWindowRect(hwnd)
+                        width = rect[2] - rect[0]
+                        height = rect[3] - rect[1]
+
+                        if width > 100 and height > 100:  # Ignore les petites fenêtres
+                            main_window = hwnd
+                            return False  # Arrête l'énumération
+            except:
+                pass
+            return True
+
+        try:
+            win32gui.EnumWindows(enum_windows_proc, 0)
+        except:
+            pass
+
+        return main_window
+
+    def _is_image_valid(self, image: Image.Image) -> bool:
+        """Vérifie qu'une image n'est pas complètement noire ou invalide"""
+        try:
+            if not image or image.size[0] < 10 or image.size[1] < 10:
+                return False
+
+            # Vérifie qu'il y a des pixels non noirs
+            # Prend un échantillon de l'image pour éviter de traiter toute l'image
+            sample = image.resize((50, 50))
+            pixels = list(sample.getdata())
+
+            # Compte les pixels non noirs
+            non_black_pixels = sum(1 for pixel in pixels if sum(pixel[:3]) > 30)
+
+            # Au moins 10% de pixels non noirs
+            return non_black_pixels > len(pixels) * 0.1
+
+        except Exception as e:
+            self.logger.error(f"Erreur validation image: {e}")
+            return False
+
+    def _validate_window_coordinates(self, x: int, y: int, width: int, height: int) -> bool:
+        """Valide les coordonnées de fenêtre"""
+        try:
+            # Vérifie que les coordonnées sont des nombres positifs
+            if x < -100 or y < -100 or width <= 0 or height <= 0:
+                return False
+
+            # Vérifie que la fenêtre n'est pas trop petite
+            if width < 50 or height < 50:
+                return False
+
+            # Vérifie que la fenêtre n'est pas trop grande (plus grande que l'écran)
+            screen_width, screen_height = pyautogui.size()
+            if width > screen_width * 2 or height > screen_height * 2:
+                return False
+
+            return True
+
+        except Exception as e:
+            self.logger.error(f"Erreur validation coordonnées: {e}")
+            return False
 
     def capture_area_selection(self, save_path: Optional[str] = None,
                                folder_override: Optional[str] = None) -> Optional[str]:
@@ -1115,7 +1264,9 @@ class ScreenshotManager:
             'window': True,
             'area_selection': True,
             'app_detection': False,
-            'native_window_capture': WINDOWS_AVAILABLE
+            'native_window_capture': WINDOWS_AVAILABLE,
+            'printwindow_api': WINDOWS_AVAILABLE,
+            'enhanced_capture': WINDOWS_AVAILABLE
         }
 
         try:

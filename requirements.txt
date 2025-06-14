@@ -5,3 +5,9 @@ psutil>=5.9.0
 keyboard>=0.13.5
 pyscreenshot>=3.0
 configparser>=5.0.0
+
+# Dépendances Windows pour capture avancée
+pywin32>=227; sys_platform == "win32"
+
+# Dépendances optionnelles pour améliorer les performances
+numpy>=1.21.0

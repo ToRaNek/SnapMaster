@@ -10,14 +10,12 @@
     "applications": {
         "app_folder_mapping": {
             "Spotify.exe": "Spotify",
-            "Discord.exe": "Discord",
-            "python.exe": "Spotify"
+            "Discord.exe": "Discord"
         },
         "monitored_apps": [
             "Spotify",
             "Spotify.exe",
-            "Discord.exe",
-            "python.exe"
+            "Discord.exe"
         ]
     },
     "hotkeys": {
