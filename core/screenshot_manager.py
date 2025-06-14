@@ -3,12 +3,14 @@
 Gestionnaire de captures d'écran pour SnapMaster - VERSION CORRIGÉE
 Gère tous les types de captures avec optimisation mémoire et sélection de zone interactive
 CORRECTION : Capture réelle de toutes les fenêtres y compris Spotify, Chrome, etc.
+NOUVEAU : Dialogue de choix de dossier pour applications non configurées
 """
 
 import pyautogui
 import time
 import os
 import tkinter as tk
+from tkinter import messagebox, filedialog
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Tuple, Callable, Any, Dict
@@ -33,8 +35,21 @@ if platform.system() == "Windows":
         WINDOWS_AVAILABLE = True
     except ImportError:
         WINDOWS_AVAILABLE = False
-else:
-    WINDOWS_AVAILABLE = False
+        logging.warning("Modules Windows non disponibles, fonctionnalités limitées")
+
+elif platform.system() == "Linux":
+    try:
+        import subprocess
+        LINUX_AVAILABLE = True
+    except ImportError:
+        LINUX_AVAILABLE = False
+
+else:  # macOS et autres
+    try:
+        import subprocess
+        MACOS_AVAILABLE = True
+    except ImportError:
+        MACOS_AVAILABLE = False
 
 from core.memory_manager import MemoryManager
 from core.app_detector import AppDetector, AppInfo
@@ -456,6 +471,268 @@ class AreaSelector:
             self.logger.error(f"Erreur nettoyage interface sélection: {e}")
 
 
+class ApplicationFolderDialog:
+    """Dialogue modal pour choisir le dossier d'une application non configurée"""
+
+    def __init__(self, parent, app_name: str, settings_manager: SettingsManager):
+        self.parent = parent
+        self.app_name = app_name
+        self.settings = settings_manager
+        self.result = None
+        self.window = None
+
+    def show(self) -> Optional[str]:
+        """Affiche le dialogue et retourne le dossier choisi ou None"""
+        try:
+            self.logger.info(f"Affichage du dialogue pour {self.app_name}")
+            self._create_dialog()
+
+            # S'assure que le dialogue est visible et au premier plan
+            self.window.update()
+            self.window.lift()
+            self.window.focus_force()
+
+            # Active le mode modal APRÈS que la fenêtre soit visible
+            self.window.grab_set()
+
+            # Log pour debug
+            self.logger.info("Dialogue créé et visible, attente de l'utilisateur...")
+
+            self.window.wait_window()
+            self.logger.info(f"Dialogue fermé, résultat: {self.result}")
+            return self.result
+        except Exception as e:
+            logging.error(f"Erreur dialogue choix application: {e}")
+            return None
+
+    def _create_dialog(self):
+        """Crée le dialogue modal"""
+        try:
+            self.logger.info("Création de la fenêtre de dialogue...")
+
+            self.window = tk.Toplevel(self.parent)
+            self.window.title("Configuration de dossier - SnapMaster")
+            self.window.geometry("500x300")
+            self.window.resizable(False, False)
+
+            # Configuration modale avec premier plan - RENFORCÉE
+            self.window.transient(self.parent)
+            self.window.wm_attributes("-topmost", True)
+
+            # Style moderne
+            self.window.configure(bg='#1a202c')
+
+            # Centre le dialogue
+            self._center_dialog()
+
+            # Création du contenu
+            self._create_header()
+            self._create_content()
+            self._create_buttons()
+
+            # Gestionnaire de fermeture
+            self.window.protocol("WM_DELETE_WINDOW", self._cancel)
+
+            # Force l'affichage et le focus
+            self.window.update_idletasks()
+            self.window.deiconify()
+
+            self.logger.info("Fenêtre de dialogue créée et configurée")
+
+        except Exception as e:
+            self.logger.error(f"Erreur création dialogue: {e}")
+            raise
+
+    def _center_dialog(self):
+        """Centre le dialogue sur l'écran"""
+        self.window.update_idletasks()
+        width = self.window.winfo_width()
+        height = self.window.winfo_height()
+        x = (self.window.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.window.winfo_screenheight() // 2) - (height // 2)
+        self.window.geometry(f"{width}x{height}+{x}+{y}")
+
+    def _create_header(self):
+        """Crée l'en-tête du dialogue"""
+        header_frame = tk.Frame(self.window, bg='#1e3a8a', height=80)
+        header_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+        header_frame.pack_propagate(False)
+
+        # Icône et titre
+        title_label = tk.Label(header_frame,
+                               text="📁 Configuration de dossier",
+                               bg='#1e3a8a',
+                               fg='white',
+                               font=('Segoe UI', 16, 'bold'))
+        title_label.pack(expand=True, pady=10)
+
+    def _create_content(self):
+        """Crée le contenu principal"""
+        content_frame = tk.Frame(self.window, bg='#2d3748', relief='flat', bd=2)
+        content_frame.pack(fill=tk.BOTH, expand=True, padx=15, pady=15)
+
+        # Message principal
+        message_frame = tk.Frame(content_frame, bg='#2d3748')
+        message_frame.pack(fill=tk.X, padx=20, pady=20)
+
+        app_icon = "🎮" if self._is_likely_game() else "💼"
+        message_text = f"L'application {app_icon} {self.app_name} n'a pas de dossier configuré.\n\n"
+        message_text += "Où souhaitez-vous sauvegarder les captures de cette application ?"
+
+        message_label = tk.Label(message_frame,
+                                 text=message_text,
+                                 bg='#2d3748',
+                                 fg='white',
+                                 font=('Segoe UI', 12),
+                                 justify=tk.CENTER,
+                                 wraplength=400)
+        message_label.pack()
+
+        # Options
+        options_frame = tk.Frame(content_frame, bg='#2d3748')
+        options_frame.pack(fill=tk.X, padx=20, pady=20)
+
+        # Option 1: Dossier par défaut
+        default_btn = tk.Button(options_frame,
+                                text="🏠 Utiliser le dossier par défaut",
+                                command=self._use_default_folder,
+                                bg='#3b82f6',
+                                fg='white',
+                                font=('Segoe UI', 12, 'bold'),
+                                relief='flat',
+                                padx=20,
+                                pady=15,
+                                width=35)
+        default_btn.pack(pady=10)
+
+        # Affichage du dossier par défaut
+        default_path = self.settings.get_default_folder()
+        default_info = tk.Label(options_frame,
+                                text=f"📂 {default_path}",
+                                bg='#2d3748',
+                                fg='#94a3b8',
+                                font=('Segoe UI', 10))
+        default_info.pack()
+
+        # Séparateur
+        separator = tk.Frame(options_frame, bg='#475569', height=1)
+        separator.pack(fill=tk.X, pady=20)
+
+        # Option 2: Choisir un dossier
+        choose_btn = tk.Button(options_frame,
+                               text="📁 Choisir un autre dossier...",
+                               command=self._choose_custom_folder,
+                               bg='#10b981',
+                               fg='white',
+                               font=('Segoe UI', 12, 'bold'),
+                               relief='flat',
+                               padx=20,
+                               pady=15,
+                               width=35)
+        choose_btn.pack(pady=10)
+
+    def _create_buttons(self):
+        """Crée les boutons de contrôle"""
+        buttons_frame = tk.Frame(self.window, bg='#1a202c')
+        buttons_frame.pack(fill=tk.X, padx=15, pady=15)
+
+        # Note informative
+        info_label = tk.Label(buttons_frame,
+                              text="💡 Ce choix sera mémorisé pour cette application",
+                              bg='#1a202c',
+                              fg='#94a3b8',
+                              font=('Segoe UI', 10))
+        info_label.pack(pady=(0, 10))
+
+        # Bouton Annuler
+        cancel_btn = tk.Button(buttons_frame,
+                               text="❌ Annuler la capture",
+                               command=self._cancel,
+                               bg='#ef4444',
+                               fg='white',
+                               font=('Segoe UI', 11, 'bold'),
+                               relief='flat',
+                               padx=20,
+                               pady=10)
+        cancel_btn.pack(side=tk.RIGHT, padx=5)
+
+    def _is_likely_game(self) -> bool:
+        """Détermine si l'application est probablement un jeu"""
+        game_indicators = [
+            'game', 'steam', 'unity', 'unreal', 'epicgames',
+            'origin', 'uplay', 'gog', 'minecraft', 'wow'
+        ]
+        app_lower = self.app_name.lower()
+        return any(indicator in app_lower for indicator in game_indicators)
+
+    def _use_default_folder(self):
+        """Utilise le dossier par défaut"""
+        try:
+            default_folder = self.settings.get_default_folder()
+
+            # Sauvegarde l'association dans les paramètres
+            if self.settings.link_app_to_folder(self.app_name, "default"):
+                self.result = default_folder
+                self.window.destroy()
+            else:
+                messagebox.showerror("Erreur", "Impossible de sauvegarder la configuration", parent=self.window)
+
+        except Exception as e:
+            logging.error(f"Erreur sélection dossier par défaut: {e}")
+            messagebox.showerror("Erreur", f"Erreur: {e}", parent=self.window)
+
+    def _choose_custom_folder(self):
+        """Permet de choisir un dossier personnalisé"""
+        try:
+            # Ouvre le dialogue de sélection de dossier
+            folder = filedialog.askdirectory(
+                title=f"Choisir un dossier pour {self.app_name}",
+                initialdir=self.settings.get_default_folder(),
+                parent=self.window
+            )
+
+            if folder:
+                # Crée un nom pour le dossier personnalisé
+                folder_name = self._generate_folder_name(folder)
+
+                # Ajoute le dossier aux dossiers personnalisés
+                if self.settings.add_custom_folder(folder_name, folder):
+                    # Crée l'association
+                    if self.settings.link_app_to_folder(self.app_name, folder_name):
+                        self.result = folder
+                        self.window.destroy()
+                    else:
+                        messagebox.showerror("Erreur", "Impossible de créer l'association", parent=self.window)
+                else:
+                    messagebox.showerror("Erreur", "Impossible d'ajouter le dossier personnalisé", parent=self.window)
+
+        except Exception as e:
+            logging.error(f"Erreur sélection dossier personnalisé: {e}")
+            messagebox.showerror("Erreur", f"Erreur: {e}", parent=self.window)
+
+    def _generate_folder_name(self, folder_path: str) -> str:
+        """Génère un nom unique pour le dossier personnalisé"""
+        base_name = Path(folder_path).name
+        if not base_name:
+            base_name = f"{self.app_name}_Folder"
+
+        # Vérifie l'unicité
+        existing_folders = self.settings.get_custom_folders()
+        counter = 1
+        folder_name = base_name
+
+        while folder_name in existing_folders:
+            folder_name = f"{base_name}_{counter}"
+            counter += 1
+
+        return folder_name
+
+    def _cancel(self):
+        """Annule la sélection"""
+        self.result = None
+        self.window.destroy()
+
+
 class ScreenshotManager:
     """Gestionnaire principal des captures d'écran avec capture UNIVERSELLE de fenêtre"""
 
@@ -528,9 +805,9 @@ class ScreenshotManager:
 
     def capture_active_window(self, save_path: Optional[str] = None,
                               folder_override: Optional[str] = None) -> Optional[str]:
-        """Capture UNIVERSELLE de la fenêtre active - CORRIGÉ POUR TOUTES LES APPS"""
+        """Capture UNIVERSELLE de la fenêtre active - CORRIGÉ POUR TOUTES LES APPS avec dialogue de choix"""
         try:
-            self.logger.info("Début capture fenêtre active - VERSION UNIVERSELLE")
+            self.logger.info("Début capture fenêtre active - VERSION UNIVERSELLE avec choix de dossier")
             self._prepare_capture()
 
             # Récupère l'application active
@@ -542,16 +819,20 @@ class ScreenshotManager:
             self.logger.info(f"Coordonnées fenêtre: {current_app.window_rect}")
             self.logger.info(f"Plein écran: {current_app.is_fullscreen}")
 
+            # NOUVELLE FONCTIONNALITÉ: Vérification et choix du dossier
+            if not folder_override:
+                folder_override = self._get_or_choose_app_folder(current_app)
+                if folder_override is None:
+                    # L'utilisateur a annulé
+                    self.logger.info("Capture annulée par l'utilisateur lors du choix de dossier")
+                    return None
+
             # Délai configurable
             delay = self.settings.get_capture_settings().get('delay_seconds', 0)
             if delay > 0:
                 time.sleep(delay)
 
-            # Détermine le dossier de sauvegarde basé sur l'app
-            if not folder_override:
-                folder_override = self.settings.get_app_folder(current_app.name)
-
-            # NOUVELLE MÉTHODE UNIVERSELLE DE CAPTURE
+            # MÉTHODE UNIVERSELLE DE CAPTURE
             with self._memory_optimized_capture():
                 screenshot = None
 
@@ -596,6 +877,125 @@ class ScreenshotManager:
             self._update_stats(False)
             self._notify_error("window", str(e))
             return None
+
+    def _get_or_choose_app_folder(self, app_info: AppInfo) -> Optional[str]:
+        """Récupère ou fait choisir le dossier pour une application - VERSION SIMPLIFIÉE"""
+        try:
+            # Vérifie si l'application a déjà un dossier configuré
+            existing_folder = self.settings.get_app_folder(app_info.name)
+
+            if existing_folder:
+                self.logger.info(f"Dossier existant trouvé pour {app_info.name}: {existing_folder}")
+                return existing_folder
+
+            # L'application n'a pas de dossier configuré
+            self.logger.info(f"Aucun dossier configuré pour {app_info.name}, affichage du dialogue de choix")
+
+            # Utilise une approche plus simple avec les dialogues standards
+            import tkinter as tk
+            from tkinter import messagebox, filedialog
+
+            # Crée une fenêtre racine temporaire si nécessaire
+            temp_root = None
+            try:
+                # Teste si on peut créer des dialogues
+                if not tk._default_root:
+                    temp_root = tk.Tk()
+                    temp_root.withdraw()
+                    temp_root.wm_attributes("-topmost", True)
+
+                # Message de choix avec messagebox standard
+                app_icon = "🎮" if self._is_likely_game(app_info.name) else "💼"
+                message = f"L'application {app_icon} {app_info.name} n'a pas de dossier configuré.\n\n"
+                message += "Voulez-vous :\n"
+                message += "• OUI = Utiliser le dossier par défaut\n"
+                message += "• NON = Choisir un autre dossier\n"
+                message += "• ANNULER = Annuler la capture"
+
+                choice = messagebox.askyesnocancel(
+                    "Configuration de dossier - SnapMaster",
+                    message
+                )
+
+                if choice is None:  # Annuler
+                    self.logger.info("Capture annulée par l'utilisateur")
+                    return None
+
+                elif choice:  # OUI - Dossier par défaut
+                    default_folder = self.settings.get_default_folder()
+                    # Sauvegarde l'association
+                    if self.settings.link_app_to_folder(app_info.name, "default"):
+                        self.logger.info(f"Dossier par défaut configuré pour {app_info.name}: {default_folder}")
+                        return default_folder
+                    else:
+                        self.logger.error("Impossible de sauvegarder la configuration")
+                        return default_folder
+
+                else:  # NON - Choisir un dossier
+                    folder = filedialog.askdirectory(
+                        title=f"Choisir un dossier pour {app_info.name}",
+                        initialdir=self.settings.get_default_folder()
+                    )
+
+                    if folder:
+                        # Génère un nom pour le dossier personnalisé
+                        folder_name = self._generate_folder_name_for_app(app_info.name, folder)
+
+                        # Ajoute le dossier aux dossiers personnalisés
+                        if self.settings.add_custom_folder(folder_name, folder):
+                            # Crée l'association
+                            if self.settings.link_app_to_folder(app_info.name, folder_name):
+                                self.logger.info(f"Dossier personnalisé configuré pour {app_info.name}: {folder}")
+                                return folder
+                            else:
+                                self.logger.error("Impossible de créer l'association")
+                                return folder
+                        else:
+                            self.logger.error("Impossible d'ajouter le dossier personnalisé")
+                            return folder
+                    else:
+                        # Aucun dossier choisi, utilise le défaut
+                        default_folder = self.settings.get_default_folder()
+                        self.logger.info(f"Aucun dossier choisi, utilisation du défaut: {default_folder}")
+                        return default_folder
+
+            finally:
+                # Nettoie la fenêtre temporaire
+                if temp_root:
+                    temp_root.destroy()
+
+        except Exception as e:
+            self.logger.error(f"Erreur lors du choix de dossier pour {app_info.name}: {e}")
+            # En cas d'erreur, utilise le dossier par défaut
+            default_folder = self.settings.get_default_folder()
+            self.logger.info(f"Fallback sur dossier par défaut: {default_folder}")
+            return default_folder
+
+    def _is_likely_game(self, app_name: str) -> bool:
+        """Détermine si l'application est probablement un jeu"""
+        game_indicators = [
+            'game', 'steam', 'unity', 'unreal', 'epicgames',
+            'origin', 'uplay', 'gog', 'minecraft', 'wow'
+        ]
+        app_lower = app_name.lower()
+        return any(indicator in app_lower for indicator in game_indicators)
+
+    def _generate_folder_name_for_app(self, app_name: str, folder_path: str) -> str:
+        """Génère un nom unique pour le dossier personnalisé"""
+        base_name = Path(folder_path).name
+        if not base_name:
+            base_name = f"{app_name.replace('.exe', '')}_Folder"
+
+        # Vérifie l'unicité
+        existing_folders = self.settings.get_custom_folders()
+        counter = 1
+        folder_name = base_name
+
+        while folder_name in existing_folders:
+            folder_name = f"{base_name}_{counter}"
+            counter += 1
+
+        return folder_name
 
     def _capture_window_printwindow(self, app_info: AppInfo) -> Optional[Image.Image]:
         """Capture avec PrintWindow API - Méthode la plus efficace"""
@@ -953,8 +1353,11 @@ class ScreenshotManager:
             if not current_app or current_app.name.lower() != app_name.lower():
                 raise Exception(f"Application {app_name} non active")
 
-            # Récupère le dossier configuré pour cette app
-            folder_override = self.settings.get_app_folder(app_name)
+            # Récupère ou fait choisir le dossier pour cette app
+            folder_override = self._get_or_choose_app_folder(current_app)
+            if folder_override is None:
+                self.logger.info("Capture directe annulée par l'utilisateur")
+                return None
 
             # Utilise la capture de fenêtre active
             return self.capture_active_window(save_path, folder_override)

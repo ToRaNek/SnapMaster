@@ -4,18 +4,21 @@
         "default_screenshots": "C:\\Users\\admin\\Pictures\\SnapMaster",
         "custom_folders": {
             "Spotify": "C:\\Users\\admin\\Pictures\\SnapMaster\\Spotify",
-            "Discord": "C:\\Users\\admin\\Pictures\\SnapMaster\\Discord"
+            "Discord": "C:\\Users\\admin\\Pictures\\SnapMaster\\Discord",
+            "Firefox": "C:\\Users\\admin\\Pictures\\SnapMaster\\Firefox"
         }
     },
     "applications": {
         "app_folder_mapping": {
             "Spotify.exe": "Spotify",
-            "Discord.exe": "Discord"
+            "Discord.exe": "Discord",
+            "firefox.exe": "Firefox"
         },
         "monitored_apps": [
             "Spotify",
             "Spotify.exe",
-            "Discord.exe"
+            "Discord.exe",
+            "firefox.exe"
         ]
     },
     "hotkeys": {
