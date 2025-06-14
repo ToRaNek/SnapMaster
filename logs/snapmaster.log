@@ -2206,3 +2206,164 @@
 2025-06-14 17:38:41,235 - __main__ - INFO - SnapMaster fermé proprement
 2025-06-14 17:38:41,253 - core.screenshot_manager - INFO - Application marquée comme inactive, callbacks désactivés
 2025-06-14 17:38:41,255 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:16:35,095 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-14 23:16:35,104 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-14 23:16:35,105 - __main__ - INFO - Dépendances Windows disponibles - Capture avancée activée
+2025-06-14 23:16:35,105 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-14 23:16:35,109 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-14 23:16:35,111 - config.settings - INFO - Configuration chargée avec succès
+2025-06-14 23:16:35,115 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-14 23:16:35,115 - core.screenshot_manager - INFO - ScreenshotManager initialisé avec capture universelle de fenêtre
+2025-06-14 23:16:35,115 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-14 23:16:35,117 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-14 23:16:35,118 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne
+2025-06-14 23:16:35,120 - __main__ - INFO - Interface graphique initialisée
+2025-06-14 23:16:35,121 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-14 23:16:37,564 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-14 23:16:37,564 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-14 23:16:37,565 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-14 23:16:37,565 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-14 23:16:37,565 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-14 23:16:37,565 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-14 23:16:37,568 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-14 23:16:37,572 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-14 23:16:38,034 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-14 23:16:38,035 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-14 23:16:38,036 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-14 23:16:38,037 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-14 23:16:38,038 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-14 23:16:38,038 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-14 23:16:38,038 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-14 23:16:38,039 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-14 23:16:38,040 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-14 23:16:38,040 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-14 23:16:38,040 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-14 23:16:38,157 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-14 23:16:38,157 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-14 23:16:38,158 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-14 23:16:38,158 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-14 23:16:38,159 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-14 23:16:38,159 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-14 23:16:42,512 - core.screenshot_manager - INFO - Début capture plein écran
+2025-06-14 23:16:42,535 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.0MB
+2025-06-14 23:16:42,535 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-14 23:16:42,984 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\fullscreen_Screenshot_20250614_231642.png
+2025-06-14 23:16:43,000 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:16:46,647 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION UNIVERSELLE avec choix de dossier
+2025-06-14 23:16:46,663 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-14 23:16:46,664 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-14 23:16:46,665 - core.screenshot_manager - INFO - Application détectée: python.exe
+2025-06-14 23:16:46,666 - core.screenshot_manager - INFO - Coordonnées fenêtre: (955, 126, 900, 700)
+2025-06-14 23:16:46,666 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-14 23:16:46,666 - core.screenshot_manager - INFO - Aucun dossier configuré pour python.exe, affichage du dialogue de choix
+2025-06-14 23:16:51,608 - core.screenshot_manager - INFO - Aucun dossier choisi, utilisation du défaut: C:\Users\admin\Pictures\SnapMaster
+2025-06-14 23:16:51,608 - core.screenshot_manager - INFO - Tentative capture PrintWindow...
+2025-06-14 23:16:51,800 - core.screenshot_manager - INFO - PrintWindow réussi: 918x772
+2025-06-14 23:16:51,801 - core.screenshot_manager - INFO - Capture PrintWindow réussie
+2025-06-14 23:16:51,871 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\python.exe_ SnapMaster - Capture d'cran avance_Screenshot_20250614_231651.png
+2025-06-14 23:16:51,887 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:16:54,568 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-14 23:16:54,569 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION UNIVERSELLE avec choix de dossier
+2025-06-14 23:16:54,582 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-14 23:16:54,582 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-14 23:16:54,584 - core.screenshot_manager - INFO - Application détectée: python.exe
+2025-06-14 23:16:54,584 - core.screenshot_manager - INFO - Coordonnées fenêtre: (955, 126, 900, 700)
+2025-06-14 23:16:54,584 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-14 23:16:54,584 - core.screenshot_manager - INFO - Aucun dossier configuré pour python.exe, affichage du dialogue de choix
+2025-06-14 23:16:56,662 - core.screenshot_manager - INFO - Capture annulée par l'utilisateur
+2025-06-14 23:16:56,662 - core.screenshot_manager - INFO - Capture annulée par l'utilisateur lors du choix de dossier
+2025-06-14 23:16:58,921 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-14 23:16:58,923 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION UNIVERSELLE avec choix de dossier
+2025-06-14 23:16:58,936 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:16:58,936 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-14 23:16:58,937 - core.screenshot_manager - INFO - Application détectée: Discord.exe
+2025-06-14 23:16:58,937 - core.screenshot_manager - INFO - Coordonnées fenêtre: (-1, -9, 1922, 1030)
+2025-06-14 23:16:58,937 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-14 23:16:58,938 - core.screenshot_manager - INFO - Dossier existant trouvé pour Discord.exe: C:\Users\admin\Pictures\SnapMaster\Discord
+2025-06-14 23:16:58,938 - core.screenshot_manager - INFO - Tentative capture PrintWindow...
+2025-06-14 23:16:59,109 - core.screenshot_manager - INFO - PrintWindow réussi: 1938x1038
+2025-06-14 23:16:59,110 - core.screenshot_manager - INFO - Capture PrintWindow réussie
+2025-06-14 23:16:59,432 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Discord\Discord.exe_@govman - Discord_Screenshot_20250614_231659.png
+2025-06-14 23:16:59,447 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:17:04,707 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-14 23:17:04,709 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION UNIVERSELLE avec choix de dossier
+2025-06-14 23:17:04,728 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-14 23:17:04,729 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-14 23:17:04,730 - core.screenshot_manager - INFO - Application détectée: Discord.exe
+2025-06-14 23:17:04,730 - core.screenshot_manager - INFO - Coordonnées fenêtre: (-1, -9, 1922, 1030)
+2025-06-14 23:17:04,731 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-14 23:17:04,731 - core.screenshot_manager - INFO - Dossier existant trouvé pour Discord.exe: C:\Users\admin\Pictures\SnapMaster\Discord
+2025-06-14 23:17:04,731 - core.screenshot_manager - INFO - Tentative capture PrintWindow...
+2025-06-14 23:17:04,907 - core.screenshot_manager - INFO - PrintWindow réussi: 1938x1038
+2025-06-14 23:17:04,909 - core.screenshot_manager - INFO - Capture PrintWindow réussie
+2025-06-14 23:17:05,110 - core.memory_manager - WARNING - Seuil mémoire dépassé: 100.2MB > 38.879999999999995MB
+2025-06-14 23:17:05,132 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:17:05,278 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Discord\Discord.exe_@govman - Discord_Screenshot_20250614_231704.png
+2025-06-14 23:17:05,294 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:17:35,137 - core.memory_manager - WARNING - Seuil mémoire dépassé: 92.5MB > 38.879999999999995MB
+2025-06-14 23:17:35,156 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-14 23:17:42,547 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-14 23:17:43,379 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-14 23:17:43,381 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION UNIVERSELLE avec choix de dossier
+2025-06-14 23:17:43,397 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:17:43,397 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-14 23:17:43,398 - core.screenshot_manager - INFO - Application détectée: Discord.exe
+2025-06-14 23:17:43,399 - core.screenshot_manager - INFO - Coordonnées fenêtre: (-1, -9, 1922, 1030)
+2025-06-14 23:17:43,399 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-14 23:17:43,399 - core.screenshot_manager - INFO - Dossier existant trouvé pour Discord.exe: C:\Users\admin\Pictures\SnapMaster\Discord
+2025-06-14 23:17:43,400 - core.screenshot_manager - INFO - Tentative capture PrintWindow...
+2025-06-14 23:17:43,564 - core.screenshot_manager - INFO - PrintWindow réussi: 1938x1038
+2025-06-14 23:17:43,565 - core.screenshot_manager - INFO - Capture PrintWindow réussie
+2025-06-14 23:17:43,717 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-14 23:17:43,719 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION UNIVERSELLE avec choix de dossier
+2025-06-14 23:17:43,736 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:17:43,737 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-14 23:17:43,737 - core.screenshot_manager - INFO - Application détectée: Discord.exe
+2025-06-14 23:17:43,738 - core.screenshot_manager - INFO - Coordonnées fenêtre: (-1, -9, 1922, 1030)
+2025-06-14 23:17:43,738 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-14 23:17:43,739 - core.screenshot_manager - INFO - Dossier existant trouvé pour Discord.exe: C:\Users\admin\Pictures\SnapMaster\Discord
+2025-06-14 23:17:43,739 - core.screenshot_manager - INFO - Tentative capture PrintWindow...
+2025-06-14 23:17:43,834 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Discord\Discord.exe_@govman - Discord_Screenshot_20250614_231743.png
+2025-06-14 23:17:43,843 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:17:43,895 - core.screenshot_manager - INFO - PrintWindow réussi: 1938x1038
+2025-06-14 23:17:43,896 - core.screenshot_manager - INFO - Capture PrintWindow réussie
+2025-06-14 23:17:44,018 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-14 23:17:44,020 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION UNIVERSELLE avec choix de dossier
+2025-06-14 23:17:44,032 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-14 23:17:44,032 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-14 23:17:44,033 - core.screenshot_manager - INFO - Application détectée: Discord.exe
+2025-06-14 23:17:44,033 - core.screenshot_manager - INFO - Coordonnées fenêtre: (-1, -9, 1922, 1030)
+2025-06-14 23:17:44,034 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-14 23:17:44,034 - core.screenshot_manager - INFO - Dossier existant trouvé pour Discord.exe: C:\Users\admin\Pictures\SnapMaster\Discord
+2025-06-14 23:17:44,034 - core.screenshot_manager - INFO - Tentative capture PrintWindow...
+2025-06-14 23:17:44,143 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Discord\Discord.exe_@govman - Discord_Screenshot_20250614_231743_1.png
+2025-06-14 23:17:44,159 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: -2.7MB
+2025-06-14 23:17:44,183 - core.screenshot_manager - INFO - PrintWindow réussi: 1938x1038
+2025-06-14 23:17:44,184 - core.screenshot_manager - INFO - Capture PrintWindow réussie
+2025-06-14 23:17:44,455 - core.hotkey_manager - INFO - Hotkey déclenché: window_capture
+2025-06-14 23:17:44,457 - core.screenshot_manager - INFO - Début capture fenêtre active - VERSION UNIVERSELLE avec choix de dossier
+2025-06-14 23:17:44,469 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-14 23:17:44,469 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-14 23:17:44,470 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Discord\Discord.exe_@govman - Discord_Screenshot_20250614_231744.png
+2025-06-14 23:17:44,484 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:17:44,485 - core.screenshot_manager - INFO - Application détectée: Discord.exe
+2025-06-14 23:17:44,485 - core.screenshot_manager - INFO - Coordonnées fenêtre: (-1, -9, 1922, 1030)
+2025-06-14 23:17:44,486 - core.screenshot_manager - INFO - Plein écran: False
+2025-06-14 23:17:44,487 - core.screenshot_manager - INFO - Dossier existant trouvé pour Discord.exe: C:\Users\admin\Pictures\SnapMaster\Discord
+2025-06-14 23:17:44,487 - core.screenshot_manager - INFO - Tentative capture PrintWindow...
+2025-06-14 23:17:44,639 - core.screenshot_manager - INFO - PrintWindow réussi: 1938x1038
+2025-06-14 23:17:44,640 - core.screenshot_manager - INFO - Capture PrintWindow réussie
+2025-06-14 23:17:44,991 - core.screenshot_manager - INFO - Image sauvegardée: C:\Users\admin\Pictures\SnapMaster\Discord\Discord.exe_@govman - Discord_Screenshot_20250614_231744_1.png
+2025-06-14 23:17:45,013 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-14 23:17:46,666 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-14 23:17:54,599 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-14 23:17:58,940 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-14 23:18:04,745 - core.memory_manager - INFO - Seuil mémoire restauré
+2025-06-14 23:18:05,168 - core.memory_manager - WARNING - Seuil mémoire dépassé: 92.7MB > 64.8MB
+2025-06-14 23:18:05,182 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 8, Mémoire libérée: 0.0MB
+2025-06-14 23:18:11,150 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-14 23:18:12,847 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-14 23:18:12,866 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-14 23:18:12,866 - gui.main_window - INFO - Nettoyage terminé
+2025-06-14 23:18:17,877 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-14 23:18:17,877 - __main__ - INFO - SnapMaster fermé proprement

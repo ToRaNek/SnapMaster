@@ -1,7 +1,8 @@
 # gui/main_window.py
 """
 Interface graphique principale pour SnapMaster avec thème bleu moderne
-Fenêtre principale avec tous les contrôles et paramètres - Version avec associations améliorées
+Fenêtre principale avec tous les contrôles et paramètres - Version sans notifications de succès
+MODIFICATION: Suppression des messages de confirmation de réussite
 """
 
 import tkinter as tk
@@ -951,15 +952,16 @@ class SnapMasterGUI:
                 self.logger.error(f"Erreur mise à jour UI: {e}")
                 time.sleep(5)
 
-    # Méthodes de callback avec couleurs
+    # Méthodes de callback avec couleurs - MODIFICATION : Suppression des notifications de succès
     def _on_capture_complete(self, capture_type: str, save_path: str, app_info: Optional[AppInfo] = None):
-        """Callback appelé après une capture réussie"""
+        """Callback appelé après une capture réussie - SANS notification de succès"""
         def update_ui():
             message = f"✅ Capture {capture_type} sauvegardée: {Path(save_path).name}"
             self._update_status(message, self.colors['success'])
 
-            if self.settings.get_ui_settings().get('show_notifications', True):
-                self._show_notification("Capture réussie", message)
+            # SUPPRIMÉ : Notification de succès
+            # if self.settings.get_ui_settings().get('show_notifications', True):
+            #     self._show_notification("Capture réussie", message)
 
         self.root.after(0, update_ui)
 
@@ -1087,15 +1089,9 @@ class SnapMasterGUI:
 
     # Méthodes utilitaires avec couleurs
     def _show_notification(self, title: str, message: str):
-        """Affiche une notification"""
-        try:
-            # Utilise la notification système si disponible
-            if sys.platform == "win32":
-                import win32api
-                win32api.MessageBox(0, message, title, 0x40)  # INFO
-        except:
-            # Fallback vers messagebox tkinter
-            messagebox.showinfo(title, message)
+        """Affiche une notification - SUPPRIMÉE"""
+        # Cette méthode ne fait plus rien pour supprimer les notifications de succès
+        pass
 
     def _show_error(self, title: str, message: str):
         """Affiche une erreur"""
@@ -1160,10 +1156,10 @@ class SnapMasterGUI:
                 if self.settings.link_app_to_folder(app_name, folder_name):
                     self._update_associations_list()
                     self._update_status(f"✅ Association ajoutée: {app_name} → {folder_name}", self.colors['success'])
-                    messagebox.showinfo("Succès",
-                                        f"Association créée avec succès !\n\n"
-                                        f"🎮 Application: {app_name}\n"
-                                        f"📁 Dossier: {folder_path}")
+                    # SUPPRIMÉ : Notification de succès
+                    # messagebox.showinfo("Succès", f"Association créée avec succès !\n\n"
+                    #                     f"🎮 Application: {app_name}\n"
+                    #                     f"📁 Dossier: {folder_path}")
                 else:
                     self._show_error("Erreur", "Impossible d'ajouter l'association")
 
@@ -1209,10 +1205,10 @@ class SnapMasterGUI:
                 if self.settings.link_app_to_folder(new_app_name, new_folder_name):
                     self._update_associations_list()
                     self._update_status(f"✅ Association modifiée: {new_app_name} → {new_folder_name}", self.colors['success'])
-                    messagebox.showinfo("Succès",
-                                        f"Association modifiée avec succès !\n\n"
-                                        f"🎮 Application: {new_app_name}\n"
-                                        f"📁 Dossier: {new_folder_path}")
+                    # SUPPRIMÉ : Notification de succès
+                    # messagebox.showinfo("Succès", f"Association modifiée avec succès !\n\n"
+                    #                     f"🎮 Application: {new_app_name}\n"
+                    #                     f"📁 Dossier: {new_folder_path}")
                 else:
                     self._show_error("Erreur", "Impossible de modifier l'association")
 
@@ -1246,7 +1242,8 @@ class SnapMasterGUI:
                     self.settings.save_config()
                     self._update_associations_list()
                     self._update_status(f"✅ Association supprimée: {app_name}", self.colors['success'])
-                    messagebox.showinfo("Succès", f"Association supprimée avec succès !\n\n{app_name}")
+                    # SUPPRIMÉ : Notification de succès
+                    # messagebox.showinfo("Succès", f"Association supprimée avec succès !\n\n{app_name}")
                 else:
                     self._show_warning("Erreur", "Association introuvable")
 
@@ -1335,7 +1332,9 @@ class SnapMasterGUI:
                 filetypes=[("Fichiers JSON", "*.json"), ("Tous les fichiers", "*.*")]
             )
             if filename and self.settings.export_config(filename):
-                messagebox.showinfo("Succès", "Configuration exportée avec succès")
+                # SUPPRIMÉ : Notification de succès
+                # messagebox.showinfo("Succès", "Configuration exportée avec succès")
+                pass
         except Exception as e:
             self._show_error("Erreur", str(e))
 
@@ -1348,7 +1347,9 @@ class SnapMasterGUI:
             )
             if filename and messagebox.askyesno("Confirmation", "Remplacer la configuration actuelle?"):
                 if self.settings.import_config(filename):
-                    messagebox.showinfo("Succès", "Configuration importée. Redémarrez l'application.")
+                    # SUPPRIMÉ : Notification de succès
+                    # messagebox.showinfo("Succès", "Configuration importée. Redémarrez l'application.")
+                    pass
         except Exception as e:
             self._show_error("Erreur", str(e))
 
@@ -1365,7 +1366,8 @@ class SnapMasterGUI:
         """Force le nettoyage mémoire"""
         try:
             self.memory_manager.force_cleanup()
-            messagebox.showinfo("Nettoyage", "Nettoyage mémoire effectué")
+            # SUPPRIMÉ : Notification de succès
+            # messagebox.showinfo("Nettoyage", "Nettoyage mémoire effectué")
         except Exception as e:
             self._show_error("Erreur", str(e))
 
