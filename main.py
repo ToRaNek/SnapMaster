@@ -9,6 +9,16 @@ import os
 import logging
 from pathlib import Path
 
+import ctypes
+import sys
+import os
+
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
 # Ajouter le répertoire racine au path pour les imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
@@ -90,4 +100,11 @@ def check_permissions():
         return False
 
 if __name__ == "__main__":
-    main()
+    if not is_admin():
+        # Re-run the script with admin rights
+        print("Requesting admin privileges...")
+        ctypes.windll.shell32.ShellExecuteW(
+            None, "runas", sys.executable, ' '.join(sys.argv), None, 1)
+        sys.exit()
+    else:
+        main()

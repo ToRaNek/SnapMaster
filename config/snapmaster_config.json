@@ -28,7 +28,7 @@
     },
     "capture_settings": {
         "image_format": "PNG",
-        "image_quality": 100,
+        "image_quality": 75,
         "include_cursor": false,
         "auto_filename": true,
         "filename_pattern": "Screenshot_%Y%m%d_%H%M%S",
