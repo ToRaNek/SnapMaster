@@ -3,6 +3,7 @@
 Interface graphique principale pour SnapMaster avec thème bleu moderne
 Fenêtre principale avec tous les contrôles et paramètres - Version sans notifications de succès
 MODIFICATION: Suppression des messages de confirmation de réussite
+AJOUT: Fonctionnalité System Tray pour minimisation en arrière-plan
 """
 
 import tkinter as tk
@@ -16,6 +17,9 @@ import os
 import psutil
 import subprocess
 import platform
+import pystray
+from PIL import Image, ImageDraw
+import io
 
 # Imports des modules SnapMaster
 from config.settings import SettingsManager
@@ -29,7 +33,7 @@ import time
 SettingsWindow = None
 
 class SnapMasterGUI:
-    """Interface graphique principale de SnapMaster avec thème bleu moderne"""
+    """Interface graphique principale de SnapMaster avec thème bleu moderne et System Tray"""
 
     def __init__(self, settings_manager: SettingsManager, memory_manager: MemoryManager):
         self.logger = logging.getLogger(__name__)
@@ -92,20 +96,30 @@ class SnapMasterGUI:
         self.ui_update_thread: Optional[threading.Thread] = None
         self.ui_update_running = False
 
-        self.logger.info("SnapMasterGUI initialisé avec thème bleu moderne")
+        # === AJOUT SYSTEM TRAY ===
+        self.tray_icon = None
+        self.tray_thread = None
+        self.is_minimized_to_tray = False
+        self.should_exit = False
 
-    def run(self):
-        """Lance l'interface graphique"""
+        self.logger.info("SnapMasterGUI initialisé avec thème bleu moderne et System Tray")
+
+    def run(self, start_minimized=True):
+        """Lance l'interface graphique - MODIFIÉ pour démarrer minimisé"""
         try:
             self.logger.info("Initialisation de l'interface SnapMaster...")
 
             # 1. Crée la fenêtre principale
             self._create_main_window()
 
-            # 2. Démarre tous les services (qui configure aussi les callbacks)
+            # 2. Crée et démarre le system tray
+            self._create_tray_icon()
+            self._start_tray()
+
+            # 3. Démarre tous les services (qui configure aussi les callbacks)
             self._start_services()
 
-            # 3. Démarre les mises à jour de l'interface
+            # 4. Démarre les mises à jour de l'interface
             self._start_ui_updates()
 
             self.logger.info("Interface graphique démarrée avec succès")
@@ -114,7 +128,13 @@ class SnapMasterGUI:
             for action, hotkey in active_hotkeys.items():
                 self.logger.info(f"  • {action.replace('_', ' ').title()}: {hotkey}")
 
-            # 4. Lance la boucle principale
+            # 5. Démarre minimisé si demandé
+            if start_minimized:
+                self._minimize_to_tray()
+            else:
+                self._show_window()
+
+            # 6. Lance la boucle principale
             self.root.mainloop()
 
         except Exception as e:
@@ -147,11 +167,143 @@ class SnapMasterGUI:
         self._create_main_frame()
         self._create_status_bar()
 
-        # Gestionnaire de fermeture
-        self.root.protocol("WM_DELETE_WINDOW", self._on_window_close)
+        # === MODIFICATION: Nouveau gestionnaire de fermeture pour tray ===
+        self.root.protocol("WM_DELETE_WINDOW", self._on_window_close_tray)
 
         # Centre la fenêtre
         self._center_window()
+
+    # === AJOUT: MÉTHODES SYSTEM TRAY ===
+
+    def _create_tray_icon(self):
+        """Crée l'icône pour le system tray"""
+        try:
+            # Crée une icône simple avec PIL
+            image = Image.new('RGB', (64, 64), color='#1e3a8a')
+            draw = ImageDraw.Draw(image)
+
+            # Dessine un cercle bleu avec un "S" blanc
+            draw.ellipse([8, 8, 56, 56], fill='#3b82f6', outline='#ffffff', width=2)
+
+            # Dessine un "S" simple (rectangles)
+            # Partie haute du S
+            draw.rectangle([20, 16, 44, 24], fill='#ffffff')
+            draw.rectangle([20, 24, 28, 32], fill='#ffffff')
+            # Partie milieu du S
+            draw.rectangle([20, 32, 44, 40], fill='#ffffff')
+            draw.rectangle([36, 40, 44, 48], fill='#ffffff')
+            # Partie basse du S
+            draw.rectangle([20, 48, 44, 56], fill='#ffffff')
+
+            return image
+        except Exception as e:
+            self.logger.error(f"Erreur création icône tray: {e}")
+            # Icône de fallback simple
+            image = Image.new('RGB', (64, 64), color='#3b82f6')
+            return image
+
+    def _create_tray_menu(self):
+        """Crée le menu du system tray"""
+        return pystray.Menu(
+            pystray.MenuItem("🎯 SnapMaster", self._show_window, default=True),
+            pystray.Menu.SEPARATOR,
+            pystray.MenuItem("📸 Capture plein écran", self._tray_capture_fullscreen),
+            pystray.MenuItem("🪟 Capture fenêtre active", self._tray_capture_window),
+            pystray.MenuItem("✂️ Capture zone sélectionnée", self._tray_capture_area),
+            pystray.Menu.SEPARATOR,
+            pystray.MenuItem("⚙️ Paramètres", self._tray_open_settings),
+            pystray.MenuItem("📂 Ouvrir dossier captures", self._tray_open_folder),
+            pystray.Menu.SEPARATOR,
+            pystray.MenuItem("❌ Quitter", self._tray_quit)
+        )
+
+    def _start_tray(self):
+        """Démarre le system tray dans un thread séparé"""
+        def run_tray():
+            try:
+                icon_image = self._create_tray_icon()
+                menu = self._create_tray_menu()
+
+                self.tray_icon = pystray.Icon(
+                    "SnapMaster",
+                    icon_image,
+                    "SnapMaster - Capture d'écran avancée",
+                    menu
+                )
+
+                self.tray_icon.run()
+            except Exception as e:
+                self.logger.error(f"Erreur system tray: {e}")
+
+        self.tray_thread = threading.Thread(target=run_tray, daemon=True)
+        self.tray_thread.start()
+
+        # Attend que le tray soit initialisé
+        time.sleep(0.5)
+
+    def _on_window_close_tray(self):
+        """Nouveau gestionnaire de fermeture - minimise au lieu de fermer"""
+        self._minimize_to_tray()
+
+    def _minimize_to_tray(self):
+        """Minimise la fenêtre dans le system tray"""
+        try:
+            self.root.withdraw()  # Cache la fenêtre
+            self.is_minimized_to_tray = True
+            self.logger.info("Application minimisée dans le system tray")
+        except Exception as e:
+            self.logger.error(f"Erreur minimisation tray: {e}")
+
+    def _show_window(self, icon=None, item=None):
+        """Affiche la fenêtre depuis le system tray"""
+        try:
+            self.root.deiconify()  # Restaure la fenêtre
+            self.root.lift()       # Met au premier plan
+            self.root.focus_force() # Donne le focus
+            self.is_minimized_to_tray = False
+            self.logger.info("Fenêtre restaurée depuis le system tray")
+        except Exception as e:
+            self.logger.error(f"Erreur restauration fenêtre: {e}")
+
+    # === MÉTHODES TRAY POUR LES CAPTURES ===
+
+    def _tray_capture_fullscreen(self, icon=None, item=None):
+        """Capture plein écran depuis le tray"""
+        def capture():
+            self.screenshot_manager.capture_fullscreen()
+        threading.Thread(target=capture, daemon=True).start()
+
+    def _tray_capture_window(self, icon=None, item=None):
+        """Capture fenêtre active depuis le tray"""
+        def capture():
+            self.screenshot_manager.capture_active_window()
+        threading.Thread(target=capture, daemon=True).start()
+
+    def _tray_capture_area(self, icon=None, item=None):
+        """Capture zone sélectionnée depuis le tray"""
+        def capture():
+            self.screenshot_manager.capture_area_selection()
+        threading.Thread(target=capture, daemon=True).start()
+
+    def _tray_open_settings(self, icon=None, item=None):
+        """Ouvre les paramètres depuis le tray"""
+        self._show_window()  # Affiche d'abord la fenêtre
+        self.root.after(100, self._open_settings)  # Puis ouvre les paramètres
+
+    def _tray_open_folder(self, icon=None, item=None):
+        """Ouvre le dossier de captures depuis le tray"""
+        self._open_screenshots_folder()
+
+    def _tray_quit(self, icon=None, item=None):
+        """Quitte complètement l'application depuis le tray"""
+        self.should_exit = True
+        if self.tray_icon:
+            self.tray_icon.stop()
+        self._cleanup()
+        if self.root:
+            self.root.quit()
+
+    # === FIN AJOUTS SYSTEM TRAY ===
 
     def _apply_modern_blue_theme(self):
         """Applique le thème bleu moderne avancé avec coins arrondis"""
@@ -457,7 +609,8 @@ class SnapMasterGUI:
         file_menu.add_command(label="📤 Exporter configuration", command=self._export_config)
         file_menu.add_command(label="📥 Importer configuration", command=self._import_config)
         file_menu.add_separator()
-        file_menu.add_command(label="❌ Quitter", command=self._on_window_close)
+        file_menu.add_command(label="➖ Minimiser dans la barre", command=self._minimize_to_tray)
+        file_menu.add_command(label="❌ Quitter", command=self._tray_quit)
 
         # Menu Capture
         capture_menu = tk.Menu(menubar, tearoff=0,
@@ -1124,15 +1277,13 @@ class SnapMasterGUI:
             if self.memory_manager:
                 self.memory_manager.force_cleanup()
 
+            # === AJOUT : Nettoyage system tray ===
+            if self.tray_icon and not self.should_exit:
+                self.tray_icon.stop()
+
             self.logger.info("Nettoyage terminé")
         except Exception as e:
             self.logger.error(f"Erreur nettoyage: {e}")
-
-    def _on_window_close(self):
-        """Gestionnaire de fermeture de fenêtre"""
-        if messagebox.askokcancel("Quitter SnapMaster", "Voulez-vous vraiment quitter SnapMaster?"):
-            self._cleanup()
-            self.root.destroy()
 
     # MÉTHODES D'ASSOCIATION AMÉLIORÉES
     def _add_association(self):
@@ -1388,7 +1539,7 @@ class SnapMasterGUI:
         messagebox.showinfo("Raccourcis clavier", message)
 
     def _show_about(self):
-        messagebox.showinfo("À propos", "🎯 SnapMaster v1.0.0\n\nCapture d'écran avancée\nAvec thème bleu moderne")
+        messagebox.showinfo("À propos", "🎯 SnapMaster v1.0.0\n\nCapture d'écran avancée\nAvec thème bleu moderne et System Tray")
 
     def _on_format_change(self, event):
         """Change le format d'image"""
@@ -1747,7 +1898,7 @@ class AdvancedAssociationDialog:
         # Bouton parcourir
         browse_folder_btn = tk.Button(folder_buttons_frame,
                                       text="📂 Parcourir...",
-                                      command=self._browse_folder,
+                                      command=self._browse_folder_dialog,
                                       bg='#10b981',
                                       fg='white',
                                       font=('Segoe UI', 11, 'bold'),
@@ -2086,7 +2237,7 @@ class AdvancedAssociationDialog:
         default_folder = self.settings.get_default_folder()
         self.selected_folder_path.set(default_folder)
 
-    def _browse_folder(self):
+    def _browse_folder_dialog(self):
         """Parcourt pour sélectionner un dossier"""
         try:
             folder = filedialog.askdirectory(

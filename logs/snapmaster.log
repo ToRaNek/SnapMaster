@@ -2367,3 +2367,321 @@
 2025-06-14 23:18:12,866 - gui.main_window - INFO - Nettoyage terminé
 2025-06-14 23:18:17,877 - core.memory_manager - INFO - Surveillance mémoire arrêtée
 2025-06-14 23:18:17,877 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-15 22:43:53,571 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-15 22:43:53,583 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-15 22:43:53,583 - __main__ - INFO - Dépendances Windows disponibles - Capture avancée activée
+2025-06-15 22:43:53,584 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-15 22:43:53,585 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-15 22:43:53,592 - config.settings - INFO - Configuration chargée avec succès
+2025-06-15 22:43:53,594 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 22:43:53,594 - core.screenshot_manager - INFO - ScreenshotManager initialisé avec capture universelle de fenêtre
+2025-06-15 22:43:53,595 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-15 22:43:53,595 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 22:43:53,595 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne et System Tray
+2025-06-15 22:43:53,596 - __main__ - INFO - Interface graphique initialisée
+2025-06-15 22:43:53,596 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-15 22:43:55,523 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-15 22:43:55,524 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-15 22:43:55,524 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-15 22:43:55,524 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-15 22:43:55,525 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-15 22:43:55,525 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-15 22:43:55,527 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-15 22:43:55,527 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-15 22:43:55,663 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-15 22:43:55,663 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-15 22:43:55,664 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-15 22:43:55,665 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-15 22:43:55,665 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-15 22:43:55,666 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-15 22:43:55,666 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-15 22:43:55,666 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-15 22:43:55,667 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-15 22:43:55,667 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-15 22:43:55,667 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-15 22:43:55,692 - core.screenshot_manager - ERROR - Erreur test capacités: PyAutoGUI was unable to import pyscreeze. (This is likely because you're running a version of Python that Pillow (which pyscreeze depends on) doesn't support currently.) Please install this module to enable the function you tried to call.
+2025-06-15 22:43:55,693 - gui.main_window - WARNING - Capacités de capture limitées
+2025-06-15 22:43:56,911 - core.app_detector - ERROR - Erreur callback: main thread is not in main loop
+2025-06-15 22:43:57,528 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-15 22:43:57,528 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-15 22:43:57,529 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-15 22:43:57,529 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-15 22:43:57,530 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-15 22:43:57,530 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-15 22:43:57,585 - gui.main_window - INFO - Application minimisée dans le system tray
+2025-06-15 22:44:02,217 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-15 22:44:02,947 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-15 22:44:02,959 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 121, Mémoire libérée: -0.0MB
+2025-06-15 22:44:02,960 - gui.main_window - INFO - Nettoyage terminé
+2025-06-15 22:44:07,963 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-15 22:44:07,963 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-15 22:47:05,553 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-15 22:47:05,556 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-15 22:47:05,556 - __main__ - INFO - Dépendances Windows disponibles - Capture avancée activée
+2025-06-15 22:47:05,556 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-15 22:47:05,558 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-15 22:47:05,558 - config.settings - INFO - Configuration chargée avec succès
+2025-06-15 22:47:05,559 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 22:47:05,559 - core.screenshot_manager - INFO - ScreenshotManager initialisé avec capture universelle de fenêtre
+2025-06-15 22:47:05,559 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-15 22:47:05,561 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 22:47:05,561 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne et System Tray
+2025-06-15 22:47:05,561 - __main__ - INFO - Interface graphique initialisée
+2025-06-15 22:47:05,561 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-15 22:47:07,254 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-15 22:47:07,254 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-15 22:47:07,255 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-15 22:47:07,255 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-15 22:47:07,256 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-15 22:47:07,256 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-15 22:47:07,257 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-15 22:47:07,257 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-15 22:47:07,393 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-15 22:47:07,394 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-15 22:47:07,394 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-15 22:47:07,394 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-15 22:47:07,395 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-15 22:47:07,395 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-15 22:47:07,395 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-15 22:47:07,395 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-15 22:47:07,395 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-15 22:47:07,396 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-15 22:47:07,396 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-15 22:47:07,421 - core.screenshot_manager - ERROR - Erreur test capacités: PyAutoGUI was unable to import pyscreeze. (This is likely because you're running a version of Python that Pillow (which pyscreeze depends on) doesn't support currently.) Please install this module to enable the function you tried to call.
+2025-06-15 22:47:07,422 - gui.main_window - WARNING - Capacités de capture limitées
+2025-06-15 22:47:08,611 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-15 22:47:08,611 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-15 22:47:08,611 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-15 22:47:08,611 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-15 22:47:08,612 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-15 22:47:08,612 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-15 22:47:08,654 - gui.main_window - INFO - Application minimisée dans le system tray
+2025-06-15 22:47:13,542 - gui.main_window - INFO - Fenêtre restaurée depuis le system tray
+2025-06-15 22:47:17,172 - gui.main_window - INFO - Application minimisée dans le system tray
+2025-06-15 22:47:18,813 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-15 22:47:18,815 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec effets visuels
+2025-06-15 22:47:18,835 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.0MB
+2025-06-15 22:47:18,836 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-15 22:47:18,836 - core.screenshot_manager - INFO - Début sélection de zone avec effets visuels d'assombrissement
+2025-06-15 22:47:18,836 - core.screenshot_manager - INFO - Capture et préparation des images avec effets...
+2025-06-15 22:47:18,837 - core.screenshot_manager - ERROR - Erreur préparation images: PyAutoGUI was unable to import pyscreeze. (This is likely because you're running a version of Python that Pillow (which pyscreeze depends on) doesn't support currently.) Please install this module to enable the function you tried to call.
+2025-06-15 22:47:18,837 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-15 22:47:23,727 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-15 22:47:23,728 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec effets visuels
+2025-06-15 22:47:23,739 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-15 22:47:23,740 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-15 22:47:23,741 - core.screenshot_manager - INFO - Début sélection de zone avec effets visuels d'assombrissement
+2025-06-15 22:47:23,741 - core.screenshot_manager - INFO - Capture et préparation des images avec effets...
+2025-06-15 22:47:23,741 - core.screenshot_manager - ERROR - Erreur préparation images: PyAutoGUI was unable to import pyscreeze. (This is likely because you're running a version of Python that Pillow (which pyscreeze depends on) doesn't support currently.) Please install this module to enable the function you tried to call.
+2025-06-15 22:47:23,741 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-15 22:47:25,373 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-15 22:47:26,796 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-15 22:47:26,811 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-15 22:47:26,812 - gui.main_window - INFO - Nettoyage terminé
+2025-06-15 22:57:12,513 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-15 22:57:12,517 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-15 22:57:12,517 - __main__ - INFO - Dépendances Windows disponibles - Capture avancée activée
+2025-06-15 22:57:12,517 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-15 22:57:12,519 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-15 22:57:12,520 - config.settings - INFO - Configuration chargée avec succès
+2025-06-15 22:57:12,521 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 22:57:12,522 - core.screenshot_manager - INFO - ScreenshotManager initialisé avec capture universelle de fenêtre
+2025-06-15 22:57:12,522 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-15 22:57:12,522 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 22:57:12,523 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne et System Tray
+2025-06-15 22:57:12,523 - __main__ - INFO - Interface graphique initialisée
+2025-06-15 22:57:12,523 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-15 22:57:14,219 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-15 22:57:14,219 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-15 22:57:14,220 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-15 22:57:14,220 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-15 22:57:14,220 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-15 22:57:14,221 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-15 22:57:14,221 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-15 22:57:14,222 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-15 22:57:14,358 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-15 22:57:14,358 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-15 22:57:14,359 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-15 22:57:14,360 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-15 22:57:14,360 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-15 22:57:14,361 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-15 22:57:14,361 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-15 22:57:14,361 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-15 22:57:14,361 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-15 22:57:14,362 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-15 22:57:14,362 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-15 22:57:14,384 - core.screenshot_manager - ERROR - Erreur test capacités: PyAutoGUI was unable to import pyscreeze. (This is likely because you're running a version of Python that Pillow (which pyscreeze depends on) doesn't support currently.) Please install this module to enable the function you tried to call.
+2025-06-15 22:57:14,384 - gui.main_window - WARNING - Capacités de capture limitées
+2025-06-15 22:57:15,640 - core.app_detector - ERROR - Erreur callback: main thread is not in main loop
+2025-06-15 22:57:20,679 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-15 22:57:20,680 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-15 22:57:20,680 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-15 22:57:20,680 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-15 22:57:20,680 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-15 22:57:20,681 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-15 22:57:20,750 - gui.main_window - INFO - Application minimisée dans le system tray
+2025-06-15 22:57:32,483 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-15 22:57:32,485 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec effets visuels
+2025-06-15 22:57:32,502 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.0MB
+2025-06-15 22:57:32,502 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-15 22:57:32,503 - core.screenshot_manager - INFO - Début sélection de zone avec effets visuels d'assombrissement
+2025-06-15 22:57:32,503 - core.screenshot_manager - INFO - Capture et préparation des images avec effets...
+2025-06-15 22:57:32,504 - core.screenshot_manager - ERROR - Erreur préparation images: PyAutoGUI was unable to import pyscreeze. (This is likely because you're running a version of Python that Pillow (which pyscreeze depends on) doesn't support currently.) Please install this module to enable the function you tried to call.
+2025-06-15 22:57:32,504 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-15 22:57:35,704 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-15 22:57:35,738 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-15 22:57:35,751 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-15 22:57:35,751 - gui.main_window - INFO - Nettoyage terminé
+2025-06-15 22:57:35,755 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-15 22:57:35,755 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-15 22:57:35,780 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-15 22:57:35,781 - gui.main_window - INFO - Nettoyage terminé
+2025-06-15 22:57:40,782 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-15 22:57:40,783 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-15 22:58:16,773 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-15 22:58:16,775 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-15 22:58:16,776 - __main__ - INFO - Dépendances Windows disponibles - Capture avancée activée
+2025-06-15 22:58:16,776 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-15 22:58:16,777 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-15 22:58:16,778 - config.settings - INFO - Configuration chargée avec succès
+2025-06-15 22:58:16,779 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 22:58:16,779 - core.screenshot_manager - INFO - ScreenshotManager initialisé avec capture universelle de fenêtre
+2025-06-15 22:58:16,780 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-15 22:58:16,780 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 22:58:16,780 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne et System Tray
+2025-06-15 22:58:16,780 - __main__ - INFO - Interface graphique initialisée
+2025-06-15 22:58:16,781 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-15 22:58:18,511 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-15 22:58:18,511 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-15 22:58:18,511 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-15 22:58:18,512 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-15 22:58:18,512 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-15 22:58:18,512 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-15 22:58:18,513 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-15 22:58:18,513 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-15 22:58:18,753 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-15 22:58:18,754 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-15 22:58:18,754 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-15 22:58:18,755 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-15 22:58:18,755 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-15 22:58:18,755 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-15 22:58:18,756 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-15 22:58:18,756 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-15 22:58:18,756 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-15 22:58:18,756 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-15 22:58:18,757 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-15 22:58:18,781 - core.screenshot_manager - ERROR - Erreur test capacités: PyAutoGUI was unable to import pyscreeze. (This is likely because you're running a version of Python that Pillow (which pyscreeze depends on) doesn't support currently.) Please install this module to enable the function you tried to call.
+2025-06-15 22:58:18,781 - gui.main_window - WARNING - Capacités de capture limitées
+2025-06-15 22:58:20,007 - core.app_detector - ERROR - Erreur callback: main thread is not in main loop
+2025-06-15 22:58:23,109 - core.app_detector - ERROR - Erreur callback: main thread is not in main loop
+2025-06-15 22:58:39,652 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-15 22:58:41,183 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-15 22:58:41,197 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 121, Mémoire libérée: 0.0MB
+2025-06-15 22:58:41,197 - gui.main_window - INFO - Nettoyage terminé
+2025-06-15 22:58:46,197 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-15 22:58:46,197 - __main__ - INFO - SnapMaster fermé proprement
+2025-06-15 22:59:15,301 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-15 22:59:15,304 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-15 22:59:15,304 - __main__ - INFO - Dépendances Windows disponibles - Capture avancée activée
+2025-06-15 22:59:15,305 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-15 22:59:15,306 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-15 22:59:15,307 - config.settings - INFO - Configuration chargée avec succès
+2025-06-15 22:59:15,309 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 22:59:15,309 - core.screenshot_manager - INFO - ScreenshotManager initialisé avec capture universelle de fenêtre
+2025-06-15 22:59:15,309 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-15 22:59:15,310 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 22:59:15,310 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne et System Tray
+2025-06-15 22:59:15,310 - __main__ - INFO - Interface graphique initialisée
+2025-06-15 22:59:15,310 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-15 22:59:16,987 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-15 22:59:16,987 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-15 22:59:16,987 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-15 22:59:16,988 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-15 22:59:16,988 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-15 22:59:16,988 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-15 22:59:16,989 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-15 22:59:16,990 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-15 22:59:17,127 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-15 22:59:17,128 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-15 22:59:17,129 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-15 22:59:17,129 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-15 22:59:17,130 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-15 22:59:17,130 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-15 22:59:17,130 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-15 22:59:17,131 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-15 22:59:17,131 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-15 22:59:17,131 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-15 22:59:17,131 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-15 22:59:17,153 - core.screenshot_manager - ERROR - Erreur test capacités: PyAutoGUI was unable to import pyscreeze. (This is likely because you're running a version of Python that Pillow (which pyscreeze depends on) doesn't support currently.) Please install this module to enable the function you tried to call.
+2025-06-15 22:59:17,154 - gui.main_window - WARNING - Capacités de capture limitées
+2025-06-15 22:59:18,388 - core.app_detector - ERROR - Erreur callback: main thread is not in main loop
+2025-06-15 22:59:19,102 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-15 22:59:19,102 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-15 22:59:19,102 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-15 22:59:19,102 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-15 22:59:19,103 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-15 22:59:19,103 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-15 22:59:19,173 - gui.main_window - INFO - Application minimisée dans le system tray
+2025-06-15 23:00:40,631 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-15 23:00:42,838 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-15 23:18:31,091 - __main__ - INFO - Démarrage de SnapMaster...
+2025-06-15 23:18:31,116 - __main__ - INFO - Méthodes intégrées avec succès
+2025-06-15 23:18:31,117 - __main__ - INFO - Dépendances Windows disponibles - Capture avancée activée
+2025-06-15 23:18:31,117 - core.memory_manager - INFO - MemoryManager initialisé - Seuil: 500MB
+2025-06-15 23:18:31,118 - core.memory_manager - INFO - Surveillance mémoire démarrée
+2025-06-15 23:18:31,121 - config.settings - INFO - Configuration chargée avec succès
+2025-06-15 23:18:31,123 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 23:18:31,123 - core.screenshot_manager - INFO - ScreenshotManager initialisé avec capture universelle de fenêtre
+2025-06-15 23:18:31,123 - core.hotkey_manager - INFO - HotkeyManager initialisé
+2025-06-15 23:18:31,124 - core.app_detector - INFO - AppDetector initialisé pour Windows avec détection améliorée
+2025-06-15 23:18:31,124 - gui.main_window - INFO - SnapMasterGUI initialisé avec thème bleu moderne et System Tray
+2025-06-15 23:18:31,124 - __main__ - INFO - Interface graphique initialisée
+2025-06-15 23:18:31,124 - gui.main_window - INFO - Initialisation de l'interface SnapMaster...
+2025-06-15 23:18:32,877 - gui.main_window - INFO - Démarrage des services SnapMaster...
+2025-06-15 23:18:32,877 - core.hotkey_manager - INFO - Callback ajouté pour l'action: fullscreen_capture
+2025-06-15 23:18:32,878 - core.hotkey_manager - INFO - Callback ajouté pour l'action: window_capture
+2025-06-15 23:18:32,879 - core.hotkey_manager - INFO - Callback ajouté pour l'action: area_capture
+2025-06-15 23:18:32,879 - core.hotkey_manager - INFO - Callback ajouté pour l'action: quick_capture
+2025-06-15 23:18:32,879 - gui.main_window - INFO - Callbacks configurés avec succès
+2025-06-15 23:18:32,880 - core.app_detector - INFO - Surveillance des applications démarrée
+2025-06-15 23:18:32,881 - gui.main_window - INFO - Détection d'applications démarrée
+2025-06-15 23:18:33,021 - core.hotkey_manager - INFO - Hotkey enregistré: fullscreen_capture -> ctrl+shift+f
+2025-06-15 23:18:33,021 - core.hotkey_manager - INFO - Hotkey enregistré: window_capture -> shift+ctrl+r
+2025-06-15 23:18:33,022 - core.hotkey_manager - INFO - Hotkey enregistré: area_capture -> ctrl+shift+a
+2025-06-15 23:18:33,022 - core.hotkey_manager - INFO - Hotkey enregistré: quick_capture -> ctrl+shift+q
+2025-06-15 23:18:33,022 - core.hotkey_manager - INFO - Surveillance des hotkeys démarrée
+2025-06-15 23:18:33,022 - gui.main_window - INFO - Hotkeys activés avec succès
+2025-06-15 23:18:33,023 - gui.main_window - INFO -   • fullscreen_capture: ctrl+shift+f
+2025-06-15 23:18:33,023 - gui.main_window - INFO -   • window_capture: shift+ctrl+r
+2025-06-15 23:18:33,023 - gui.main_window - INFO -   • area_capture: ctrl+shift+a
+2025-06-15 23:18:33,023 - gui.main_window - INFO -   • quick_capture: ctrl+shift+q
+2025-06-15 23:18:33,024 - gui.main_window - INFO - Surveillance mémoire démarrée
+2025-06-15 23:18:33,114 - gui.main_window - INFO - Interface graphique démarrée avec succès
+2025-06-15 23:18:33,114 - gui.main_window - INFO - Raccourcis clavier disponibles:
+2025-06-15 23:18:33,115 - gui.main_window - INFO -   • Fullscreen Capture: ctrl+shift+f
+2025-06-15 23:18:33,115 - gui.main_window - INFO -   • Window Capture: shift+ctrl+r
+2025-06-15 23:18:33,115 - gui.main_window - INFO -   • Area Capture: ctrl+shift+a
+2025-06-15 23:18:33,116 - gui.main_window - INFO -   • Quick Capture: ctrl+shift+q
+2025-06-15 23:18:33,153 - gui.main_window - INFO - Application minimisée dans le system tray
+2025-06-15 23:18:38,331 - core.hotkey_manager - INFO - Hotkey déclenché: area_capture
+2025-06-15 23:18:38,334 - core.screenshot_manager - INFO - Début capture zone sélectionnée avec effets visuels
+2025-06-15 23:18:38,349 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 97, Mémoire libérée: -0.0MB
+2025-06-15 23:18:38,350 - core.memory_manager - INFO - Optimisation mémoire pour captures activée
+2025-06-15 23:18:38,351 - core.screenshot_manager - INFO - Début sélection de zone avec effets visuels d'assombrissement
+2025-06-15 23:18:38,351 - core.screenshot_manager - INFO - Capture et préparation des images avec effets...
+2025-06-15 23:18:38,397 - core.screenshot_manager - INFO - Écran capturé: (1920, 1080)
+2025-06-15 23:18:38,414 - core.screenshot_manager - INFO - Version assombrie créée
+2025-06-15 23:18:38,880 - core.screenshot_manager - INFO - Interface de sélection créée avec effets visuels
+2025-06-15 23:18:40,299 - core.screenshot_manager - INFO - Zone sélectionnée: 591x316 à (787, 495)
+2025-06-15 23:18:41,047 - core.screenshot_manager - INFO - Sélection annulée par l'utilisateur
+2025-06-15 23:18:41,094 - core.screenshot_manager - INFO - Ressources de sélection nettoyées
+2025-06-15 23:18:41,095 - core.screenshot_manager - INFO - Sélection de zone annulée par l'utilisateur
+2025-06-15 23:18:50,990 - gui.main_window - INFO - Fenêtre restaurée depuis le system tray
+2025-06-15 23:18:53,679 - gui.main_window - INFO - Application minimisée dans le system tray
+2025-06-15 23:18:55,271 - core.hotkey_manager - INFO - Surveillance des hotkeys arrêtée
+2025-06-15 23:18:56,360 - core.app_detector - ERROR - Erreur callback: main thread is not in main loop
+2025-06-15 23:18:58,278 - core.app_detector - INFO - Surveillance des applications arrêtée
+2025-06-15 23:18:58,294 - core.memory_manager - INFO - Nettoyage terminé - Objets GC: 0, Mémoire libérée: 0.0MB
+2025-06-15 23:18:58,295 - gui.main_window - INFO - Nettoyage terminé
+2025-06-15 23:19:01,134 - core.memory_manager - INFO - Surveillance mémoire arrêtée
+2025-06-15 23:19:01,134 - __main__ - INFO - SnapMaster fermé proprement
