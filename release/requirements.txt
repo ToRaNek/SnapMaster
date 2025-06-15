@@ -1,0 +1,16 @@
+# requirements.txt
+pyautogui
+pillow
+psutil
+keyboard
+pyscreenshot
+configparser
+
+# System Tray support
+pystray
+
+# Dépendances Windows pour capture avancée
+pywin32
+
+# Dépendances optionnelles pour améliorer les performances
+numpy>=1.21.0pi

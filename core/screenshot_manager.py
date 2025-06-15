@@ -3,6 +3,7 @@
 Gestionnaire de captures d'écran pour SnapMaster - VERSION CORRIGÉE
 Gère tous les types de captures avec optimisation mémoire et sélection de zone interactive
 CORRECTION : Capture réelle de toutes les fenêtres y compris Spotify, Chrome, etc.
+CORRECTION : Capture zone utilise l'image figée, pas une nouvelle capture
 NOUVEAU : Dialogue de choix de dossier pour applications non configurées
 """
 
@@ -56,13 +57,14 @@ from core.app_detector import AppDetector, AppInfo
 from config.settings import SettingsManager
 
 class AreaSelector:
-    """Interface de sélection de zone avec effets visuels d'assombrissement et révélation"""
+    """Interface de sélection de zone avec effets visuels d'assombrissement et révélation - CORRIGÉE"""
 
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.root = None
         self.canvas = None
         self.selected_area = None
+        self.selected_image = None  # NOUVEAU: L'image croppée de la zone sélectionnée
         self.frozen_screenshot = None  # L'image PIL figée originale
         self.darkened_screenshot = None  # L'image assombrie
         self.tk_image_dark = None  # Image Tkinter assombrie
@@ -83,8 +85,8 @@ class AreaSelector:
         self.selection_width = 3
         self.corner_color = '#FFFFFF'  # Coins blancs
 
-    def select_area(self) -> Optional[Tuple[int, int, int, int]]:
-        """Lance l'interface de sélection et retourne les coordonnées (x, y, width, height)"""
+    def select_area(self) -> Optional[Tuple[Tuple[int, int, int, int], Image.Image]]:
+        """Lance l'interface de sélection et retourne les coordonnées ET l'image croppée"""
         try:
             self.logger.info("Début sélection de zone avec effets visuels d'assombrissement")
 
@@ -102,8 +104,11 @@ class AreaSelector:
             # 4. Nettoyer les ressources
             self._cleanup_selection_interface()
 
-            # 5. Retourner les coordonnées sélectionnées
-            return self.selected_area
+            # 5. Retourner les coordonnées ET l'image sélectionnée
+            if self.selected_area and self.selected_image:
+                return (self.selected_area, self.selected_image)
+            else:
+                return None
 
         except Exception as e:
             self.logger.error(f"Erreur sélection de zone: {e}")
@@ -375,6 +380,15 @@ class AreaSelector:
         # Vérifie que la sélection est valide
         if width > 10 and height > 10:
             self.selected_area = (min_x, min_y, width, height)
+
+            # NOUVEAU: Crée l'image croppée de la zone sélectionnée à partir de l'image figée
+            try:
+                self.selected_image = self.frozen_screenshot.crop((min_x, min_y, min_x + width, min_y + height))
+                self.logger.info(f"Image zone sélectionnée créée: {width}x{height}")
+            except Exception as e:
+                self.logger.error(f"Erreur création image zone: {e}")
+                self.selected_image = None
+
             self._show_confirmation()
             self.logger.info(f"Zone sélectionnée: {width}x{height} à ({min_x}, {min_y})")
         else:
@@ -420,7 +434,7 @@ class AreaSelector:
 
     def _confirm_selection(self, event=None):
         """Confirme la sélection"""
-        if self.selected_area:
+        if self.selected_area and self.selected_image:
             self.selection_confirmed = True
             self.logger.info("Sélection confirmée par l'utilisateur")
             self.root.quit()
@@ -428,6 +442,7 @@ class AreaSelector:
     def _cancel_selection(self, event=None):
         """Annule la sélection"""
         self.selected_area = None
+        self.selected_image = None
         self.selection_confirmed = False
         self.logger.info("Sélection annulée par l'utilisateur")
         self.root.quit()
@@ -480,6 +495,7 @@ class ApplicationFolderDialog:
         self.settings = settings_manager
         self.result = None
         self.window = None
+        self.logger = logging.getLogger(__name__)
 
     def show(self) -> Optional[str]:
         """Affiche le dialogue et retourne le dossier choisi ou None"""
@@ -1284,7 +1300,7 @@ class ScreenshotManager:
 
     def capture_area_selection(self, save_path: Optional[str] = None,
                                folder_override: Optional[str] = None) -> Optional[str]:
-        """Capture une zone sélectionnée avec protection contre les lancements multiples"""
+        """Capture une zone sélectionnée avec protection contre les lancements multiples - CORRIGÉ"""
         # Protection contre les lancements multiples
         with self._area_selection_lock:
             if self._area_selection_active:
@@ -1298,28 +1314,24 @@ class ScreenshotManager:
             self.logger.info("Début capture zone sélectionnée avec effets visuels")
             self._prepare_capture()
 
-            # Interface de sélection avec effets visuels
+            # Interface de sélection avec effets visuels - CORRIGÉE
             selector = AreaSelector()
-            region = selector.select_area()
+            selection_result = selector.select_area()
 
-            if not region:
+            if not selection_result:
                 self.logger.info("Sélection de zone annulée par l'utilisateur")
                 return None
 
+            # Récupère les coordonnées ET l'image croppée
+            region, cropped_image = selection_result
             x, y, width, height = region
             self.logger.info(f"Zone sélectionnée: {x},{y} {width}x{height}")
 
-            # Délai pour que l'interface disparaisse complètement
-            time.sleep(0.5)
-
-            # Délai configurable additionnel
-            delay = self.settings.get_capture_settings().get('delay_seconds', 0)
-            if delay > 0:
-                time.sleep(delay)
-
-            # Capture de la région sélectionnée sur l'écran RÉEL
+            # PAS DE DÉLAI - on utilise directement l'image figée qui a été croppée
+            # L'image a été capturée au moment de la création de l'interface
             with self._memory_optimized_capture():
-                screenshot = pyautogui.screenshot(region=(x, y, width, height))
+                # CORRECTION: Utilise l'image croppée de l'interface au lieu de faire une nouvelle capture
+                screenshot = cropped_image
 
                 save_path = self._process_and_save_image(
                     screenshot, save_path, folder_override, "area_selection"
