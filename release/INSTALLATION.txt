@@ -1,0 +1,31 @@
+🎯 SnapMaster - Installation
+
+INSTALLATION:
+1. Extraire tous les fichiers dans un dossier de votre choix
+2. Double-cliquer sur SnapMaster.exe pour lancer l'application
+3. L'application se minimise automatiquement dans la barre système
+
+DÉMARRAGE AUTOMATIQUE:
+- Windows: Utiliser Démarrer_SnapMaster.bat
+- Linux/macOS: Utiliser start_snapmaster.sh
+
+UTILISATION:
+- L'application reste en arrière-plan (icône dans la barre système)
+- Clic droit sur l'icône pour accéder aux fonctions
+- Utilisation des raccourcis clavier configurés
+
+RACCOURCIS PAR DÉFAUT:
+- Ctrl+Shift+F : Capture plein écran
+- Ctrl+Shift+W : Capture fenêtre active
+- Ctrl+Shift+A : Capture zone sélectionnée
+- Ctrl+Shift+Q : Capture rapide
+
+CONFIGURATION:
+- Clic droit sur l'icône système → Paramètres
+- Ou double-clic sur l'icône pour afficher la fenêtre principale
+
+DÉSINSTALLATION:
+- Supprimer simplement le dossier d'installation
+- Aucune trace laissée dans le registre
+
+Pour plus d'informations, consultez README.md

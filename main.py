@@ -35,15 +35,15 @@ from config.settings import SettingsManager
 
 def setup_logging():
     """Configure le système de logging"""
-    log_dir = Path("logs")
-    log_dir.mkdir(exist_ok=True)
+    #log_dir = Path("logs")
+    #log_dir.mkdir(exist_ok=True)
 
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler('logs/snapmaster.log', encoding='utf-8'),
-            logging.StreamHandler(sys.stdout)
+            #logging.FileHandler('logs/snapmaster.log', encoding='utf-8'),
+            #logging.StreamHandler(sys.stdout)
         ]
     )
 
@@ -55,27 +55,6 @@ def main():
         logger = logging.getLogger(__name__)
         logger.info("Démarrage de SnapMaster...")
 
-        # Vérifie les permissions de base (pas forcément admin)
-        if not check_basic_permissions():
-            logger.warning("Permissions limitées détectées")
-
-            # Sur Windows, propose d'élever les privilèges seulement si nécessaire
-            if platform.system() == "Windows" and not is_admin():
-                import tkinter.messagebox as msgbox
-                response = msgbox.askyesno(
-                    "Privilèges administrateur",
-                    "SnapMaster peut nécessiter des privilèges administrateur pour certaines fonctionnalités avancées.\n\n"
-                    "Voulez-vous redémarrer avec les privilèges administrateur ?\n\n"
-                    "Note: Vous pouvez continuer sans privilèges, mais certaines captures pourraient ne pas fonctionner."
-                )
-
-                if response:
-                    try:
-                        ctypes.windll.shell32.ShellExecuteW(
-                            None, "runas", sys.executable, ' '.join(sys.argv), None, 1)
-                        sys.exit()
-                    except Exception as e:
-                        logger.warning(f"Impossible d'obtenir les privilèges administrateur: {e}")
 
         # Intégration des méthodes manquantes
         try:
@@ -125,26 +104,6 @@ def main():
         except:
             pass
 
-def check_basic_permissions():
-    """Vérifie les permissions de base nécessaires"""
-    try:
-        # Test d'accès au répertoire de travail
-        Path("temp").mkdir(exist_ok=True)
-        test_file = Path("temp/test.txt")
-        test_file.write_text("test")
-        test_file.unlink()
-        Path("temp").rmdir()
-
-        # Test d'accès aux logs
-        Path("logs").mkdir(exist_ok=True)
-        log_test = Path("logs/test.log")
-        log_test.write_text("test")
-        log_test.unlink()
-
-        return True
-    except Exception as e:
-        logging.error(f"Erreur permissions de base: {e}")
-        return False
 
 def test_windows_dependencies():
     """Teste la disponibilité des dépendances Windows"""
